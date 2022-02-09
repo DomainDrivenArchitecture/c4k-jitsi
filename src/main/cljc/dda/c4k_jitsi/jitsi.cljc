@@ -66,13 +66,13 @@
   (->
    (yaml/from-string (yaml/load-resource "jitsi/web-deployment.yaml"))))
 
-(defn generate-web-pvc []
+(defn generate-web-pvc-config []
   (yaml/from-string (yaml/load-resource "jitsi/web-pvc-config.yaml")))
 
-(defn generate-web-pvc []
+(defn generate-web-pvc-crontabs []
   (yaml/from-string (yaml/load-resource "jitsi/web-pvc-crontabs.yaml")))
 
-(defn generate-web-pvc []
+(defn generate-web-pvc-transcripts []
   (yaml/from-string (yaml/load-resource "jitsi/web-pvc-transcripts.yaml")))
 
 (defn generate-web-service []
