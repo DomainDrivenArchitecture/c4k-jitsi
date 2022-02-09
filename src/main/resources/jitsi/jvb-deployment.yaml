@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jvb
+spec:
+  selector:
+    matchLabels:
+      app: jvb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: jvb
+        jitsi-network/meet.jitsi: "true"
+        service: jvb-service
+    spec:
+      containers:
+      - env:
+        - name: JVB_PORT
+          value: "10000"
+        - name: JVB_TCP_MAPPED_PORT
+          value: "4443"
+        - name: JVB_TCP_PORT
+          value: "4443"
+        - name: SENTRY_DSN
+          value: '"0"'
+        image: jitsi/jvb:stable-6865
+        imagePullPolicy: IfNotPresent
+        name: jvb
+        ports:
+        - containerPort: 10000
+          protocol: UDP
+        - containerPort: 4443
+        volumeMounts:
+        - mountPath: /config
+          name: jvb-claim-config
+      volumes:
+      - name: jvb-claim-config
+        persistentVolumeClaim:
+          claimName: jvb-claim-config

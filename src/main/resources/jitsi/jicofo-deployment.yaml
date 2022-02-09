@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jicofo
+spec:
+  selector:
+    matchLabels:
+      app: jicofo
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: jicofo
+        jitsi-network/meet.jitsi: "true"
+    spec:
+      containers:
+      - env:
+        - name: SENTRY_DSN
+          value: '"0"'
+        image: jitsi/jicofo:stable-6865
+        imagePullPolicy: IfNotPresent
+        name: jicofo
+        volumeMounts:
+        - mountPath: /config
+          name: jicofo-claim-config
+      volumes:
+      - name: jicofo-claim-config
+        persistentVolumeClaim:
+          claimName: jicofo-claim-config
