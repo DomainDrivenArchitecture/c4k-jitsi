@@ -1,37 +1,53 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prosody
+  labels:
+    app: jitsi
+  name: jitsi
 spec:
-  selector:
-    matchLabels:
-      app: prosody
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      app: jitsi
   template:
     metadata:
       labels:
-        app: prosody
-        jitsi-network/meet.jitsi: "true"
-        service: prosody-service
+        app: jitsi
     spec:
       containers:
-      - image: jitsi/prosody:stable-6865
-        imagePullPolicy: IfNotPresent
-        name: prosody
-        ports:
-        - containerPort: 5222
-        - containerPort: 5347
-        - containerPort: 5280
-        volumeMounts:
-        - mountPath: /config
-          name: prosody-claim-config
-        - mountPath: /prosody-plugins-custom
-          name: prosody-claim-plugins
-      volumes:
-      - name: prosody-claim-config
-        persistentVolumeClaim:
-          claimName: prosody-claim-config
-      - name: prosody-claim-plugins
-        persistentVolumeClaim:
-          claimName: prosody-claim-plugins
+        - name: prosody
+          image: jitsi/prosody:stable-6826
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: XMPP_DOMAIN
+              value: meet.jitsi
+            - name: XMPP_AUTH_DOMAIN
+              value: auth.meet.jitsi
+            - name: XMPP_MUC_DOMAIN
+              value: muc.meet.jitsi
+            - name: XMPP_INTERNAL_MUC_DOMAIN
+              value: internal-muc.meet.jitsi
+            - name: JICOFO_COMPONENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jitsi-config
+                  key: JICOFO_COMPONENT_SECRET
+            - name: JVB_AUTH_USER
+              value: jvb
+            - name: JVB_AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: jitsi-config
+                  key: JVB_AUTH_PASSWORD
+            - name: JICOFO_AUTH_USER
+              value: focus
+            - name: JICOFO_AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: jitsi-config
+                  key: JICOFO_AUTH_PASSWORD
+            - name: TZ
+              value: Europe/Berlin
+            - name: JVB_TCP_HARVESTER_DISABLED
+              value: "true"

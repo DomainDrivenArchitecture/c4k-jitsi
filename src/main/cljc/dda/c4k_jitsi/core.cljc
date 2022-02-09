@@ -12,24 +12,18 @@
 (def config? (s/keys :req-un [::jitsi/fqdn]
                      :opt-un [::jitsi/issuer ::jitsi/ingress-type]))
 
-(def auth? (s/keys :req-un []))
+(def auth? (s/keys :req-un [::jitsi/jvb-auth-password ::jitsi/jicofo-auth-password ::jitsi/jicofo-component-secret]))
 
 (defn k8s-objects [config]
    (map (fn [x] (yaml/to-string x))
-   [(jitsi/generate-jicofo-deployment config)
-    (jitsi/generate-jicofo-pvc)
-    (jitsi/generate-jvb-deployment config)
-    (jitsi/generate-jvb-pvc)
+   [(jitsi/generate-ingress config)
+    (jitsi/generate-secret config)
+    (jitsi/generate-jicofo-deployment)
+    (jitsi/generate-jvb-deployment)
     (jitsi/generate-jvb-service)
-    (jitsi/generate-networkpolicy)
-    (jitsi/generate-prosody-deployment config)
-    (jitsi/generate-prosody-pvc-config)
-    (jitsi/generate-prosody-pvc-plugins)
-    (jitsi/generate-prosody-service)
-    (jitsi/generate-web-deployment config)
-    (jitsi/generate-web-pvc-config)
-    (jitsi/generate-web-pvc-crontabs)
-    (jitsi/generate-web-pvc-transcripts)]))
+    (jitsi/generate-prosody-deployment)
+    (jitsi/generate-web-deployment)
+    (jitsi/generate-web-service)]))
 
 (defn-spec generate any?
   [my-config config?

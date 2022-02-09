@@ -1,0 +1,22 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: jitsi
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging-issuer
+spec:
+  tls:
+  - hosts:
+    - fqdn
+    secretName: tls-jitsi
+  rules:
+  - host: fqdn
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web
+            port:
+              number: 80

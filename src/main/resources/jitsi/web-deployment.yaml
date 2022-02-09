@@ -1,41 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jitsi-web
+  labels:
+    app: jitsi
+  name: jitsi
 spec:
-  selector:
-    matchLabels:
-      app: jitsi-web
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      app: jitsi
   template:
     metadata:
       labels:
         app: jitsi
-        jitsi-network/meet.jitsi: "true"
-        service: jitsi-web-service
     spec:
       containers:
-      - image: jitsi/web:stable-6865
-        imagePullPolicy: IfNotPresent
-        name: jitsi-web
-        ports:
-        - containerPort: 80
-        - containerPort: 443
-        volumeMounts:
-        - mountPath: /config
-          name: web-claim-config
-        - mountPath: /var/spool/cron/crontabs
-          name: web-claim-crontabs
-        - mountPath: /usr/share/jitsi-meet/transcripts
-          name: web-claim-transcripts
-      volumes:
-      - name: web-claim-config
-        persistentVolumeClaim:
-          claimName: web-claim-config
-      - name: web-claim-crontabs
-        persistentVolumeClaim:
-          claimName: web-claim-crontabs
-      - name: web-claim-transcripts
-        persistentVolumeClaim:
-          claimName: web-claim-transcripts
+        - name: web
+          image: jitsi/web:stable-6826
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: XMPP_SERVER
+              value: localhost
+            - name: JICOFO_AUTH_USER
+              value: focus
+            - name: XMPP_DOMAIN
+              value: meet.jitsi
+            - name: XMPP_AUTH_DOMAIN
+              value: auth.meet.jitsi
+            - name: XMPP_INTERNAL_MUC_DOMAIN
+              value: internal-muc.meet.jitsi
+            - name: XMPP_BOSH_URL_BASE
+              value: http://127.0.0.1:5280
+            - name: XMPP_MUC_DOMAIN
+              value: muc.meet.jitsi
+            - name: TZ
+              value: Europe/Berlin
+            - name: JVB_TCP_HARVESTER_DISABLED
+              value: "true"
