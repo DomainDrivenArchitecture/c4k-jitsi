@@ -8,24 +8,22 @@
 
 (s/def ::fqdn pred/fqdn-string?)
 (s/def ::issuer pred/letsencrypt-issuer?)
-(s/def ::django-secret-key pred/bash-env-string?)
-
-(defn ingress-type?
-  [input]
-  (contains? #{:traefik :default} input))
-
-(s/def ::ingress-type ingress-type?)
 
 #?(:cljs
    (defmethod yaml/load-resource :jitsi [resource-name]
      (case resource-name
-       "jitsi/secret.yaml" (rc/inline "jitsi/secret.yaml")
-       "jitsi/certificate.yaml" (rc/inline "jitsi/certificate.yaml")
-       "jitsi/deployments.yaml" (rc/inline "jitsi/deployments.yaml")
-       "jitsi/ingress.yaml" (rc/inline "jitsi/ingress.yaml")  
-       "jitsi/service-redis.yaml" (rc/inline "jitsi/service-redis.yaml")
-       "jitsi/service-webserver.yaml" (rc/inline "jitsi/service-webserver.yaml")
-       "jitsi/statefulset.yaml" (rc/inline "jitsi/statefulset.yaml")
+       "jitsi/jicofo-deployment.yaml"  (rc/inline "jitsi/jicofo-deployment.yaml")
+       "jitsi/jicofo-pvc.yaml"         (rc/inline "jitsi/jicofo-pvc.yaml")
+       "jitsi/jvb-deployment.yaml"     (rc/inline "jitsi/jvb-deployment.yaml")
+       "jitsi/jvb-pvc.yaml"            (rc/inline "jitsi/jvb-pvc.yaml")
+       "jitsi/jvb-service.yaml"        (rc/inline "jitsi/jvb-service.yaml")
+       "jitsi/networkpolicy.yaml"      (rc/inline "jitsi/networkpolicy.yaml")
+       "jitsi/prosody-deployment.yaml" (rc/inline "jitsi/prosody-deployment.yaml")
+       "jitsi/prosody-pvc.yaml"        (rc/inline "jitsi/prosody-pvc.yaml")
+       "jitsi/prosody-service.yaml"    (rc/inline "jitsi/prosody-service.yaml")
+       "jitsi/web-deployment.yaml"     (rc/inline "jitsi/web-deployment.yaml")
+       "jitsi/web-pvc.yaml"            (rc/inline "jitsi/web-pvc.yaml")
+       "jitsi/web-service.yaml"        (rc/inline "jitsi/web-service.yaml")
        (throw (js/Error. "Undefined Resource!")))))
  
 (defn generate-secret [config]
