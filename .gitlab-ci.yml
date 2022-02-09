@@ -47,7 +47,7 @@ test-schema:
   stage: build_and_test
   script:
     - lein uberjar
-    - java -jar target/uberjar/c4k-shynet-standalone.jar valid-config.edn valid-auth.edn | kubeconform --kubernetes-version 1.19.0 --strict --skip Certificate -
+    - java -jar target/uberjar/c4k-jitsi-standalone.jar valid-config.edn valid-auth.edn | kubeconform --kubernetes-version 1.19.0 --strict --skip Certificate -
   artifacts:
     paths:
       - target/uberjar
@@ -68,9 +68,9 @@ package-frontend:
   script:
     - mkdir -p target/frontend-build
     - shadow-cljs release frontend
-    - cp public/js/main.js target/frontend-build/c4k-shynet.js
-    - sha256sum target/frontend-build/c4k-shynet.js > target/frontend-build/c4k-shynet.js.sha256
-    - sha512sum target/frontend-build/c4k-shynet.js > target/frontend-build/c4k-shynet.js.sha512
+    - cp public/js/main.js target/frontend-build/c4k-jitsi.js
+    - sha256sum target/frontend-build/c4k-jitsi.js > target/frontend-build/c4k-jitsi.js.sha256
+    - sha512sum target/frontend-build/c4k-jitsi.js > target/frontend-build/c4k-jitsi.js.sha512
   artifacts:
     paths:
       - target/frontend-build
@@ -79,8 +79,8 @@ package-uberjar:
   <<: *clj
   stage: package
   script:
-    - sha256sum target/uberjar/c4k-shynet-standalone.jar > target/uberjar/c4k-shynet-standalone.jar.sha256
-    - sha512sum target/uberjar/c4k-shynet-standalone.jar > target/uberjar/c4k-shynet-standalone.jar.sha512
+    - sha256sum target/uberjar/c4k-jitsi-standalone.jar > target/uberjar/c4k-jitsi-standalone.jar.sha256
+    - sha512sum target/uberjar/c4k-jitsi-standalone.jar > target/uberjar/c4k-jitsi-standalone.jar.sha512
   artifacts:
     paths:
       - target/uberjar
@@ -117,9 +117,9 @@ release:
     - apk --no-cache add curl
     - |
       release-cli create --name "Release $CI_COMMIT_TAG" --tag-name $CI_COMMIT_TAG \
-        --assets-link "{\"name\":\"c4k-shynet-standalone.jar\",\"url\":\"https://gitlab.com/domaindrivenarchitecture/c4k-shynet/-/jobs/${CI_JOB_ID}/artifacts/file/target/uberjar/c4k-shynet-standalone.jar\"}" \
-        --assets-link "{\"name\":\"c4k-shynet-standalone.jar.sha256\",\"url\":\"https://gitlab.com/domaindrivenarchitecture/c4k-shynet/-/jobs/${CI_JOB_ID}/artifacts/file/target/uberjar/c4k-shynet-standalone.jar.sha256\"}" \
-        --assets-link "{\"name\":\"c4k-shynet-standalone.jar.sha512\",\"url\":\"https://gitlab.com/domaindrivenarchitecture/c4k-shynet/-/jobs/${CI_JOB_ID}/artifacts/file/target/uberjar/c4k-shynet-standalone.jar.sha512\"}" \
-        --assets-link "{\"name\":\"c4k-shynet.js\",\"url\":\"https://gitlab.com/domaindrivenarchitecture/c4k-shynet/-/jobs/${CI_JOB_ID}/artifacts/file/target/frontend-build/c4k-shynet.js\"}" \
-        --assets-link "{\"name\":\"c4k-shynet.js.sha256\",\"url\":\"https://gitlab.com/domaindrivenarchitecture/c4k-shynet/-/jobs/${CI_JOB_ID}/artifacts/file/target/frontend-build/c4k-shynet.js.sha256\"}" \
-        --assets-link "{\"name\":\"c4k-shynet.js.sha512\",\"url\":\"https://gitlab.com/domaindrivenarchitecture/c4k-shynet/-/jobs/${CI_JOB_ID}/artifacts/file/target/frontend-build/c4k-shynet.js.sha512\"}" \
+        --assets-link "{\"name\":\"c4k-jitsi-standalone.jar\",\"url\":\"https://gitlab.com/domaindrivenarchitecture/c4k-jitsi/-/jobs/${CI_JOB_ID}/artifacts/file/target/uberjar/c4k-jitsi-standalone.jar\"}" \
+        --assets-link "{\"name\":\"c4k-jitsi-standalone.jar.sha256\",\"url\":\"https://gitlab.com/domaindrivenarchitecture/c4k-jitsi/-/jobs/${CI_JOB_ID}/artifacts/file/target/uberjar/c4k-jitsi-standalone.jar.sha256\"}" \
+        --assets-link "{\"name\":\"c4k-jitsi-standalone.jar.sha512\",\"url\":\"https://gitlab.com/domaindrivenarchitecture/c4k-jitsi/-/jobs/${CI_JOB_ID}/artifacts/file/target/uberjar/c4k-jitsi-standalone.jar.sha512\"}" \
+        --assets-link "{\"name\":\"c4k-jitsi.js\",\"url\":\"https://gitlab.com/domaindrivenarchitecture/c4k-jitsi/-/jobs/${CI_JOB_ID}/artifacts/file/target/frontend-build/c4k-jitsi.js\"}" \
+        --assets-link "{\"name\":\"c4k-jitsi.js.sha256\",\"url\":\"https://gitlab.com/domaindrivenarchitecture/c4k-jitsi/-/jobs/${CI_JOB_ID}/artifacts/file/target/frontend-build/c4k-jitsi.js.sha256\"}" \
+        --assets-link "{\"name\":\"c4k-jitsi.js.sha512\",\"url\":\"https://gitlab.com/domaindrivenarchitecture/c4k-jitsi/-/jobs/${CI_JOB_ID}/artifacts/file/target/frontend-build/c4k-jitsi.js.sha512\"}" \

@@ -1,25 +1,25 @@
-(ns dda.c4k-shynet.browser
+(ns dda.c4k-jitsi.browser
   (:require
    [clojure.tools.reader.edn :as edn]
-   [dda.c4k-shynet.core :as core]
-   [dda.c4k-shynet.shynet :as shynet]
+   [dda.c4k-jitsi.core :as core]
+   [dda.c4k-jitsi.jitsi :as jitsi]
    [dda.c4k-common.browser :as br]
    [dda.c4k-common.postgres :as pgc]))
 
 (defn generate-content
   []
   (into [] (concat [(assoc (br/generate-needs-validation) :content
-                           (into [] (concat (br/generate-input-field "fqdn" "Your fqdn:" "shynet.prod.meissa-gmbh.de")
+                           (into [] (concat (br/generate-input-field "fqdn" "Your fqdn:" "jitsi.prod.meissa-gmbh.de")
                                             (br/generate-input-field "postgres-data-volume-path" "(Optional) Your postgres-data-volume-path:" "/var/postgres")
                                             (br/generate-input-field "issuer" "(Optional) Your issuer prod/staging:" "")
                                             [(br/generate-br)]
-                                            (br/generate-text-area "auth" "Your auth.edn:" "{:postgres-db-user \"shynet\"
-         :postgres-db-password \"shynet-db-password\"
+                                            (br/generate-text-area "auth" "Your auth.edn:" "{:postgres-db-user \"jitsi\"
+         :postgres-db-password \"jitsi-db-password\"
          :django-secret-key \"djangosecretkey\"}"
                                                                    "5")
                                             [(br/generate-br)]
                                             (br/generate-button "generate-button" "Generate c4k yaml"))))]
-                   (br/generate-output "c4k-shynet-output" "Your c4k deployment.yaml:" "25"))))
+                   (br/generate-output "c4k-jitsi-output" "Your c4k deployment.yaml:" "25"))))
 
 (defn generate-content-div
   []
@@ -40,9 +40,9 @@
      )))
 
 (defn validate-all! []
-  (br/validate! "fqdn" ::shynet/fqdn)
+  (br/validate! "fqdn" ::jitsi/fqdn)
   (br/validate! "postgres-data-volume-path" ::pgc/postgres-data-volume-path :optional true)
-  (br/validate! "issuer" ::shynet/issuer :optional true :deserializer keyword)
+  (br/validate! "issuer" ::jitsi/issuer :optional true :deserializer keyword)
   (br/validate! "auth" core/auth? :deserializer edn/read-string)
   (br/set-validated!))
 

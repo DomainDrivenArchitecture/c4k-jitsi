@@ -1,5 +1,5 @@
-(defproject org.domaindrivenarchitecture/c4k-shynet "1.0.0-SNAPSHOT"
-  :description "shynet c4k-installation package"
+(defproject org.domaindrivenarchitecture/c4k-jitsi "1.0.0-SNAPSHOT"
+  :description "jitsi c4k-installation package"
   :url "https://domaindrivenarchitecture.org"
   :license {:name "Apache License, Version 2.0"
             :url "https://www.apache.org/licenses/LICENSE-2.0.html"}
@@ -20,8 +20,8 @@
                     :dependencies [[dda/data-test "0.1.1"]]}
              :dev {:plugins [[lein-shell "0.5.0"]]}
              :uberjar {:aot :all
-                       :main dda.c4k-shynet.uberjar
-                       :uberjar-name "c4k-shynet-standalone.jar"
+                       :main dda.c4k-jitsi.uberjar
+                       :uberjar-name "c4k-jitsi-standalone.jar"
                        :dependencies [[org.clojure/tools.cli "1.0.206"]
                                       [ch.qos.logback/logback-classic "1.3.0-alpha4"
                                        :exclusions [com.sun.mail/javax.mail]]
@@ -36,7 +36,7 @@
                       "native-image"
                       "--report-unsupported-elements-at-runtime"
                       "--initialize-at-build-time"
-                      "-jar" "target/uberjar/c4k-shynet-standalone.jar"
+                      "-jar" "target/uberjar/c4k-jitsi-standalone.jar"
                       "-H:ResourceConfigurationFiles=graalvm-resource-config.json"
                       "-H:Log=registerResource"
                       "-H:Name=target/graalvm/${:name}"]})

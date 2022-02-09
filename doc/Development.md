@@ -58,15 +58,15 @@ sudo ln -s /usr/lib/jvm/graalvm/bin/native-image /usr/local/bin
 sudo apt-get install build-essential libz-dev zlib1g-dev
 
 # build
-cd ~/repo/dda/c4k-shynet
+cd ~/repo/dda/c4k-jitsi
 lein uberjar
 mkdir -p target/graalvm
 lein native
 
 # execute
-./target/graalvm/c4k-shynet -h
-./target/graalvm/c4k-shynet src/test/resources/valid-config.edn src/test/resources/valid-auth.edn 
-./target/graalvm/c4k-shynet src/test/resources/invalid-config.edn src/test/resources/invalid-auth.edn
+./target/graalvm/c4k-jitsi -h
+./target/graalvm/c4k-jitsi src/test/resources/valid-config.edn src/test/resources/valid-auth.edn 
+./target/graalvm/c4k-jitsi src/test/resources/invalid-config.edn src/test/resources/invalid-auth.edn
 ```
 
 ## c4k-setup
@@ -102,9 +102,9 @@ ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@devops.test
 kubectl get pods
 ```
 
-### deploy shynet
+### deploy jitsi
 
 ```
-java -jar target/uberjar/c4k-shynet-standalone.jar valid-config.edn valid-auth.edn | kubeconform --kubernetes-version 1.19.0 --strict --skip Certificate -
-java -jar target/uberjar/c4k-shynet-standalone.jar valid-config.edn my-auth.edn | kubectl apply -f -
+java -jar target/uberjar/c4k-jitsi-standalone.jar valid-config.edn valid-auth.edn | kubeconform --kubernetes-version 1.19.0 --strict --skip Certificate -
+java -jar target/uberjar/c4k-jitsi-standalone.jar valid-config.edn my-auth.edn | kubectl apply -f -
 ```

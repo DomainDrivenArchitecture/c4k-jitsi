@@ -1,59 +1,59 @@
-(ns dda.c4k-shynet.shynet-test
+(ns dda.c4k-jitsi.jitsi-test
   (:require
    #?(:clj [clojure.test :refer [deftest is are testing run-tests]]
       :cljs [cljs.test :refer-macros [deftest is are testing run-tests]])
-   [dda.c4k-shynet.shynet :as cut]))
+   [dda.c4k-jitsi.jitsi :as cut]))
 
 
 (deftest should-generate-webserver-deployment
   (is (= {:apiVersion "apps/v1"
           :kind "Deployment"
           :metadata
-          {:name "shynet-webserver"
+          {:name "jitsi-webserver"
            :namespace "default"
-           :labels {:app "shynet-webserver"}}
+           :labels {:app "jitsi-webserver"}}
           :spec
-          {:selector {:matchLabels {:app "shynet-webserver"}}
+          {:selector {:matchLabels {:app "jitsi-webserver"}}
            :strategy {:type "Recreate"}
            :replicas 1
            :template
-           {:metadata {:labels {:app "shynet-webserver"}}
+           {:metadata {:labels {:app "jitsi-webserver"}}
             :spec
             {:containers
-             [{:name "shynet-webserver"
-               :image "milesmcc/shynet:v0.12.0"
+             [{:name "jitsi-webserver"
+               :image "milesmcc/jitsi:v0.12.0"
                :imagePullPolicy "IfNotPresent"
-               :envFrom [{:secretRef {:name "shynet-settings"}}]}]}}}}
+               :envFrom [{:secretRef {:name "jitsi-settings"}}]}]}}}}
          (cut/generate-webserver-deployment))))
 
 (deftest should-generate-celeryworker-deployment
   (is (= {:apiVersion "apps/v1"
           :kind "Deployment"
           :metadata
-          {:name "shynet-celeryworker"
+          {:name "jitsi-celeryworker"
            :namespace "default"
-           :labels {:app "shynet-celeryworker"}}
+           :labels {:app "jitsi-celeryworker"}}
           :spec
-          {:selector {:matchLabels {:app "shynet-celeryworker"}}
+          {:selector {:matchLabels {:app "jitsi-celeryworker"}}
            :strategy {:type "Recreate"}
            :replicas 1
            :template
-           {:metadata {:labels {:app "shynet-celeryworker"}}
+           {:metadata {:labels {:app "jitsi-celeryworker"}}
             :spec
             {:containers
-             [{:name "shynet-celeryworker"
-               :image "milesmcc/shynet:v0.12.0"
+             [{:name "jitsi-celeryworker"
+               :image "milesmcc/jitsi:v0.12.0"
                :imagePullPolicy "IfNotPresent"
                :command ["./celeryworker.sh"]
-               :envFrom [{:secretRef {:name "shynet-settings"}}]}]}}}}
+               :envFrom [{:secretRef {:name "jitsi-settings"}}]}]}}}}
          (cut/generate-celeryworker-deployment))))
 
 (deftest should-generate-certificate
   (is (= {:apiVersion "cert-manager.io/v1"
           :kind "Certificate"
-          :metadata {:name "shynet-cert", :namespace "default"}
+          :metadata {:name "jitsi-cert", :namespace "default"}
           :spec
-          {:secretName "shynet-secret"
+          {:secretName "jitsi-secret"
            :commonName "test.com"
            :dnsNames ["test.com"]
            :issuerRef {:name "letsencrypt-staging-issuer", :kind "ClusterIssuer"}}}
@@ -63,7 +63,7 @@
   (is (= {:apiVersion "networking.k8s.io/v1"
           :kind "Ingress"
           :metadata
-          {:name "shynet-webserver-ingress"
+          {:name "jitsi-webserver-ingress"
            :annotations
            {:cert-manager.io/cluster-issuer "letsencrypt-staging-issuer"
             :nginx.ingress.kubernetes.io/proxy-body-size "256m"
@@ -73,17 +73,17 @@
             :nginx.ingress.kubernetes.io/proxy-send-timeout "300"
             :nginx.ingress.kubernetes.io/proxy-read-timeout "300"}}
           :spec
-          {:tls [{:hosts ["test.com"], :secretName "shynet-secret"}]
+          {:tls [{:hosts ["test.com"], :secretName "jitsi-secret"}]
            :rules
            [{:host "test.com"
              :http {:paths [{:backend {:service
-                                       {:name "shynet-webserver-service" :port {:number 8080}}}, :path "/", :pathType "Prefix"}]}}]}}
+                                       {:name "jitsi-webserver-service" :port {:number 8080}}}, :path "/", :pathType "Prefix"}]}}]}}
          (cut/generate-ingress {:fqdn "test.com" :issuer :staging}))))
 
 (deftest should-generate-secret
   (is (= {:apiVersion "v1"
           :kind "Secret"
-          :metadata {:name "shynet-settings"}
+          :metadata {:name "jitsi-settings"}
           :type "Opaque"
           :stringData
           {:DEBUG "False"
@@ -92,16 +92,16 @@
            :ACCOUNT_SIGNUPS_ENABLED "False"
            :TIME_ZONE "America/New_York"
            :REDIS_CACHE_LOCATION
-           "redis://shynet-redis.default.svc.cluster.local/0"
+           "redis://jitsi-redis.default.svc.cluster.local/0"
            :CELERY_BROKER_URL
-           "redis://shynet-redis.default.svc.cluster.local/1"
-           :DB_NAME "shynet"
+           "redis://jitsi-redis.default.svc.cluster.local/1"
+           :DB_NAME "jitsi"
            :DB_USER "postgres-user"
            :DB_PASSWORD "postgres-pw"
            :DB_HOST "postgresql-service"
            :EMAIL_HOST_USER ""
            :EMAIL_HOST_PASSWORD ""
            :EMAIL_HOST ""
-           :SERVER_EMAIL "Shynet <noreply@shynet.example.com>"}}
+           :SERVER_EMAIL "jitsi <noreply@jitsi.example.com>"}}
          (cut/generate-secret {:fqdn "test.com" :django-secret-key "django-pw"
                                :postgres-db-user "postgres-user" :postgres-db-password "postgres-pw"}))))

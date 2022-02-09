@@ -17,7 +17,7 @@ resource "aws_s3_bucket" "backup" {
   }
 }
 
-resource "hcloud_server" "shynet_09_2021" {
+resource "hcloud_server" "jitsi_09_2021" {
   name        = "the name"
   image       = "ubuntu-20.04"
   server_type = "cx31"
@@ -31,14 +31,14 @@ resource "hcloud_server" "shynet_09_2021" {
 
 resource "aws_route53_record" "v4_neu" {
   zone_id = the_dns_zone
-  name    = "shynet-neu"
+  name    = "jitsi-neu"
   type    = "A"
   ttl     = "300"
-  records = [hcloud_server.shynet_09_2021.ipv4_address]
+  records = [hcloud_server.jitsi_09_2021.ipv4_address]
 }
 
 output "ipv4" {
-  value = hcloud_server.shynet_09_2021.ipv4_address
+  value = hcloud_server.jitsi_09_2021.ipv4_address
 }
 
 ```
@@ -56,12 +56,12 @@ For k8s installation we use our [dda-k8s-crate](https://github.com/DomainDrivenA
  }
 ```
 
-## kubectl apply c4k-shynet
+## kubectl apply c4k-jitsi
 
-The last step for applying the shynet deployment is
+The last step for applying the jitsi deployment is
 
 ```
-c4k-shynet config.edn auth.edn | kubectl apply -f -
+c4k-jitsi config.edn auth.edn | kubectl apply -f -
 ```
 
 with the following config.edn:

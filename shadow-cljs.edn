@@ -7,7 +7,7 @@
  :dependencies [[org.domaindrivenarchitecture/c4k-common-cljs "1.0.0"]
                 [hickory "0.7.1"]]
  :builds {:frontend {:target :browser
-                     :modules {:main {:init-fn dda.c4k-shynet.browser/init}}
+                     :modules {:main {:init-fn dda.c4k-jitsi.browser/init}}
                      :release {}
                      :compiler-options {:optimizations :advanced}}
           :test {:target :node-test

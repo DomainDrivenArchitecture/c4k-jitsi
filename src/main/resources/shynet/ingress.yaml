@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: shynet-webserver-ingress
+  name: jitsi-webserver-ingress
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-staging-issuer
     nginx.ingress.kubernetes.io/proxy-body-size: "256m"
@@ -14,14 +14,14 @@ spec:
   tls:
   - hosts:
     - fqdn
-    secretName: shynet-secret
+    secretName: jitsi-secret
   rules:
   - host: fqdn
     http:
       paths:
       - backend:
           service:
-            name: shynet-webserver-service
+            name: jitsi-webserver-service
             port:
               number: 8080
         path: /

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: shynet-redis
+  name: jitsi-redis
 spec:
   selector:
     matchLabels:
-      app: shynet-redis
-  serviceName: shynet-redis
+      app: jitsi-redis
+  serviceName: jitsi-redis
   replicas: 1
   template:
     metadata:
       labels:
-        app: shynet-redis
+        app: jitsi-redis
     spec:
       containers:
-        - name: shynet-redis
+        - name: jitsi-redis
           image: redis:6.2.6
           imagePullPolicy: IfNotPresent
           ports:

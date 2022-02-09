@@ -1,16 +1,16 @@
-(ns dda.c4k-shynet.uberjar
+(ns dda.c4k-jitsi.uberjar
   (:gen-class)
   (:require
    [clojure.spec.alpha :as s]
    [clojure.string :as cs]
    [clojure.tools.reader.edn :as edn]
    [expound.alpha :as expound]
-   [dda.c4k-shynet.core :as core]))
+   [dda.c4k-jitsi.core :as core]))
 
 (def usage
   "usage:
   
-  c4k-shynet {your configuraton file} {your authorization file}")
+  c4k-jitsi {your configuraton file} {your authorization file}")
 
 (s/def ::options (s/* #{"-h"}))
 (s/def ::filename (s/and string?

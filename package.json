@@ -1,18 +1,18 @@
 {
-  "name": "c4k-shynet",
-  "description": "Generate c4k yaml for a shynet deployment.",
+  "name": "c4k-jitsi",
+  "description": "Generate c4k yaml for a jitsi deployment.",
   "author": "meissa GmbH",
   "version": "1.0.0-SNAPSHOT",
-  "homepage": "https://gitlab.com/domaindrivenarchitecture/c4k-shynet#readme",
-  "repository": "https://www.npmjs.com/package/c4k-shynet",
+  "homepage": "https://gitlab.com/domaindrivenarchitecture/c4k-jitsi#readme",
+  "repository": "https://www.npmjs.com/package/c4k-jitsi",
   "license": "APACHE2",
-  "main": "c4k-shynet.js",
+  "main": "c4k-jitsi.js",
   "bin": {
-    "c4k-shynet": "./c4k-shynet.js"
+    "c4k-jitsi": "./c4k-jitsi.js"
   },
   "keywords": [
     "cljs",
-    "shynet",
+    "jitsi",
     "k8s",
     "c4k",
     "deployment",
@@ -20,7 +20,7 @@
     "convention4kubernetes"
   ],
   "bugs": {
-    "url": "https://gitlab.com/domaindrivenarchitecture/c4k-shynet/issues"
+    "url": "https://gitlab.com/domaindrivenarchitecture/c4k-jitsi/issues"
   },
   "dependencies": {
     "js-base64": "^3.6.1",

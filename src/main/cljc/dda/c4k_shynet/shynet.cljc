@@ -1,4 +1,4 @@
-(ns dda.c4k-shynet.shynet
+(ns dda.c4k-jitsi.jitsi
  (:require
   [clojure.spec.alpha :as s]
   #?(:cljs [shadow.resource :as rc])
@@ -17,21 +17,21 @@
 (s/def ::ingress-type ingress-type?)
 
 #?(:cljs
-   (defmethod yaml/load-resource :shynet [resource-name]
+   (defmethod yaml/load-resource :jitsi [resource-name]
      (case resource-name
-       "shynet/secret.yaml" (rc/inline "shynet/secret.yaml")
-       "shynet/certificate.yaml" (rc/inline "shynet/certificate.yaml")
-       "shynet/deployments.yaml" (rc/inline "shynet/deployments.yaml")
-       "shynet/ingress.yaml" (rc/inline "shynet/ingress.yaml")  
-       "shynet/service-redis.yaml" (rc/inline "shynet/service-redis.yaml")
-       "shynet/service-webserver.yaml" (rc/inline "shynet/service-webserver.yaml")
-       "shynet/statefulset.yaml" (rc/inline "shynet/statefulset.yaml")
+       "jitsi/secret.yaml" (rc/inline "jitsi/secret.yaml")
+       "jitsi/certificate.yaml" (rc/inline "jitsi/certificate.yaml")
+       "jitsi/deployments.yaml" (rc/inline "jitsi/deployments.yaml")
+       "jitsi/ingress.yaml" (rc/inline "jitsi/ingress.yaml")  
+       "jitsi/service-redis.yaml" (rc/inline "jitsi/service-redis.yaml")
+       "jitsi/service-webserver.yaml" (rc/inline "jitsi/service-webserver.yaml")
+       "jitsi/statefulset.yaml" (rc/inline "jitsi/statefulset.yaml")
        (throw (js/Error. "Undefined Resource!")))))
  
 (defn generate-secret [config]
   (let [{:keys [fqdn django-secret-key postgres-db-user postgres-db-password]} config]
     (->
-     (yaml/from-string (yaml/load-resource "shynet/secret.yaml"))
+     (yaml/from-string (yaml/load-resource "jitsi/secret.yaml"))
      ; See comment in secret.yaml
      ;(assoc-in [:stringData :ALLOWED_HOSTS] fqdn)
      (assoc-in [:stringData :DJANGO_SECRET_KEY] django-secret-key)
@@ -42,21 +42,21 @@
   (let [{:keys [fqdn issuer]} config
         letsencrypt-issuer (str "letsencrypt-" (name issuer) "-issuer")]
     (->
-     (yaml/from-string (yaml/load-resource "shynet/certificate.yaml"))
+     (yaml/from-string (yaml/load-resource "jitsi/certificate.yaml"))
      (assoc-in [:spec :commonName] fqdn)
      (assoc-in [:spec :dnsNames] [fqdn])
      (assoc-in [:spec :issuerRef :name] letsencrypt-issuer))))
 
 (defn generate-webserver-deployment []
-  (let [shynet-application "shynet-webserver"]
-    (-> (yaml/from-string (yaml/load-resource "shynet/deployments.yaml"))
-        (cm/replace-all-matching-values-by-new-value "shynet-application" shynet-application)
+  (let [jitsi-application "jitsi-webserver"]
+    (-> (yaml/from-string (yaml/load-resource "jitsi/deployments.yaml"))
+        (cm/replace-all-matching-values-by-new-value "jitsi-application" jitsi-application)
         (update-in [:spec :template :spec :containers 0] dissoc :command))))
 
 (defn generate-celeryworker-deployment []
-  (let [shynet-application "shynet-celeryworker"]
-    (-> (yaml/from-string (yaml/load-resource "shynet/deployments.yaml"))
-        (cm/replace-all-matching-values-by-new-value "shynet-application" shynet-application))))
+  (let [jitsi-application "jitsi-celeryworker"]
+    (-> (yaml/from-string (yaml/load-resource "jitsi/deployments.yaml"))
+        (cm/replace-all-matching-values-by-new-value "jitsi-application" jitsi-application))))
 
 (defn generate-ingress [config]
   (let [{:keys [fqdn issuer ingress-type]
@@ -64,16 +64,16 @@
         letsencrypt-issuer (str "letsencrypt-" (name issuer) "-issuer")
         ingress-kind (if (= :default ingress-type) "" (name ingress-type))]
     (->
-     (yaml/from-string (yaml/load-resource "shynet/ingress.yaml"))
+     (yaml/from-string (yaml/load-resource "jitsi/ingress.yaml"))
      (assoc-in [:metadata :annotations :cert-manager.io/cluster-issuer] letsencrypt-issuer)
      (assoc-in [:metadata :annotations :kubernetes.io/ingress.class] ingress-kind)
      (cm/replace-all-matching-values-by-new-value "fqdn" fqdn))))
 
 (defn generate-statefulset []
-  (yaml/from-string (yaml/load-resource "shynet/statefulset.yaml")))
+  (yaml/from-string (yaml/load-resource "jitsi/statefulset.yaml")))
 
 (defn generate-service-redis []
-  (yaml/from-string (yaml/load-resource "shynet/service-redis.yaml")))
+  (yaml/from-string (yaml/load-resource "jitsi/service-redis.yaml")))
 
 (defn generate-service-webserver []
-  (yaml/from-string (yaml/load-resource "shynet/service-webserver.yaml")))
+  (yaml/from-string (yaml/load-resource "jitsi/service-webserver.yaml")))

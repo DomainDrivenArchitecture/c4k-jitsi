@@ -1,12 +1,12 @@
-# convention 4 kubernetes: c4k-shynet
-[![Clojars Project](https://img.shields.io/clojars/v/org.domaindrivenarchitecture/c4k-shynet.svg)](https://clojars.org/org.domaindrivenarchitecture/c4k-shynet) [![pipeline status](https://gitlab.com/domaindrivenarchitecture/c4k-shynet/badges/master/pipeline.svg)](https://gitlab.com/domaindrivenarchitecture/c4k-shynet/-/commits/main) 
+# convention 4 kubernetes: c4k-jitsi
+[![Clojars Project](https://img.shields.io/clojars/v/org.domaindrivenarchitecture/c4k-jitsi.svg)](https://clojars.org/org.domaindrivenarchitecture/c4k-jitsi) [![pipeline status](https://gitlab.com/domaindrivenarchitecture/c4k-jitsi/badges/master/pipeline.svg)](https://gitlab.com/domaindrivenarchitecture/c4k-jitsi/-/commits/main) 
 
 [<img src="https://domaindrivenarchitecture.org/img/delta-chat.svg" width=20 alt="DeltaChat"> chat over e-mail](mailto:buero@meissa-gmbh.de?subject=community-chat) | [<img src="https://meissa-gmbh.de/img/community/Mastodon_Logotype.svg" width=20 alt="team@social.meissa-gmbh.de"> team@social.meissa-gmbh.de](https://social.meissa-gmbh.de/@team) | [Website & Blog](https://domaindrivenarchitecture.org)
 
 ## Purpose
 
-c4k-shynet provides a k8s deployment for shynet containing:
-* shynet
+c4k-jitsi provides a k8s deployment for jitsi containing:
+* jitsi
 * ingress having a letsencrypt managed certificate
 * postgres database
 
@@ -20,14 +20,14 @@ Stable - we use this setup on production.
 
 Click on the image to try out live in your browser:
 
-[![Try it out](doc/tryItOut.png "Try out yourself")](https://domaindrivenarchitecture.org/pages/dda-provision/c4k-shynet/)
+[![Try it out](doc/tryItOut.png "Try out yourself")](https://domaindrivenarchitecture.org/pages/dda-provision/c4k-jitsi/)
 
 Your input will stay in your browser. No server interaction is required.
 
 You will also be able to try out on cli:
 ```
-target/graalvm/c4k-shynet src/test/resources/valid-config.edn src/test/resources/valid-auth.edn | kubeval -
-target/graalvm/c4k-shynet src/test/resources/valid-config.edn src/test/resources/valid-auth.edn | kubectl apply -f -
+target/graalvm/c4k-jitsi src/test/resources/valid-config.edn src/test/resources/valid-auth.edn | kubeval -
+target/graalvm/c4k-jitsi src/test/resources/valid-config.edn src/test/resources/valid-auth.edn | kubectl apply -f -
 ```
 
 ## Documentation
