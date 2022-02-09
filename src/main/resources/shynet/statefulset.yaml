@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: shynet-redis
+spec:
+  selector:
+    matchLabels:
+      app: shynet-redis
+  serviceName: shynet-redis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: shynet-redis
+    spec:
+      containers:
+        - name: shynet-redis
+          image: redis:6.2.6
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6379
+              name: redis

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shynet-application
+  namespace: default
+  labels:
+    app: shynet-application
+spec:
+  selector:
+    matchLabels:
+      app: shynet-application
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: shynet-application
+    spec:
+      containers:
+      - name: shynet-application
+        image: milesmcc/shynet:v0.12.0
+        imagePullPolicy: IfNotPresent
+        command: ["./celeryworker.sh"]
+        envFrom:
+        - secretRef:
+            name: shynet-settings
