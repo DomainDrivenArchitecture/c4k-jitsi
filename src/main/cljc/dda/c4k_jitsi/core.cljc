@@ -15,7 +15,7 @@
 (def auth? (s/keys :req-un []))
 
 (defn k8s-objects [config]
-   map yaml/to-string
+   (map (fn [x] (yaml/to-string x))
    [(jitsi/generate-jicofo-deployment config)
     (jitsi/generate-jicofo-pvc)
     (jitsi/generate-jvb-deployment config)
@@ -23,8 +23,13 @@
     (jitsi/generate-jvb-service)
     (jitsi/generate-networkpolicy)
     (jitsi/generate-prosody-deployment config)
-    (jitsi/generate-prosody-pvc)
-    (jitsi/generate-prosody-service)])
+    (jitsi/generate-prosody-pvc-config)
+    (jitsi/generate-prosody-pvc-plugins)
+    (jitsi/generate-prosody-service)
+    (jitsi/generate-web-deployment config)
+    (jitsi/generate-web-pvc-config)
+    (jitsi/generate-web-pvc-crontabs)
+    (jitsi/generate-web-pvc-transcripts)]))
 
 (defn-spec generate any?
   [my-config config?
