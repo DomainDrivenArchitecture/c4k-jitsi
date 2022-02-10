@@ -15,12 +15,12 @@
 (def auth? (s/keys :req-un [::jitsi/jvb-auth-password ::jitsi/jicofo-auth-password ::jitsi/jicofo-component-secret]))
 
 (defn k8s-objects [config]
-   (map (fn [x] (yaml/to-string x))
-   [(jitsi/generate-ingress config)
-    (jitsi/generate-secret config)
-    (jitsi/generate-jvb-service)
-    (jitsi/generate-deployment)
-    (jitsi/generate-web-service)]))
+  (map yaml/to-string
+       [(jitsi/generate-ingress config)
+        (jitsi/generate-secret config)
+        (jitsi/generate-jvb-service)
+        (jitsi/generate-deployment)
+        (jitsi/generate-web-service)]))
 
 (defn-spec generate any?
   [my-config config?
