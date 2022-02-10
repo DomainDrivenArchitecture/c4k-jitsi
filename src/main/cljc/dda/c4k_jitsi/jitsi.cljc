@@ -45,23 +45,8 @@
      (cm/replace-key-value :JICOFO_AUTH_PASSWORD (b64/encode jicofo-auth-password))
      (cm/replace-key-value :JICOFO_COMPONENT_SECRET (b64/encode jicofo-component-secret)))))
 
-(defn generate-jvb-service []
-  (yaml/from-string (yaml/load-resource "jitsi/jvb-service.yaml")))
-
-(defn generate-web-service []
-  (yaml/from-string (yaml/load-resource "jitsi/web-service.yaml")))
-
-(defn generate-deployment []
-  (yaml/from-string (yaml/load-resource "jitsi/deployment.yaml")))
-
-(defn generate-pod-security-policy []
-  (yaml/from-string (yaml/load-resource "jitsi/pod-security-policy.yaml")))
-
-(defn generate-role-binding []
-  (yaml/from-string (yaml/load-resource "jitsi/role-binding.yaml")))
-
-(defn generate-role []
-  (yaml/from-string (yaml/load-resource "jitsi/role.yaml")))
-
-(defn generate-service-account []
-  (yaml/from-string (yaml/load-resource "jitsi/service-account.yaml")))
+(defn generate-unchanged-files []
+  (map (comp yaml/from-string yaml/load-resource)
+       ["jitsi/jvb-service.yaml"
+        "jitsi/web-service.yaml"
+        "jitsi/deployment.yaml"]))

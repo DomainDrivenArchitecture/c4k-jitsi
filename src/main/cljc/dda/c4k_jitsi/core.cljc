@@ -18,9 +18,7 @@
   (map yaml/to-string
        [(jitsi/generate-ingress config)
         (jitsi/generate-secret config)
-        (jitsi/generate-jvb-service)
-        (jitsi/generate-deployment)
-        (jitsi/generate-web-service)]))
+        (jitsi/generate-unchanged-files)]))
 
 (defn-spec generate any?
   [my-config config?
