@@ -1,3 +1,2 @@
-{:fqdn "statistics.test.meissa-gmbh.de"
- :issuer :staging 
- :postgres-data-volume-path "/var/postgres"}
+{:fqdn "jitsi.test.meissa-gmbh.de"
+ :issuer :staging}

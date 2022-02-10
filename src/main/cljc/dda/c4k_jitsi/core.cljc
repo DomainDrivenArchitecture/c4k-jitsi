@@ -18,11 +18,8 @@
    (map (fn [x] (yaml/to-string x))
    [(jitsi/generate-ingress config)
     (jitsi/generate-secret config)
-    (jitsi/generate-jicofo-deployment)
-    (jitsi/generate-jvb-deployment)
     (jitsi/generate-jvb-service)
-    (jitsi/generate-prosody-deployment)
-    (jitsi/generate-web-deployment)
+    (jitsi/generate-deployment)
     (jitsi/generate-web-service)]))
 
 (defn-spec generate any?
