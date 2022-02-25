@@ -8,7 +8,6 @@
 c4k-jitsi provides a k8s deployment for jitsi containing:
 * jitsi
 * ingress having a letsencrypt managed certificate
-* postgres database
 
 The package aims to a low load sceanrio.
 
