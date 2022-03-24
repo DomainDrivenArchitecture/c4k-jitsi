@@ -45,8 +45,11 @@
      (cm/replace-key-value :JICOFO_AUTH_PASSWORD (b64/encode jicofo-auth-password))
      (cm/replace-key-value :JICOFO_COMPONENT_SECRET (b64/encode jicofo-component-secret)))))
 
-(defn generate-unchanged-files []
-  (map (comp yaml/from-string yaml/load-resource)
-       ["jitsi/jvb-service.yaml"
-        "jitsi/web-service.yaml"
-        "jitsi/deployment.yaml"]))
+(defn generate-jvb-service []
+  (yaml/from-string (yaml/load-resource "jitsi/jvb-service.yaml")))
+
+(defn generate-web-service []
+  (yaml/from-string (yaml/load-resource "jitsi/web-service.yaml")))
+
+(defn generate-deployment []
+  (yaml/from-string (yaml/load-resource "jitsi/deployment.yaml")))
