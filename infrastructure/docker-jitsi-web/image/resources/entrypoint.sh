@@ -15,6 +15,6 @@ config.constraints.video = {
 config.channelLastN = 8;
 config.enableLayerSuspension = true;
 config.disableAudioLevels = true;
-" >> /config/config.js
+" >> /defaults/config.js
 
 /init
