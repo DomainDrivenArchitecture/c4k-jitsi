@@ -107,6 +107,18 @@ spec:
               value: Europe/Berlin
             - name: JVB_TCP_HARVESTER_DISABLED
               value: "true"
+            - name: DEFAULT_LANGUAGE
+              value: "de"
+            - name: RESOLUTION
+              value: "480"
+            - name: RESOLUTION_MIN
+              value: "240"
+            - name: RESOLUTION_WIDTH
+              value: "853"
+            - name: RESOLUTION_WIDTH_MIN
+              value: "427"
+            - name: DISABLE_AUDIO_LEVELS
+              value: "true"
         - name: jvb
           image: jitsi/jvb:stable-6826
           imagePullPolicy: IfNotPresent
