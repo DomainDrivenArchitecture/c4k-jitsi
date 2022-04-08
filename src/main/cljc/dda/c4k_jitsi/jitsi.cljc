@@ -20,9 +20,13 @@
        "jitsi/jvb-service.yaml"          (rc/inline "jitsi/jvb-service.yaml")
        "jitsi/secret.yaml"               (rc/inline "jitsi/secret.yaml")
        "jitsi/web-service.yaml"          (rc/inline "jitsi/web-service.yaml")
+       ;; TODO - dat gibt es nicht, oder?
        "jitsi/pod-security-policy.yaml"  (rc/inline "jitsi/pod-security-policy.yaml")
+       ;; TODO - dat gibt es nicht, oder?
        "jitsi/role-binding.yaml"         (rc/inline "jitsi/role-binding.yaml")
+       ;; TODO - dat gibt es nicht, oder?
        "jitsi/role.yaml"                 (rc/inline "jitsi/role.yaml")
+       ;; TODO - dat gibt es nicht, oder?
        "jitsi/service-account.yaml"      (rc/inline "jitsi/service-account.yaml")
        (throw (js/Error. "Undefined Resource!")))))
 
@@ -35,7 +39,7 @@
      (yaml/from-string (yaml/load-resource "jitsi/ingress.yaml"))
      (assoc-in [:metadata :annotations :cert-manager.io/cluster-issuer] letsencrypt-issuer)
      (assoc-in [:metadata :annotations :kubernetes.io/ingress.class] ingress-kind)
-     (cm/replace-all-matching-values-by-new-value "fqdn" fqdn))))
+     (cm/replace-all-matching-values-by-new-value "FQDN" fqdn))))
 
 (defn generate-secret [config]
   (let [{:keys [jvb-auth-password jicofo-auth-password jicofo-component-secret]} config]
@@ -51,5 +55,8 @@
 (defn generate-web-service []
   (yaml/from-string (yaml/load-resource "jitsi/web-service.yaml")))
 
-(defn generate-deployment []
-  (yaml/from-string (yaml/load-resource "jitsi/deployment.yaml")))
+(defn generate-deployment [config]
+  (let [{:keys [fqdn]} config]
+    (->
+     (yaml/from-string (yaml/load-resource "jitsi/deployment.yaml"))
+     (cm/replace-all-matching-values-by-new-value "FQDN" fqdn))))

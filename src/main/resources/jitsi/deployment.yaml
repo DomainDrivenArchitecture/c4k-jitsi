@@ -51,7 +51,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: PUBLIC_URL
-              value: "https://jitsi.test.meissa-gmbh.de"
+              value: FQDN
             - name: XMPP_DOMAIN
               value: meet.jitsi
             - name: XMPP_AUTH_DOMAIN
@@ -88,7 +88,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: PUBLIC_URL
-              value: "https://jitsi.test.meissa-gmbh.de"
+              value: FQDN
             - name: XMPP_SERVER
               value: localhost
             - name: JICOFO_AUTH_USER

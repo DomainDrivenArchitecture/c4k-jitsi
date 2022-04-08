@@ -20,7 +20,7 @@
         (jitsi/generate-secret config)
         (jitsi/generate-jvb-service)
         (jitsi/generate-web-service)
-        (jitsi/generate-deployment)]))
+        (jitsi/generate-deployment config)]))
 
 (defn-spec generate any?
   [my-config config?
