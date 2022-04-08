@@ -46,8 +46,6 @@ spec:
               value: Europe/Berlin
             - name: JVB_BREWERY_MUC
               value: jvbbrewery
-            - name: CONFIG_JSON
-              value: '{"disableThirdPartyRequests": true}'
         - name: prosody
           image: jitsi/prosody:stable-6826
           imagePullPolicy: IfNotPresent
@@ -85,10 +83,8 @@ spec:
               value: Europe/Berlin
             - name: JVB_TCP_HARVESTER_DISABLED
               value: "true"
-            - name: CONFIG_JSON
-              value: '{"disableThirdPartyRequests": true}'
         - name: web
-          image: jitsi/web:stable-6826
+          image: domaindrivenarchitecture/c4k-jitsi
           imagePullPolicy: IfNotPresent
           env:
             - name: PUBLIC_URL
@@ -111,8 +107,6 @@ spec:
               value: Europe/Berlin
             - name: JVB_TCP_HARVESTER_DISABLED
               value: "true"
-            - name: CONFIG_JSON
-              value: '{"disableThirdPartyRequests": true}'
         - name: jvb
           image: jitsi/jvb:stable-6826
           imagePullPolicy: IfNotPresent
@@ -151,5 +145,3 @@ spec:
               value: jvbbrewery
             - name: TZ
               value: Europe/Berlin
-            - name: CONFIG_JSON
-              value: '{"disableThirdPartyRequests": true}'

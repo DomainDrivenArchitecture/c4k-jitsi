@@ -11,7 +11,7 @@ config.constraints.video = {
          ideal: 480,   
          max: 480,    
          min: 240     
-      }
+      };
 config.channelLastN = 8;
 config.enableLayerSuspension = true;
 config.disableAudioLevels = true;

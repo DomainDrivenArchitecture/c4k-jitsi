@@ -1,4 +1,4 @@
-FROM meissa-cloud-app
+FROM c4k-jitsi
 
 RUN apt update
 RUN mkdir /usr/share/man/man1/

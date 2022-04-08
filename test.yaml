@@ -1,0 +1,216 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: jitsi
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging-issuer
+    kubernetes.io/ingress.class: ''
+spec:
+  tls:
+  - hosts:
+    - jitsi.test.meissa-gmbh.de
+    secretName: tls-jitsi
+  rules:
+  - host: jitsi.test.meissa-gmbh.de
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web
+            port:
+              number: 80
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: jitsi-config
+type: Opaque
+data:
+  JVB_AUTH_PASSWORD: SnZiQXV0aA==
+  JICOFO_AUTH_PASSWORD: Smljb2ZvQXV0aA==
+  JICOFO_COMPONENT_SECRET: Smljb2ZvQ29tcFNlYw==
+
+---
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      service: jvb
+    name: jvb-udp
+  spec:
+    type: NodePort
+    externalTrafficPolicy: Cluster
+    ports:
+    - port: 30300
+      protocol: UDP
+      targetPort: 30300
+      nodePort: 30300
+    selector:
+      app: jitsi
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      service: web
+    name: web
+  spec:
+    ports:
+    - name: http
+      port: 80
+      targetPort: 80
+    - name: https
+      port: 443
+      targetPort: 443
+    selector:
+      app: jitsi
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: jitsi
+    name: jitsi
+  spec:
+    strategy:
+      type: Recreate
+    selector:
+      matchLabels:
+        app: jitsi
+    template:
+      metadata:
+        labels:
+          app: jitsi
+      spec:
+        containers:
+        - name: jicofo
+          image: jitsi/jicofo:stable-6826
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: XMPP_SERVER
+            value: localhost
+          - name: XMPP_DOMAIN
+            value: meet.jitsi
+          - name: XMPP_AUTH_DOMAIN
+            value: auth.meet.jitsi
+          - name: XMPP_MUC_DOMAIN
+            value: muc.meet.jitsi
+          - name: XMPP_INTERNAL_MUC_DOMAIN
+            value: internal-muc.meet.jitsi
+          - name: JICOFO_COMPONENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: jitsi-config
+                key: JICOFO_COMPONENT_SECRET
+          - name: JICOFO_AUTH_USER
+            value: focus
+          - name: JICOFO_AUTH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: jitsi-config
+                key: JICOFO_AUTH_PASSWORD
+          - name: TZ
+            value: Europe/Berlin
+          - name: JVB_BREWERY_MUC
+            value: jvbbrewery
+        - name: prosody
+          image: jitsi/prosody:stable-6826
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: PUBLIC_URL
+            value: https://jitsi.test.meissa-gmbh.de
+          - name: XMPP_DOMAIN
+            value: meet.jitsi
+          - name: XMPP_AUTH_DOMAIN
+            value: auth.meet.jitsi
+          - name: XMPP_MUC_DOMAIN
+            value: muc.meet.jitsi
+          - name: XMPP_INTERNAL_MUC_DOMAIN
+            value: internal-muc.meet.jitsi
+          - name: JICOFO_COMPONENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: jitsi-config
+                key: JICOFO_COMPONENT_SECRET
+          - name: JVB_AUTH_USER
+            value: jvb
+          - name: JVB_AUTH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: jitsi-config
+                key: JVB_AUTH_PASSWORD
+          - name: JICOFO_AUTH_USER
+            value: focus
+          - name: JICOFO_AUTH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: jitsi-config
+                key: JICOFO_AUTH_PASSWORD
+          - name: TZ
+            value: Europe/Berlin
+          - name: JVB_TCP_HARVESTER_DISABLED
+            value: 'true'
+        - name: web
+          image: jitsi/web:stable-6826
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: PUBLIC_URL
+            value: https://jitsi.test.meissa-gmbh.de
+          - name: XMPP_SERVER
+            value: localhost
+          - name: JICOFO_AUTH_USER
+            value: focus
+          - name: XMPP_DOMAIN
+            value: meet.jitsi
+          - name: XMPP_AUTH_DOMAIN
+            value: auth.meet.jitsi
+          - name: XMPP_INTERNAL_MUC_DOMAIN
+            value: internal-muc.meet.jitsi
+          - name: XMPP_BOSH_URL_BASE
+            value: http://127.0.0.1:5280
+          - name: XMPP_MUC_DOMAIN
+            value: muc.meet.jitsi
+          - name: TZ
+            value: Europe/Berlin
+          - name: JVB_TCP_HARVESTER_DISABLED
+            value: 'true'
+        - name: jvb
+          image: jitsi/jvb:stable-6826
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: XMPP_SERVER
+            value: localhost
+          - name: DOCKER_HOST_ADDRESS
+            value: localhost
+          - name: XMPP_DOMAIN
+            value: meet.jitsi
+          - name: XMPP_AUTH_DOMAIN
+            value: auth.meet.jitsi
+          - name: XMPP_INTERNAL_MUC_DOMAIN
+            value: internal-muc.meet.jitsi
+          - name: JVB_STUN_SERVERS
+            value: stun.1und1.de:3478,stun.t-online.de:3478,stun.hosteurope.de:3478
+          - name: JICOFO_AUTH_USER
+            value: focus
+          - name: JVB_TCP_HARVESTER_DISABLED
+            value: 'true'
+          - name: JVB_AUTH_USER
+            value: jvb
+          - name: JVB_PORT
+            value: '30300'
+          - name: JVB_AUTH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: jitsi-config
+                key: JVB_AUTH_PASSWORD
+          - name: JICOFO_AUTH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: jitsi-config
+                key: JICOFO_AUTH_PASSWORD
+          - name: JVB_BREWERY_MUC
+            value: jvbbrewery
+          - name: TZ
+            value: Europe/Berlin
+
