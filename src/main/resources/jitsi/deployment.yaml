@@ -23,13 +23,13 @@ spec:
             - name: XMPP_SERVER
               value: localhost
             - name: XMPP_DOMAIN
-              value: meet.jitsi
+              value: meet.meissa-gmbh
             - name: XMPP_AUTH_DOMAIN
-              value: auth.meet.jitsi
+              value: auth.meet.meissa-gmbh
             - name: XMPP_MUC_DOMAIN
-              value: muc.meet.jitsi
+              value: muc.meet.meissa-gmbh
             - name: XMPP_INTERNAL_MUC_DOMAIN
-              value: internal-muc.meet.jitsi
+              value: internal-muc.meet.meissa-gmbh
             - name: JICOFO_COMPONENT_SECRET
               valueFrom:
                 secretKeyRef:
@@ -53,13 +53,13 @@ spec:
             - name: PUBLIC_URL
               value: FQDN
             - name: XMPP_DOMAIN
-              value: meet.jitsi
+              value: meet.meissa-gmbh
             - name: XMPP_AUTH_DOMAIN
-              value: auth.meet.jitsi
+              value: auth.meet.meissa-gmbh
             - name: XMPP_MUC_DOMAIN
-              value: muc.meet.jitsi
+              value: muc.meet.meissa-gmbh
             - name: XMPP_INTERNAL_MUC_DOMAIN
-              value: internal-muc.meet.jitsi
+              value: internal-muc.meet.meissa-gmbh
             - name: JICOFO_COMPONENT_SECRET
               valueFrom:
                 secretKeyRef:
@@ -94,15 +94,15 @@ spec:
             - name: JICOFO_AUTH_USER
               value: focus
             - name: XMPP_DOMAIN
-              value: meet.jitsi
+              value: meet.meissa-gmbh
             - name: XMPP_AUTH_DOMAIN
-              value: auth.meet.jitsi
+              value: auth.meet.meissa-gmbh
             - name: XMPP_INTERNAL_MUC_DOMAIN
-              value: internal-muc.meet.jitsi
+              value: internal-muc.meet.meissa-gmbh
             - name: XMPP_BOSH_URL_BASE
               value: http://127.0.0.1:5280
             - name: XMPP_MUC_DOMAIN
-              value: muc.meet.jitsi
+              value: muc.meet.meissa-gmbh
             - name: TZ
               value: Europe/Berlin
             - name: JVB_TCP_HARVESTER_DISABLED
@@ -128,11 +128,11 @@ spec:
             - name: DOCKER_HOST_ADDRESS
               value: localhost
             - name: XMPP_DOMAIN
-              value: meet.jitsi
+              value: meet.meissa-gmbh
             - name: XMPP_AUTH_DOMAIN
-              value: auth.meet.jitsi
+              value: auth.meet.meissa-gmbh
             - name: XMPP_INTERNAL_MUC_DOMAIN
-              value: internal-muc.meet.jitsi
+              value: internal-muc.meet.meissa-gmbh
             - name: JVB_STUN_SERVERS
               value: stun.1und1.de:3478,stun.t-online.de:3478,stun.hosteurope.de:3478
             - name: JICOFO_AUTH_USER
