@@ -24,7 +24,7 @@
                :image "milesmcc/jitsi:v0.12.0"
                :imagePullPolicy "IfNotPresent"
                :envFrom [{:secretRef {:name "jitsi-settings"}}]}]}}}}
-         (cut/generate-webserver-deployment))))
+         (cut/generate-deployment))))
 
 (deftest should-generate-celeryworker-deployment
   (is (= {:apiVersion "apps/v1"

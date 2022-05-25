@@ -1,0 +1,146 @@
+13:56:28.246 [main] INFO  o.d.p.f.c.processors.LocalProcessor - os.name: Linux
+13:56:28.249 [main] INFO  o.d.p.f.c.processors.LocalProcessor - user.home: /home/erik
+13:56:28.251 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov: "xxxxxxxx"
+13:56:28.270 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov: "xxxxxxxx"
+13:56:28.294 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd ~/ && test -d repo/c4k/c4k-jira/.git/"
+13:56:28.323 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, cd ~/ && test -d repo/c4k/c4k-jira/.git/]
+13:56:28.325 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/c4k/c4k-jira && git pull"
+13:56:29.917 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Already up to date.
+, [/bin/bash, -c, cd repo/c4k/c4k-jira && git pull]
+13:56:29.917 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd ~/ && test -d repo/c4k/c4k-jitsi/.git/"
+13:56:29.919 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, cd ~/ && test -d repo/c4k/c4k-jitsi/.git/]
+13:56:29.919 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/c4k/c4k-jitsi && git pull"
+13:56:31.398 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Already up to date.
+, [/bin/bash, -c, cd repo/c4k/c4k-jitsi && git pull]
+13:56:31.399 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd ~/ && test -d repo/c4k/c4k-keycloak/.git/"
+13:56:31.402 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, cd ~/ && test -d repo/c4k/c4k-keycloak/.git/]
+13:56:31.402 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/c4k/c4k-keycloak && git pull"
+13:56:32.832 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Already up to date.
+, [/bin/bash, -c, cd repo/c4k/c4k-keycloak && git pull]
+13:56:32.833 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd ~/ && test -d repo/c4k/c4k-mastodon-bot/.git/"
+13:56:32.835 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, cd ~/ && test -d repo/c4k/c4k-mastodon-bot/.git/]
+13:56:32.836 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/c4k/c4k-mastodon-bot && git pull"
+13:56:34.241 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Already up to date.
+, [/bin/bash, -c, cd repo/c4k/c4k-mastodon-bot && git pull]
+13:56:34.242 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd ~/ && test -d repo/c4k/c4k-nextcloud/.git/"
+13:56:34.245 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, cd ~/ && test -d repo/c4k/c4k-nextcloud/.git/]
+13:56:34.246 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/c4k/c4k-nextcloud && git pull"
+13:56:35.665 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Already up to date.
+, [/bin/bash, -c, cd repo/c4k/c4k-nextcloud && git pull]
+13:56:35.666 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd ~/ && test -d repo/c4k/c4k-shynet/.git/"
+13:56:35.670 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, cd ~/ && test -d repo/c4k/c4k-shynet/.git/]
+13:56:35.671 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/c4k/c4k-shynet && git pull"
+13:56:37.120 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Already up to date.
+, [/bin/bash, -c, cd repo/c4k/c4k-shynet && git pull]
+13:56:37.121 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd ~/ && test -d repo/c4k/c4k-common/.git/"
+13:56:37.125 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, cd ~/ && test -d repo/c4k/c4k-common/.git/]
+13:56:37.125 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/c4k/c4k-common && git pull"
+13:56:38.527 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Already up to date.
+, [/bin/bash, -c, cd repo/c4k/c4k-common && git pull]
+13:56:38.529 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/provisioning/provs && git pull"
+13:56:39.985 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Already up to date.
+, [/bin/bash, -c, cd repo/provisioning/provs && git pull]
+13:56:39.986 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/provisioning/meissa-provs && git pull"
+13:56:40.292 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Already up to date.
+, [/bin/bash, -c, cd repo/provisioning/meissa-provs && git pull]
+13:56:40.293 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/c4k/c4k-jira/ && lein uberjar"
+13:56:51.053 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Created /home/erik/repo/c4k/c4k-jira/target/uberjar/c4k-jira-1.1.2-SNAPSHOT.jar
+Created /home/erik/repo/c4k/c4k-jira/target/uberjar/c4k-jira-standalone.jar
+, Err: OpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.
+Compiling dda.c4k-jira.backup
+Compiling dda.c4k-jira.core
+Compiling dda.c4k-jira.jira
+Compiling dda.c4k-jira.uberjar
+[/bin/bash, -c, cd repo/c4k/c4k-jira/ && lein uberjar]
+13:56:51.053 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "sudo /bin/cp -rf repo/c4k/c4k-jira/target/uberjar/c4k-jira-standalone.jar /usr/local/bin/c4k-jira-standalone.jar"
+13:56:51.121 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, sudo /bin/cp -rf repo/c4k/c4k-jira/target/uberjar/c4k-jira-standalone.jar /usr/local/bin/c4k-jira-standalone.jar]
+13:56:51.122 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "sudo chmod +x /usr/local/bin/c4k-jira-standalone.jar"
+13:56:51.132 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, sudo chmod +x /usr/local/bin/c4k-jira-standalone.jar]
+13:56:51.133 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/c4k/c4k-jitsi/ && lein uberjar"
+13:57:01.082 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Created /home/erik/repo/c4k/c4k-jitsi/target/uberjar/c4k-jitsi-1.0.0-SNAPSHOT.jar
+Created /home/erik/repo/c4k/c4k-jitsi/target/uberjar/c4k-jitsi-standalone.jar
+, Err: OpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.
+Compiling dda.c4k-jitsi.core
+Compiling dda.c4k-jitsi.jitsi
+Compiling dda.c4k-jitsi.uberjar
+[/bin/bash, -c, cd repo/c4k/c4k-jitsi/ && lein uberjar]
+13:57:01.082 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "sudo /bin/cp -rf repo/c4k/c4k-jitsi/target/uberjar/c4k-jitsi-standalone.jar /usr/local/bin/c4k-jitsi-standalone.jar"
+13:57:01.180 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, sudo /bin/cp -rf repo/c4k/c4k-jitsi/target/uberjar/c4k-jitsi-standalone.jar /usr/local/bin/c4k-jitsi-standalone.jar]
+13:57:01.181 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "sudo chmod +x /usr/local/bin/c4k-jitsi-standalone.jar"
+13:57:01.195 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, sudo chmod +x /usr/local/bin/c4k-jitsi-standalone.jar]
+13:57:01.195 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/c4k/c4k-keycloak/ && lein uberjar"
+13:57:10.165 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Created /home/erik/repo/c4k/c4k-keycloak/target/uberjar/c4k-keycloak-0.2.4-SNAPSHOT.jar
+Created /home/erik/repo/c4k/c4k-keycloak/target/uberjar/c4k-keycloak-standalone.jar
+, Err: OpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.
+Compiling dda.c4k-keycloak.core
+Compiling dda.c4k-keycloak.keycloak
+Compiling dda.c4k-keycloak.postgres
+Compiling dda.c4k-keycloak.uberjar
+Compiling dda.c4k-keycloak.yaml
+[/bin/bash, -c, cd repo/c4k/c4k-keycloak/ && lein uberjar]
+13:57:10.165 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "sudo /bin/cp -rf repo/c4k/c4k-keycloak/target/uberjar/c4k-keycloak-standalone.jar /usr/local/bin/c4k-keycloak-standalone.jar"
+13:57:10.187 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, sudo /bin/cp -rf repo/c4k/c4k-keycloak/target/uberjar/c4k-keycloak-standalone.jar /usr/local/bin/c4k-keycloak-standalone.jar]
+13:57:10.187 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "sudo chmod +x /usr/local/bin/c4k-keycloak-standalone.jar"
+13:57:10.193 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, sudo chmod +x /usr/local/bin/c4k-keycloak-standalone.jar]
+13:57:10.194 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/c4k/c4k-mastodon-bot/ && lein uberjar"
+13:57:17.810 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Created /home/erik/repo/c4k/c4k-mastodon-bot/target/uberjar/c4k-mastodon-bot-0.1.11-SNAPSHOT.jar
+Created /home/erik/repo/c4k/c4k-mastodon-bot/target/uberjar/c4k-mastodon-bot-standalone.jar
+, Err: OpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.
+Compiling dda.c4k-mastodon-bot.core
+Compiling dda.c4k-mastodon-bot.uberjar
+Compiling dda.c4k-mastodon-bot.yaml
+[/bin/bash, -c, cd repo/c4k/c4k-mastodon-bot/ && lein uberjar]
+13:57:17.811 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "sudo /bin/cp -rf repo/c4k/c4k-mastodon-bot/target/uberjar/c4k-mastodon-bot-standalone.jar /usr/local/bin/c4k-mastodon-bot-standalone.jar"
+13:57:17.857 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, sudo /bin/cp -rf repo/c4k/c4k-mastodon-bot/target/uberjar/c4k-mastodon-bot-standalone.jar /usr/local/bin/c4k-mastodon-bot-standalone.jar]
+13:57:17.858 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "sudo chmod +x /usr/local/bin/c4k-mastodon-bot-standalone.jar"
+13:57:17.866 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, sudo chmod +x /usr/local/bin/c4k-mastodon-bot-standalone.jar]
+13:57:17.867 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/c4k/c4k-nextcloud/ && lein uberjar"
+13:57:25.766 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Created /home/erik/repo/c4k/c4k-nextcloud/target/uberjar/c4k-nextcloud-4.0.1-SNAPSHOT.jar
+Created /home/erik/repo/c4k/c4k-nextcloud/target/uberjar/c4k-nextcloud-standalone.jar
+, Err: OpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.
+Compiling dda.c4k-nextcloud.backup
+Compiling dda.c4k-nextcloud.core
+Compiling dda.c4k-nextcloud.nextcloud
+Compiling dda.c4k-nextcloud.uberjar
+[/bin/bash, -c, cd repo/c4k/c4k-nextcloud/ && lein uberjar]
+13:57:25.766 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "sudo /bin/cp -rf repo/c4k/c4k-nextcloud/target/uberjar/c4k-nextcloud-standalone.jar /usr/local/bin/c4k-nextcloud-standalone.jar"
+13:57:25.803 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, sudo /bin/cp -rf repo/c4k/c4k-nextcloud/target/uberjar/c4k-nextcloud-standalone.jar /usr/local/bin/c4k-nextcloud-standalone.jar]
+13:57:25.803 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "sudo chmod +x /usr/local/bin/c4k-nextcloud-standalone.jar"
+13:57:25.812 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, sudo chmod +x /usr/local/bin/c4k-nextcloud-standalone.jar]
+13:57:25.813 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/c4k/c4k-shynet/ && lein uberjar"
+13:57:37.422 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Created /home/erik/repo/c4k/c4k-shynet/target/uberjar/c4k-shynet-1.0.7-SNAPSHOT.jar
+Created /home/erik/repo/c4k/c4k-shynet/target/uberjar/c4k-shynet-standalone.jar
+, Err: OpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.
+Compiling dda.c4k-shynet.core
+Compiling dda.c4k-shynet.shynet
+Compiling dda.c4k-shynet.uberjar
+[/bin/bash, -c, cd repo/c4k/c4k-shynet/ && lein uberjar]
+13:57:37.423 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "sudo /bin/cp -rf repo/c4k/c4k-shynet/target/uberjar/c4k-shynet-standalone.jar /usr/local/bin/c4k-shynet-standalone.jar"
+13:57:37.620 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, sudo /bin/cp -rf repo/c4k/c4k-shynet/target/uberjar/c4k-shynet-standalone.jar /usr/local/bin/c4k-shynet-standalone.jar]
+13:57:37.621 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "sudo chmod +x /usr/local/bin/c4k-shynet-standalone.jar"
+13:57:37.653 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, [/bin/bash, -c, sudo chmod +x /usr/local/bin/c4k-shynet-standalone.jar]
+13:57:37.665 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/provisioning/provs && ./gradlew installl"
+13:57:50.319 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: Starting a Gradle Daemon (subsequent builds will be faster)
+> Task :compileKotlin UP-TO-DATE
+> Task :compileJava NO-SOURCE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :uberjarDesktop UP-TO-DATE
+> Task :uberjarServer UP-TO-DATE
+> Task :uberjarSyspec UP-TO-DATE
+> Task :installlocally
+
+BUILD SUCCESSFUL in 12s
+6 actionable tasks: 1 executed, 5 up-to-date
+, [/bin/bash, -c, cd repo/provisioning/provs && ./gradlew installl]
+13:57:50.319 [main] INFO  o.d.p.f.c.processors.LocalProcessor - ******************** Prov:  "/bin/bash" "-c" "cd repo/provisioning/meissa-provs && ./gradlew installl"
+13:57:51.960 [main] INFO  o.d.p.f.c.processors.LocalProcessor - --->>> ProcessResult: Succeeded -- Code: 0, Out: > Task :compileKotlin UP-TO-DATE
+> Task :compileJava NO-SOURCE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :uberjar UP-TO-DATE
+> Task :installlocally
+
+BUILD SUCCESSFUL in 1s
+4 actionable tasks: 1 executed, 3 up-to-date
+, [/bin/bash, -c, cd repo/provisioning/meissa-provs && ./gradlew installl]

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: jicofo
-          image: jitsi/jicofo:stable-6826
+          image: jitsi/jicofo:stable-7287
           imagePullPolicy: IfNotPresent
           env:
             - name: XMPP_SERVER
@@ -47,7 +47,7 @@ spec:
             - name: JVB_BREWERY_MUC
               value: jvbbrewery
         - name: prosody
-          image: jitsi/prosody:stable-6826
+          image: jitsi/prosody:stable-7287
           imagePullPolicy: IfNotPresent
           env:
             - name: PUBLIC_URL
@@ -120,13 +120,15 @@ spec:
             - name: DISABLE_AUDIO_LEVELS
               value: "true"
         - name: jvb
-          image: jitsi/jvb:stable-6826
+          image: jitsi/jvb:stable-7287
           imagePullPolicy: IfNotPresent
           env:
+            - name: PUBLIC_URL
+              value: FQDN
             - name: XMPP_SERVER
               value: localhost
             - name: DOCKER_HOST_ADDRESS
-              value: localhost
+              value: FQDN
             - name: XMPP_DOMAIN
               value: meet.meissa-gmbh
             - name: XMPP_AUTH_DOMAIN
