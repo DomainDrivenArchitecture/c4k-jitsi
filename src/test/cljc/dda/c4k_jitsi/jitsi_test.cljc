@@ -65,7 +65,7 @@
           :metadata
           {:name "jitsi-webserver-ingress"
            :annotations
-           {:cert-manager.io/cluster-issuer "letsencrypt-staging-issuer"
+           {:cert-manager.io/cluster-issuer "staging"
             :nginx.ingress.kubernetes.io/proxy-body-size "256m"
             :nginx.ingress.kubernetes.io/ssl-redirect "true"
             :nginx.ingress.kubernetes.io/rewrite-target "/"
