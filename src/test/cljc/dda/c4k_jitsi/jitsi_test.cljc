@@ -5,7 +5,7 @@
    [dda.c4k-jitsi.jitsi :as cut]))
 
 
-(deftest should-generate-webserver-deployment
+(deftest should-generate-deployment
   (is (= {:apiVersion "apps/v1"
           :kind "Deployment"
           :metadata

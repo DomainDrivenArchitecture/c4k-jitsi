@@ -33,7 +33,7 @@
 (defn generate-ingress [config]
   (let [{:keys [fqdn issuer ingress-type]
          :or {issuer :staging ingress-type :default}} config
-        letsencrypt-issuer (str "letsencrypt-" (name issuer) "-issuer")
+        letsencrypt-issuer (name issuer)
         ingress-kind (if (= :default ingress-type) "" (name ingress-type))]
     (->
      (yaml/from-string (yaml/load-resource "jitsi/ingress.yaml"))
