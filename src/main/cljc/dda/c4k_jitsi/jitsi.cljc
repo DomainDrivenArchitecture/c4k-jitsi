@@ -20,14 +20,6 @@
        "jitsi/jvb-service.yaml"          (rc/inline "jitsi/jvb-service.yaml")
        "jitsi/secret.yaml"               (rc/inline "jitsi/secret.yaml")
        "jitsi/web-service.yaml"          (rc/inline "jitsi/web-service.yaml")
-       ;; TODO - dat gibt es nicht, oder?
-       "jitsi/pod-security-policy.yaml"  (rc/inline "jitsi/pod-security-policy.yaml")
-       ;; TODO - dat gibt es nicht, oder?
-       "jitsi/role-binding.yaml"         (rc/inline "jitsi/role-binding.yaml")
-       ;; TODO - dat gibt es nicht, oder?
-       "jitsi/role.yaml"                 (rc/inline "jitsi/role.yaml")
-       ;; TODO - dat gibt es nicht, oder?
-       "jitsi/service-account.yaml"      (rc/inline "jitsi/service-account.yaml")
        (throw (js/Error. "Undefined Resource!")))))
 
 (defn generate-ingress [config]

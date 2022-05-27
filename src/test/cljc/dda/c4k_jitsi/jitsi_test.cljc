@@ -6,102 +6,143 @@
 
 
 (deftest should-generate-deployment
-  (is (= {:apiVersion "apps/v1"
-          :kind "Deployment"
-          :metadata
-          {:name "jitsi-webserver"
-           :namespace "default"
-           :labels {:app "jitsi-webserver"}}
+  (is (= {:apiVersion "apps/v1",
+          :kind "Deployment",
+          :metadata {:labels {:app "jitsi"}, :name "jitsi"},
           :spec
-          {:selector {:matchLabels {:app "jitsi-webserver"}}
-           :strategy {:type "Recreate"}
-           :replicas 1
+          {:strategy {:type "Recreate"},
+           :selector {:matchLabels {:app "jitsi"}},
            :template
-           {:metadata {:labels {:app "jitsi-webserver"}}
+           {:metadata {:labels {:app "jitsi"}},
             :spec
             {:containers
-             [{:name "jitsi-webserver"
-               :image "milesmcc/jitsi:v0.12.0"
-               :imagePullPolicy "IfNotPresent"
-               :envFrom [{:secretRef {:name "jitsi-settings"}}]}]}}}}
-         (cut/generate-deployment))))
-
-(deftest should-generate-celeryworker-deployment
-  (is (= {:apiVersion "apps/v1"
-          :kind "Deployment"
-          :metadata
-          {:name "jitsi-celeryworker"
-           :namespace "default"
-           :labels {:app "jitsi-celeryworker"}}
-          :spec
-          {:selector {:matchLabels {:app "jitsi-celeryworker"}}
-           :strategy {:type "Recreate"}
-           :replicas 1
-           :template
-           {:metadata {:labels {:app "jitsi-celeryworker"}}
-            :spec
-            {:containers
-             [{:name "jitsi-celeryworker"
-               :image "milesmcc/jitsi:v0.12.0"
-               :imagePullPolicy "IfNotPresent"
-               :command ["./celeryworker.sh"]
-               :envFrom [{:secretRef {:name "jitsi-settings"}}]}]}}}}
-         (cut/generate-celeryworker-deployment))))
-
-(deftest should-generate-certificate
-  (is (= {:apiVersion "cert-manager.io/v1"
-          :kind "Certificate"
-          :metadata {:name "jitsi-cert", :namespace "default"}
-          :spec
-          {:secretName "jitsi-secret"
-           :commonName "test.com"
-           :dnsNames ["test.com"]
-           :issuerRef {:name "letsencrypt-staging-issuer", :kind "ClusterIssuer"}}}
-         (cut/generate-certificate {:fqdn "test.com" :issuer :staging}))))
+             [{:name "jicofo",
+               :image "jitsi/jicofo:stable-7287",
+               :imagePullPolicy "IfNotPresent",
+               :env
+               [{:name "XMPP_SERVER", :value "localhost"}
+                {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
+                {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
+                {:name "XMPP_MUC_DOMAIN", :value "muc.meet.meissa-gmbh"}
+                {:name "XMPP_INTERNAL_MUC_DOMAIN",
+                 :value "internal-muc.meet.meissa-gmbh"}
+                {:name "JICOFO_COMPONENT_SECRET",
+                 :valueFrom
+                 {:secretKeyRef
+                  {:name "jitsi-config", :key "JICOFO_COMPONENT_SECRET"}}}
+                {:name "JICOFO_AUTH_USER", :value "focus"}
+                {:name "JICOFO_AUTH_PASSWORD",
+                 :valueFrom
+                 {:secretKeyRef
+                  {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
+                {:name "TZ", :value "Europe/Berlin"}
+                {:name "JVB_BREWERY_MUC", :value "jvbbrewery"}]}
+              {:name "prosody",
+               :image "jitsi/prosody:stable-7287",
+               :imagePullPolicy "IfNotPresent",
+               :env
+               [{:name "PUBLIC_URL", :value "xy"}
+                {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
+                {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
+                {:name "XMPP_MUC_DOMAIN", :value "muc.meet.meissa-gmbh"}
+                {:name "XMPP_INTERNAL_MUC_DOMAIN",
+                 :value "internal-muc.meet.meissa-gmbh"}
+                {:name "JICOFO_COMPONENT_SECRET",
+                 :valueFrom
+                 {:secretKeyRef
+                  {:name "jitsi-config", :key "JICOFO_COMPONENT_SECRET"}}}
+                {:name "JVB_AUTH_USER", :value "jvb"}
+                {:name "JVB_AUTH_PASSWORD",
+                 :valueFrom
+                 {:secretKeyRef
+                  {:name "jitsi-config", :key "JVB_AUTH_PASSWORD"}}}
+                {:name "JICOFO_AUTH_USER", :value "focus"}
+                {:name "JICOFO_AUTH_PASSWORD",
+                 :valueFrom
+                 {:secretKeyRef
+                  {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
+                {:name "TZ", :value "Europe/Berlin"}
+                {:name "JVB_TCP_HARVESTER_DISABLED", :value "true"}]}
+              {:name "web",
+               :image "domaindrivenarchitecture/c4k-jitsi",
+               :imagePullPolicy "IfNotPresent",
+               :env
+               [{:name "PUBLIC_URL", :value "xy"}
+                {:name "XMPP_SERVER", :value "localhost"}
+                {:name "JICOFO_AUTH_USER", :value "focus"}
+                {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
+                {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
+                {:name "XMPP_INTERNAL_MUC_DOMAIN",
+                 :value "internal-muc.meet.meissa-gmbh"}
+                {:name "XMPP_BOSH_URL_BASE", :value "http://127.0.0.1:5280"}
+                {:name "XMPP_MUC_DOMAIN", :value "muc.meet.meissa-gmbh"}
+                {:name "TZ", :value "Europe/Berlin"}
+                {:name "JVB_TCP_HARVESTER_DISABLED", :value "true"}
+                {:name "DEFAULT_LANGUAGE", :value "de"}
+                {:name "RESOLUTION", :value "480"}
+                {:name "RESOLUTION_MIN", :value "240"}
+                {:name "RESOLUTION_WIDTH", :value "853"}
+                {:name "RESOLUTION_WIDTH_MIN", :value "427"}
+                {:name "DISABLE_AUDIO_LEVELS", :value "true"}]}
+              {:name "jvb",
+               :image "jitsi/jvb:stable-7287",
+               :imagePullPolicy "IfNotPresent",
+               :env
+               [{:name "PUBLIC_URL", :value "xy"}
+                {:name "XMPP_SERVER", :value "localhost"}
+                {:name "DOCKER_HOST_ADDRESS", :value "xy"}
+                {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
+                {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
+                {:name "XMPP_INTERNAL_MUC_DOMAIN",
+                 :value "internal-muc.meet.meissa-gmbh"}
+                {:name "JVB_STUN_SERVERS",
+                 :value
+                 "stun.1und1.de:3478,stun.t-online.de:3478,stun.hosteurope.de:3478"}
+                {:name "JICOFO_AUTH_USER", :value "focus"}
+                {:name "JVB_TCP_HARVESTER_DISABLED", :value "true"}
+                {:name "JVB_AUTH_USER", :value "jvb"}
+                {:name "JVB_PORT", :value "30300"}
+                {:name "JVB_AUTH_PASSWORD",
+                 :valueFrom
+                 {:secretKeyRef
+                  {:name "jitsi-config", :key "JVB_AUTH_PASSWORD"}}}
+                {:name "JICOFO_AUTH_PASSWORD",
+                 :valueFrom
+                 {:secretKeyRef
+                  {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
+                {:name "JVB_BREWERY_MUC", :value "jvbbrewery"}
+                {:name "TZ", :value "Europe/Berlin"}]}]}}}}
+         (cut/generate-deployment {:fqdn "xy"}))))
 
 (deftest should-generate-ingress
-  (is (= {:apiVersion "networking.k8s.io/v1"
-          :kind "Ingress"
+  (is (= {:apiVersion "networking.k8s.io/v1",
+          :kind "Ingress",
           :metadata
-          {:name "jitsi-webserver-ingress"
+          {:name "jitsi",
            :annotations
-           {:cert-manager.io/cluster-issuer "staging"
-            :nginx.ingress.kubernetes.io/proxy-body-size "256m"
-            :nginx.ingress.kubernetes.io/ssl-redirect "true"
-            :nginx.ingress.kubernetes.io/rewrite-target "/"
-            :nginx.ingress.kubernetes.io/proxy-connect-timeout "300"
-            :nginx.ingress.kubernetes.io/proxy-send-timeout "300"
-            :nginx.ingress.kubernetes.io/proxy-read-timeout "300"}}
+           {:cert-manager.io/cluster-issuer "staging",
+            :ingress.kubernetes.io/ssl-redirect "true",
+            :kubernetes.io/ingress.class ""}},
           :spec
-          {:tls [{:hosts ["test.com"], :secretName "jitsi-secret"}]
+          {:tls [{:hosts ["test.com"], :secretName "tls-jitsi"}],
            :rules
-           [{:host "test.com"
-             :http {:paths [{:backend {:service
-                                       {:name "jitsi-webserver-service" :port {:number 8080}}}, :path "/", :pathType "Prefix"}]}}]}}
+           [{:host "test.com",
+             :http
+             {:paths
+              [{:path "/",
+                :pathType "Prefix",
+                :backend {:service {:name "web", :port {:number 80}}}}]}}]}}
          (cut/generate-ingress {:fqdn "test.com" :issuer :staging}))))
 
 (deftest should-generate-secret
-  (is (= {:apiVersion "v1"
-          :kind "Secret"
-          :metadata {:name "jitsi-settings"}
-          :type "Opaque"
-          :stringData
-          {:DEBUG "False"
-           :ALLOWED_HOSTS "*"
-           :DJANGO_SECRET_KEY "django-pw"
-           :ACCOUNT_SIGNUPS_ENABLED "False"
-           :TIME_ZONE "America/New_York"
-           :REDIS_CACHE_LOCATION
-           "redis://jitsi-redis.default.svc.cluster.local/0"
-           :CELERY_BROKER_URL
-           "redis://jitsi-redis.default.svc.cluster.local/1"
-           :DB_NAME "jitsi"
-           :DB_USER "postgres-user"
-           :DB_PASSWORD "postgres-pw"
-           :DB_HOST "postgresql-service"
-           :EMAIL_HOST_USER ""
-           :EMAIL_HOST_PASSWORD ""
-           :EMAIL_HOST ""
-           :SERVER_EMAIL "jitsi <noreply@jitsi.example.com>"}}
-         (cut/generate-secret {:fqdn "test.com" :django-secret-key "django-pw"
-                               :postgres-db-user "postgres-user" :postgres-db-password "postgres-pw"}))))
+  (is (= {:apiVersion "v1",
+          :kind "Secret",
+          :metadata {:name "jitsi-config"},
+          :type "Opaque",
+          :data
+          {:JVB_AUTH_PASSWORD "anZiLWF1dGg=",
+           :JICOFO_AUTH_PASSWORD "amljb2ZvLWF1dGg=",
+           :JICOFO_COMPONENT_SECRET "amljb2ZvLWNvbXA="}}
+         (cut/generate-secret {:jvb-auth-password "jvb-auth"
+                               :jicofo-auth-password "jicofo-auth"
+                               :jicofo-component-secret "jicofo-comp"}))))
