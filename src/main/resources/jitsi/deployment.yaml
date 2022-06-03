@@ -135,8 +135,6 @@ spec:
               value: auth.meet.meissa-gmbh
             - name: XMPP_INTERNAL_MUC_DOMAIN
               value: internal-muc.meet.meissa-gmbh
-            - name: JVB_STUN_SERVERS
-              value: stun.1und1.de:3478,stun.t-online.de:3478,stun.hosteurope.de:3478
             - name: JICOFO_AUTH_USER
               value: focus
             - name: JVB_TCP_HARVESTER_DISABLED
