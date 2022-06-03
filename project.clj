@@ -30,7 +30,7 @@
                   ["vcs" "assert-committed"]
                   ["change" "version" "leiningen.release/bump-version" "release"]
                   ["vcs" "commit"]
-                  ["vcs" "tag"]
+                  ["vcs" "tag" "v" "--no-sign"]
                   ["change" "version" "leiningen.release/bump-version"]]
   :aliases {"native" ["shell"
                       "native-image"
