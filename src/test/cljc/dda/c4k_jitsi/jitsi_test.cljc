@@ -24,17 +24,11 @@
                 {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
                 {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
                 {:name "XMPP_MUC_DOMAIN", :value "muc.meet.meissa-gmbh"}
-                {:name "XMPP_INTERNAL_MUC_DOMAIN",
-                 :value "internal-muc.meet.meissa-gmbh"}
+                {:name "XMPP_INTERNAL_MUC_DOMAIN", :value "internal-muc.meet.meissa-gmbh"}
                 {:name "JICOFO_COMPONENT_SECRET",
-                 :valueFrom
-                 {:secretKeyRef
-                  {:name "jitsi-config", :key "JICOFO_COMPONENT_SECRET"}}}
+                 :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_COMPONENT_SECRET"}}}
                 {:name "JICOFO_AUTH_USER", :value "focus"}
-                {:name "JICOFO_AUTH_PASSWORD",
-                 :valueFrom
-                 {:secretKeyRef
-                  {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
+                {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
                 {:name "TZ", :value "Europe/Berlin"}
                 {:name "JVB_BREWERY_MUC", :value "jvbbrewery"}]}
               {:name "prosody",
@@ -45,22 +39,13 @@
                 {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
                 {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
                 {:name "XMPP_MUC_DOMAIN", :value "muc.meet.meissa-gmbh"}
-                {:name "XMPP_INTERNAL_MUC_DOMAIN",
-                 :value "internal-muc.meet.meissa-gmbh"}
+                {:name "XMPP_INTERNAL_MUC_DOMAIN", :value "internal-muc.meet.meissa-gmbh"}
                 {:name "JICOFO_COMPONENT_SECRET",
-                 :valueFrom
-                 {:secretKeyRef
-                  {:name "jitsi-config", :key "JICOFO_COMPONENT_SECRET"}}}
+                 :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_COMPONENT_SECRET"}}}
                 {:name "JVB_AUTH_USER", :value "jvb"}
-                {:name "JVB_AUTH_PASSWORD",
-                 :valueFrom
-                 {:secretKeyRef
-                  {:name "jitsi-config", :key "JVB_AUTH_PASSWORD"}}}
+                {:name "JVB_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JVB_AUTH_PASSWORD"}}}
                 {:name "JICOFO_AUTH_USER", :value "focus"}
-                {:name "JICOFO_AUTH_PASSWORD",
-                 :valueFrom
-                 {:secretKeyRef
-                  {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
+                {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
                 {:name "TZ", :value "Europe/Berlin"}
                 {:name "JVB_TCP_HARVESTER_DISABLED", :value "true"}]}
               {:name "web",
@@ -72,8 +57,7 @@
                 {:name "JICOFO_AUTH_USER", :value "focus"}
                 {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
                 {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
-                {:name "XMPP_INTERNAL_MUC_DOMAIN",
-                 :value "internal-muc.meet.meissa-gmbh"}
+                {:name "XMPP_INTERNAL_MUC_DOMAIN", :value "internal-muc.meet.meissa-gmbh"}
                 {:name "XMPP_BOSH_URL_BASE", :value "http://127.0.0.1:5280"}
                 {:name "XMPP_MUC_DOMAIN", :value "muc.meet.meissa-gmbh"}
                 {:name "TZ", :value "Europe/Berlin"}
@@ -93,23 +77,13 @@
                 {:name "DOCKER_HOST_ADDRESS", :value "xy"}
                 {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
                 {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
-                {:name "XMPP_INTERNAL_MUC_DOMAIN",
-                 :value "internal-muc.meet.meissa-gmbh"}
-                {:name "JVB_STUN_SERVERS",
-                 :value
-                 "stun.1und1.de:3478,stun.t-online.de:3478,stun.hosteurope.de:3478"}
+                {:name "XMPP_INTERNAL_MUC_DOMAIN", :value "internal-muc.meet.meissa-gmbh"}
                 {:name "JICOFO_AUTH_USER", :value "focus"}
                 {:name "JVB_TCP_HARVESTER_DISABLED", :value "true"}
                 {:name "JVB_AUTH_USER", :value "jvb"}
                 {:name "JVB_PORT", :value "30300"}
-                {:name "JVB_AUTH_PASSWORD",
-                 :valueFrom
-                 {:secretKeyRef
-                  {:name "jitsi-config", :key "JVB_AUTH_PASSWORD"}}}
-                {:name "JICOFO_AUTH_PASSWORD",
-                 :valueFrom
-                 {:secretKeyRef
-                  {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
+                {:name "JVB_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JVB_AUTH_PASSWORD"}}}
+                {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
                 {:name "JVB_BREWERY_MUC", :value "jvbbrewery"}
                 {:name "TZ", :value "Europe/Berlin"}]}]}}}}
          (cut/generate-deployment {:fqdn "xy"}))))
