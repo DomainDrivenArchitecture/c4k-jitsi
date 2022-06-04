@@ -20,6 +20,7 @@
         (jitsi/generate-secret config)
         (jitsi/generate-jvb-service)
         (jitsi/generate-web-service)
+        (jitsi/generate-etherpad-service)
         (jitsi/generate-deployment config)]))
 
 (defn-spec generate any?

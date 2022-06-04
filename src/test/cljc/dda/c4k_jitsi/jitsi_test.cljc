@@ -67,7 +67,8 @@
                 {:name "RESOLUTION_MIN", :value "240"}
                 {:name "RESOLUTION_WIDTH", :value "853"}
                 {:name "RESOLUTION_WIDTH_MIN", :value "427"}
-                {:name "DISABLE_AUDIO_LEVELS", :value "true"}]}
+                {:name "DISABLE_AUDIO_LEVELS", :value "true"}
+                {:name "ETHERPAD_PUBLIC_URL", :value "https://etherpad.xy/p/"}]}
               {:name "jvb",
                :image "jitsi/jvb:stable-7287",
                :imagePullPolicy "IfNotPresent",
@@ -85,6 +86,19 @@
                 {:name "JVB_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JVB_AUTH_PASSWORD"}}}
                 {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
                 {:name "JVB_BREWERY_MUC", :value "jvbbrewery"}
+                {:name "TZ", :value "Europe/Berlin"}]}
+              {:name "etherpad",
+               :image "jitsi/etherpad",
+               :env
+               [{:name "XMPP_SERVER", :value "localhost"}
+                {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
+                {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
+                {:name "JICOFO_COMPONENT_SECRET",
+                 :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_COMPONENT_SECRET"}}}
+                {:name "JICOFO_AUTH_USER", :value "focus"}
+                {:name "JVB_BREWERY_MUC", :value "jvbbrewery"}
+                {:name "XMPP_INTERNAL_MUC_DOMAIN", :value "internal-muc.meet.meissa-gmbh"}
+                {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
                 {:name "TZ", :value "Europe/Berlin"}]}]}}}}
          (cut/generate-deployment {:fqdn "xy"}))))
 
@@ -101,11 +115,9 @@
           {:tls [{:hosts ["test.com"], :secretName "tls-jitsi"}],
            :rules
            [{:host "test.com",
-             :http
-             {:paths
-              [{:path "/",
-                :pathType "Prefix",
-                :backend {:service {:name "web", :port {:number 80}}}}]}}]}}
+             :http {:paths [{:path "/", :pathType "Prefix", :backend {:service {:name "web", :port {:number 80}}}}]}}
+            {:host "etherpad.jitsi.test.meissa-gmbh.de",
+             :http {:paths [{:path "/", :pathType "Prefix", :backend {:service {:name "etherpad", :port {:number 9001}}}}]}}]}}
          (cut/generate-ingress {:fqdn "test.com" :issuer :staging}))))
 
 (deftest should-generate-secret

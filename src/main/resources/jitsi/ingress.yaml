@@ -21,3 +21,13 @@ spec:
             name: web
             port:
               number: 80
+  - host: etherpad.jitsi.test.meissa-gmbh.de
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: etherpad
+            port:
+              number: 9001

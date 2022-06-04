@@ -119,6 +119,8 @@ spec:
               value: "427"
             - name: DISABLE_AUDIO_LEVELS
               value: "true"
+            - name: ETHERPAD_PUBLIC_URL
+              value: ETHERPAD_FQDN
         - name: jvb
           image: jitsi/jvb:stable-7287
           imagePullPolicy: IfNotPresent
@@ -157,3 +159,30 @@ spec:
               value: jvbbrewery
             - name: TZ
               value: Europe/Berlin
+        - name: etherpad
+          image: jitsi/etherpad
+          env:
+          - name: XMPP_SERVER
+            value: localhost   
+          - name: XMPP_DOMAIN
+            value: meet.meissa-gmbh
+          - name: XMPP_AUTH_DOMAIN
+            value: auth.meet.meissa-gmbh
+          - name: JICOFO_COMPONENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: jitsi-config
+                key: JICOFO_COMPONENT_SECRET
+          - name: JICOFO_AUTH_USER
+            value: focus
+          - name: JVB_BREWERY_MUC
+            value: jvbbrewery
+          - name: XMPP_INTERNAL_MUC_DOMAIN
+            value: internal-muc.meet.meissa-gmbh
+          - name: JICOFO_AUTH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: jitsi-config
+                key: JICOFO_AUTH_PASSWORD
+          - name: TZ
+            value: Europe/Berlin

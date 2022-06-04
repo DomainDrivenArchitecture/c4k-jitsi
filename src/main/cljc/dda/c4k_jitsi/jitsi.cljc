@@ -16,6 +16,8 @@
 #?(:cljs
    (defmethod yaml/load-resource :jitsi [resource-name]
      (case resource-name
+       "jitsi/deployment.yaml"           (rc/inline "jitsi/deployment.yaml")
+       "jitsi/etherpad-service.yaml"     (rc/inline "jitsi/etherpad-service.yaml")
        "jitsi/ingress.yaml"              (rc/inline "jitsi/ingress.yaml")
        "jitsi/jvb-service.yaml"          (rc/inline "jitsi/jvb-service.yaml")
        "jitsi/secret.yaml"               (rc/inline "jitsi/secret.yaml")
@@ -31,7 +33,8 @@
      (yaml/from-string (yaml/load-resource "jitsi/ingress.yaml"))
      (assoc-in [:metadata :annotations :cert-manager.io/cluster-issuer] letsencrypt-issuer)
      (assoc-in [:metadata :annotations :kubernetes.io/ingress.class] ingress-kind)
-     (cm/replace-all-matching-values-by-new-value "FQDN" fqdn))))
+     (cm/replace-all-matching-values-by-new-value "FQDN" fqdn)
+     (cm/replace-all-matching-values-by-new-value "ETHERPAD_FQDN" (str "https://etherpad." fqdn "/p/")))))
 
 (defn generate-secret [config]
   (let [{:keys [jvb-auth-password jicofo-auth-password jicofo-component-secret]} config]
@@ -47,8 +50,12 @@
 (defn generate-web-service []
   (yaml/from-string (yaml/load-resource "jitsi/web-service.yaml")))
 
+(defn generate-etherpad-service []
+  (yaml/from-string (yaml/load-resource "jitsi/etherpad-service.yaml")))
+
 (defn generate-deployment [config]
   (let [{:keys [fqdn]} config]
     (->
      (yaml/from-string (yaml/load-resource "jitsi/deployment.yaml"))
-     (cm/replace-all-matching-values-by-new-value "FQDN" fqdn))))
+     (cm/replace-all-matching-values-by-new-value "FQDN" fqdn)
+     (cm/replace-all-matching-values-by-new-value "ETHERPAD_FQDN" (str "https://etherpad." fqdn "/p/")))))
