@@ -2,8 +2,10 @@
   (:require
    #?(:clj [clojure.test :refer [deftest is are testing run-tests]]
       :cljs [cljs.test :refer-macros [deftest is are testing run-tests]])
+   [clojure.spec.test.alpha :as st]
    [dda.c4k-jitsi.jitsi :as cut]))
 
+;;(st/instrument)
 
 (deftest should-generate-deployment
   (is (= {:apiVersion "apps/v1",
@@ -102,7 +104,7 @@
                 {:name "TZ", :value "Europe/Berlin"}]}]}}}}
          (cut/generate-deployment {:fqdn "xy"}))))
 
-(deftest should-generate-ingress
+(deftest should-generate-ingress-jitsi
   (is (= {:apiVersion "networking.k8s.io/v1",
           :kind "Ingress",
           :metadata
@@ -115,10 +117,30 @@
           {:tls [{:hosts ["test.com"], :secretName "tls-jitsi"}],
            :rules
            [{:host "test.com",
-             :http {:paths [{:path "/", :pathType "Prefix", :backend {:service {:name "web", :port {:number 80}}}}]}}
-            {:host "etherpad.jitsi.test.meissa-gmbh.de",
-             :http {:paths [{:path "/", :pathType "Prefix", :backend {:service {:name "etherpad", :port {:number 9001}}}}]}}]}}
-         (cut/generate-ingress {:fqdn "test.com" :issuer :staging}))))
+             :http {:paths [{:path "/", :pathType "Prefix", :backend {:service {:name "web", :port {:number 80}}}}]}}]}}
+         (cut/generate-ingress-jitsi {:fqdn "test.com" :issuer :staging}))))
+
+(deftest should-generate-ingress-etherpad
+  (is (= {:apiVersion "networking.k8s.io/v1",
+          :kind "Ingress",
+          :metadata
+          {:name "etherpad",
+           :annotations
+           {:cert-manager.io/cluster-issuer "staging",
+            :ingress.kubernetes.io/ssl-redirect "true",
+            :kubernetes.io/ingress.class ""}},
+          :spec
+          {:tls [{:hosts ["etherpad.test.com"], :secretName "tls-etherpad"}],
+           :rules
+           [{:host "etherpad.test.com",
+             :http
+             {:paths
+              [{:path "/",
+                :pathType "Prefix",
+                :backend
+                {:service {:name "etherpad", :port {:number 9001}}}}]}}]}}
+         (cut/generate-ingress-etherpad {:fqdn "test.com" :issuer :staging}))))
+
 
 (deftest should-generate-secret
   (is (= {:apiVersion "v1",
@@ -129,6 +151,6 @@
           {:JVB_AUTH_PASSWORD "anZiLWF1dGg=",
            :JICOFO_AUTH_PASSWORD "amljb2ZvLWF1dGg=",
            :JICOFO_COMPONENT_SECRET "amljb2ZvLWNvbXA="}}
-         (cut/generate-secret {:jvb-auth-password "jvb-auth"
-                               :jicofo-auth-password "jicofo-auth"
-                               :jicofo-component-secret "jicofo-comp"}))))
+         (cut/generate-secret-jitsi {:jvb-auth-password "jvb-auth"
+                                     :jicofo-auth-password "jicofo-auth"
+                                     :jicofo-component-secret "jicofo-comp"}))))

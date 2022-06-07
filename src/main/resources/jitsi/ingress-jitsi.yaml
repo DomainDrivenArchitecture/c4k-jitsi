@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jitsi
+  annotations:
+    cert-manager.io/cluster-issuer: REPLACEME
+    ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  tls:
+  - hosts:
+    - REPLACE_JITSI_FQDN
+    secretName: tls-jitsi
+  rules:
+  - host: REPLACE_JITSI_FQDN
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web
+            port:
+              number: 80

@@ -18,25 +18,37 @@
      (case resource-name
        "jitsi/deployment.yaml"           (rc/inline "jitsi/deployment.yaml")
        "jitsi/etherpad-service.yaml"     (rc/inline "jitsi/etherpad-service.yaml")
-       "jitsi/ingress.yaml"              (rc/inline "jitsi/ingress.yaml")
+       "jitsi/ingress-jitsi.yaml"        (rc/inline "jitsi/ingress-jitsi.yaml")
+       "jitsi/ingress-etherpad.yaml"     (rc/inline "jitsi/ingress-etherpad.yaml")
        "jitsi/jvb-service.yaml"          (rc/inline "jitsi/jvb-service.yaml")
        "jitsi/secret.yaml"               (rc/inline "jitsi/secret.yaml")
        "jitsi/web-service.yaml"          (rc/inline "jitsi/web-service.yaml")
        (throw (js/Error. "Undefined Resource!")))))
 
-(defn generate-ingress [config]
+(defn generate-ingress-jitsi [config]
   (let [{:keys [fqdn issuer ingress-type]
          :or {issuer :staging ingress-type :default}} config
         letsencrypt-issuer (name issuer)
         ingress-kind (if (= :default ingress-type) "" (name ingress-type))]
     (->
-     (yaml/from-string (yaml/load-resource "jitsi/ingress.yaml"))
+     (yaml/from-string (yaml/load-resource "jitsi/ingress-jitsi.yaml"))
      (assoc-in [:metadata :annotations :cert-manager.io/cluster-issuer] letsencrypt-issuer)
      (assoc-in [:metadata :annotations :kubernetes.io/ingress.class] ingress-kind)
-     (cm/replace-all-matching-values-by-new-value "FQDN" fqdn)
-     (cm/replace-all-matching-values-by-new-value "ETHERPAD_FQDN" (str "https://etherpad." fqdn "/p/")))))
+     (cm/replace-all-matching-values-by-new-value "REPLACE_JITSI_FQDN" fqdn))))
 
-(defn generate-secret [config]
+(defn generate-ingress-etherpad [config]
+  (let [{:keys [fqdn issuer ingress-type]
+         :or {issuer :staging ingress-type :default}} config
+        letsencrypt-issuer (name issuer)
+        ingress-kind (if (= :default ingress-type) "" (name ingress-type))]
+    (->
+     (yaml/from-string (yaml/load-resource "jitsi/ingress-etherpad.yaml"))
+     (assoc-in [:metadata :annotations :cert-manager.io/cluster-issuer] letsencrypt-issuer)
+     (assoc-in [:metadata :annotations :kubernetes.io/ingress.class] ingress-kind)
+     (cm/replace-all-matching-values-by-new-value "REPLACE_ETHERPAD_FQDN" 
+                                                  (str "etherpad." fqdn)))))
+
+(defn generate-secret-jitsi [config]
   (let [{:keys [jvb-auth-password jicofo-auth-password jicofo-component-secret]} config]
     (->
      (yaml/from-string (yaml/load-resource "jitsi/secret.yaml"))
@@ -57,5 +69,6 @@
   (let [{:keys [fqdn]} config]
     (->
      (yaml/from-string (yaml/load-resource "jitsi/deployment.yaml"))
-     (cm/replace-all-matching-values-by-new-value "FQDN" fqdn)
-     (cm/replace-all-matching-values-by-new-value "ETHERPAD_FQDN" (str "https://etherpad." fqdn "/p/")))))
+     (cm/replace-all-matching-values-by-new-value "REPLACE_JITSI_FQDN" fqdn)
+     (cm/replace-all-matching-values-by-new-value "REPLACE_ETHERPAD_URL"
+                                                  (str "https://etherpad." fqdn "/p/")))))

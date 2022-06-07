@@ -16,11 +16,12 @@
 
 (defn k8s-objects [config]
   (map yaml/to-string
-       [(jitsi/generate-ingress config)
-        (jitsi/generate-secret config)
+       [(jitsi/generate-secret-jitsi config)
         (jitsi/generate-jvb-service)
         (jitsi/generate-web-service)
         (jitsi/generate-etherpad-service)
+        (jitsi/generate-ingress-jitsi config)
+        (jitsi/generate-ingress-etherpad config)
         (jitsi/generate-deployment config)]))
 
 (defn-spec generate any?

@@ -51,7 +51,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: PUBLIC_URL
-              value: FQDN
+              value: REPLACE_JITSI_FQDN
             - name: XMPP_DOMAIN
               value: meet.meissa-gmbh
             - name: XMPP_AUTH_DOMAIN
@@ -88,7 +88,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: PUBLIC_URL
-              value: FQDN
+              value: REPLACE_JITSI_FQDN
             - name: XMPP_SERVER
               value: localhost
             - name: JICOFO_AUTH_USER
@@ -120,17 +120,17 @@ spec:
             - name: DISABLE_AUDIO_LEVELS
               value: "true"
             - name: ETHERPAD_PUBLIC_URL
-              value: ETHERPAD_FQDN
+              value: REPLACE_ETHERPAD_URL
         - name: jvb
           image: jitsi/jvb:stable-7287
           imagePullPolicy: IfNotPresent
           env:
             - name: PUBLIC_URL
-              value: FQDN
+              value: REPLACE_JITSI_FQDN
             - name: XMPP_SERVER
               value: localhost
             - name: DOCKER_HOST_ADDRESS
-              value: FQDN
+              value: REPLACE_JITSI_FQDN
             - name: XMPP_DOMAIN
               value: meet.meissa-gmbh
             - name: XMPP_AUTH_DOMAIN
