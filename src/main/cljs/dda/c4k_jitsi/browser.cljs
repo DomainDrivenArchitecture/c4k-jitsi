@@ -28,19 +28,15 @@
    (generate-content)})
 
 (defn config-from-document []
-  (let [postgres-data-volume-path (br/get-content-from-element "postgres-data-volume-path" :optional true)
-        issuer (br/get-content-from-element "issuer" :optional true :deserializer keyword)]
+  (let [issuer (br/get-content-from-element "issuer" :optional true :deserializer keyword)]
     (merge
-     {:fqdn (br/get-content-from-element "fqdn")}
-     (when (some? postgres-data-volume-path)
-       {:postgres-data-volume-path postgres-data-volume-path})
+     {:fqdn (br/get-content-from-element "fqdn")}     
      (when (some? issuer)
        {:issuer issuer})
      )))
 
 (defn validate-all! []
-  (br/validate! "fqdn" ::jitsi/fqdn)
-  (br/validate! "postgres-data-volume-path" ::pgc/postgres-data-volume-path :optional true)
+  (br/validate! "fqdn" ::jitsi/fqdn)  
   (br/validate! "issuer" ::jitsi/issuer :optional true :deserializer keyword)
   (br/validate! "auth" core/auth? :deserializer edn/read-string)
   (br/set-validated!))
@@ -60,7 +56,6 @@
                                    (config-from-document)
                                    (br/get-content-from-element "auth" :deserializer edn/read-string))
                                   (br/set-output!)))))
-  (add-validate-listener "fqdn")
-  (add-validate-listener "postgres-data-volume-path")
+  (add-validate-listener "fqdn")  
   (add-validate-listener "issuer")
   (add-validate-listener "auth"))
