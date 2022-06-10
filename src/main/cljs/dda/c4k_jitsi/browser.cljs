@@ -10,12 +10,11 @@
   []
   (into [] (concat [(assoc (br/generate-needs-validation) :content
                            (into [] (concat (br/generate-input-field "fqdn" "Your fqdn:" "jitsi.prod.meissa-gmbh.de")
-                                            (br/generate-input-field "postgres-data-volume-path" "(Optional) Your postgres-data-volume-path:" "/var/postgres")
                                             (br/generate-input-field "issuer" "(Optional) Your issuer prod/staging:" "")
                                             [(br/generate-br)]
-                                            (br/generate-text-area "auth" "Your auth.edn:" "{:postgres-db-user \"jitsi\"
-         :postgres-db-password \"jitsi-db-password\"
-         :django-secret-key \"djangosecretkey\"}"
+                                            (br/generate-text-area "auth" "Your auth.edn:" "{:jvb-auth-password \"jitsi\"
+         :jicofo-auth-password \"jicofo-password\"
+         :jicofo-component-secret \"jicofo-component-secrect\"}"
                                                                    "5")
                                             [(br/generate-br)]
                                             (br/generate-button "generate-button" "Generate c4k yaml"))))]
