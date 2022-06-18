@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 (defproject org.domaindrivenarchitecture/c4k-jitsi "1.2.1-SNAPSHOT"
+=======
+(defproject org.domaindrivenarchitecture/c4k-jitsi "1.2.2-SNAPSHOT"
+>>>>>>> 3640427c743170831c0b9dcd6d6a6cec7f64eba1
   :description "jitsi c4k-installation package"
   :url "https://domaindrivenarchitecture.org"
   :license {:name "Apache License, Version 2.0"
