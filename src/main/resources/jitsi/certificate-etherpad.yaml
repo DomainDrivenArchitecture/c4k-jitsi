@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: etherpad-cert
+  namespace: default
+spec:
+  secretName: etherpad-cert
+  commonName: REPLACE_ETHERPAD_FQDN
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  dnsNames:
+  - REPLACE_ETHERPAD_FQDN
+  issuerRef:
+    name: REPLACEME
+    kind: ClusterIssuer

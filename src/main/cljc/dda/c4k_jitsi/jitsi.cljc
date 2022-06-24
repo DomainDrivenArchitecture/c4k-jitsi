@@ -72,3 +72,25 @@
      (cm/replace-all-matching-values-by-new-value "REPLACE_JITSI_FQDN" fqdn)
      (cm/replace-all-matching-values-by-new-value "REPLACE_ETHERPAD_URL"
                                                   (str "https://etherpad." fqdn "/p/")))))
+
+(defn generate-certificate-jitsi
+  [config]
+  (let [{:keys [fqdn issuer ingress-type]
+         :or {issuer :staging ingress-type :default}} config
+        letsencrypt-issuer (name issuer)
+        ingress-kind (if (= :default ingress-type) "" (name ingress-type))]
+    (->
+     (yaml/load-as-edn "jitsi/certificate-jitsi.yaml")
+     (assoc-in [:spec :issuerRef :name] letsencrypt-issuer)
+     (cm/replace-all-matching-values-by-new-value "REPLACE_JITSI_FQDN" fqdn))))
+
+(defn generate-certificate-etherpad
+  [config]
+  (let [{:keys [fqdn issuer ingress-type]
+         :or {issuer :staging ingress-type :default}} config
+        letsencrypt-issuer (name issuer)
+        ingress-kind (if (= :default ingress-type) "" (name ingress-type))]
+    (->
+     (yaml/load-as-edn "jitsi/certificate-etherpad.yaml")
+     (assoc-in [:spec :issuerRef :name] letsencrypt-issuer)
+     (cm/replace-all-matching-values-by-new-value "REPLACE_ETHERPAD_FQDN" (str "etherpad." fqdn)))))

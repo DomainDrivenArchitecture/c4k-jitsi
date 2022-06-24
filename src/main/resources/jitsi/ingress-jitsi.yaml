@@ -9,7 +9,7 @@ spec:
   tls:
   - hosts:
     - REPLACE_JITSI_FQDN
-    secretName: tls-jitsi
+    secretName: jitsi-cert
   rules:
   - host: REPLACE_JITSI_FQDN
     http:

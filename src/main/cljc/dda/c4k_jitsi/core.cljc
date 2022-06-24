@@ -17,6 +17,8 @@
 (defn k8s-objects [config]
   (map yaml/to-string
        [(jitsi/generate-secret-jitsi config)
+        (jitsi/generate-certificate-jitsi config)
+        (jitsi/generate-certificate-etherpad config)
         (jitsi/generate-jvb-service)
         (jitsi/generate-web-service)
         (jitsi/generate-etherpad-service)

@@ -9,7 +9,7 @@ spec:
   tls:
   - hosts:
     - REPLACE_ETHERPAD_FQDN
-    secretName: tls-etherpad
+    secretName: etherpad-cert
   rules:
   - host: REPLACE_ETHERPAD_FQDN
     http:
