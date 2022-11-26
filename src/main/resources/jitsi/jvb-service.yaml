@@ -3,10 +3,11 @@ kind: Service
 metadata:
   labels:
     service: jvb
+  annotations:
+    metallb.universe.tf/address-pool: public
   name: jvb-udp
 spec:
-  type: NodePort
-  externalTrafficPolicy: Cluster
+  type: LoadBalancer
   ports:
   - port: 30300
     protocol: UDP
