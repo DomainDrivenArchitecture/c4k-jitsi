@@ -114,7 +114,7 @@
             :ingress.kubernetes.io/ssl-redirect "true",
             :kubernetes.io/ingress.class ""}},
           :spec
-          {:tls [{:hosts ["test.com"], :secretName "tls-jitsi"}],
+          {:tls [{:hosts ["test.com"], :secretName "jitsi-cert"}],
            :rules
            [{:host "test.com",
              :http {:paths [{:path "/", :pathType "Prefix", :backend {:service {:name "web", :port {:number 80}}}}]}}]}}
@@ -130,7 +130,7 @@
             :ingress.kubernetes.io/ssl-redirect "true",
             :kubernetes.io/ingress.class ""}},
           :spec
-          {:tls [{:hosts ["etherpad.test.com"], :secretName "tls-etherpad"}],
+          {:tls [{:hosts ["etherpad.test.com"], :secretName "etherpad-cert"}],
            :rules
            [{:host "etherpad.test.com",
              :http
