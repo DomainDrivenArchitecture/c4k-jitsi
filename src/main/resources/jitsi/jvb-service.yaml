@@ -4,6 +4,7 @@ metadata:
   labels:
     service: jvb
   annotations:
+    metallb.universe.tf/allow-shared-ip: "shared-ip-service-group"
     metallb.universe.tf/address-pool: public
   name: jvb-udp
 spec:
