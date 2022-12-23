@@ -3,22 +3,27 @@
    [clojure.tools.reader.edn :as edn]
    [dda.c4k-jitsi.core :as core]
    [dda.c4k-jitsi.jitsi :as jitsi]
-   [dda.c4k-common.browser :as br]
-   [dda.c4k-common.postgres :as pgc]))
+   [dda.c4k-common.browser :as br]))
 
-(defn generate-content
-  []
-  (into [] (concat [(assoc (br/generate-needs-validation) :content
-                           (into [] (concat (br/generate-input-field "fqdn" "Your fqdn:" "jitsi.prod.meissa-gmbh.de")
-                                            (br/generate-input-field "issuer" "(Optional) Your issuer prod/staging:" "")
-                                            [(br/generate-br)]
-                                            (br/generate-text-area "auth" "Your auth.edn:" "{:jvb-auth-password \"jitsi\"
+(defn generate-content []
+  (cm/concat-vec
+    [(assoc
+      (br/generate-needs-validation) :content
+      (cm/concat-vec
+       (br/generate-group
+        "domain"
+        (cm/concat-vec 
+         (br/generate-input-field "fqdn" "Your fqdn:" "jitsi.prod.meissa-gmbh.de")
+         (br/generate-input-field "issuer" "(Optional) Your issuer prod/staging:" "")))
+       (br/generate-group
+        "credentials"
+        (br/generate-text-area "auth" "Your auth.edn:" "{:jvb-auth-password \"jitsi\"
          :jicofo-auth-password \"jicofo-password\"
          :jicofo-component-secret \"jicofo-component-secrect\"}"
-                                                                   "5")
-                                            [(br/generate-br)]
-                                            (br/generate-button "generate-button" "Generate c4k yaml"))))]
-                   (br/generate-output "c4k-jitsi-output" "Your c4k deployment.yaml:" "25"))))
+                               "5"))
+       [(br/generate-br)]
+       (br/generate-button "generate-button" "Generate c4k yaml")))]
+    (br/generate-output "c4k-jitsi-output" "Your c4k deployment.yaml:" "25")))
 
 (defn generate-content-div
   []
