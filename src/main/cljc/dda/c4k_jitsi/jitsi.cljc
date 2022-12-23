@@ -13,6 +13,13 @@
 (s/def ::jicofo-auth-password pred/bash-env-string?)
 (s/def ::jicofo-component-secret pred/bash-env-string?)
 
+(def config? (s/keys :req-un [::fqdn]
+                     :opt-un [::issuer ::ingress-type]))
+
+(def auth? (s/keys :req-un [::jvb-auth-password 
+                            ::jicofo-auth-password 
+                            ::jicofo-component-secret]))
+
 #?(:cljs
    (defmethod yaml/load-resource :jitsi [resource-name]
      (case resource-name

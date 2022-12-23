@@ -9,11 +9,6 @@
 
 (def config-defaults {:issuer :staging})
 
-(def config? (s/keys :req-un [::jitsi/fqdn]
-                     :opt-un [::jitsi/issuer ::jitsi/ingress-type]))
-
-(def auth? (s/keys :req-un [::jitsi/jvb-auth-password ::jitsi/jicofo-auth-password ::jitsi/jicofo-component-secret]))
-
 (defn k8s-objects [config]
   (map yaml/to-string
        [(jitsi/generate-secret-jitsi config)
@@ -27,9 +22,9 @@
         (jitsi/generate-deployment config)]))
 
 (defn-spec generate any?
-  [my-config config?
-   my-auth auth?]
-  (let [resulting-config (merge config-defaults my-config my-auth)]
-    (cs/join
-     "\n---\n"
-     (k8s-objects resulting-config))))
+  [my-config jitsi/config?
+   my-auth jitsi/auth?]
+  (cm/concat-vec
+   (map yaml/to-string
+        (filter #(not (nil? %))
+                (merge config-defaults my-config my-auth)))))
