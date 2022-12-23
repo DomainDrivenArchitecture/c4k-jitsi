@@ -104,44 +104,6 @@
                 {:name "TZ", :value "Europe/Berlin"}]}]}}}}
          (cut/generate-deployment {:fqdn "xy"}))))
 
-(deftest should-generate-ingress-jitsi
-  (is (= {:apiVersion "networking.k8s.io/v1",
-          :kind "Ingress",
-          :metadata
-          {:name "jitsi",
-           :annotations
-           {:cert-manager.io/cluster-issuer "staging",
-            :ingress.kubernetes.io/ssl-redirect "true",
-            :kubernetes.io/ingress.class ""}},
-          :spec
-          {:tls [{:hosts ["test.com"], :secretName "tls-jitsi"}],
-           :rules
-           [{:host "test.com",
-             :http {:paths [{:path "/", :pathType "Prefix", :backend {:service {:name "web", :port {:number 80}}}}]}}]}}
-         (cut/generate-ingress-jitsi {:fqdn "test.com" :issuer :staging}))))
-
-(deftest should-generate-ingress-etherpad
-  (is (= {:apiVersion "networking.k8s.io/v1",
-          :kind "Ingress",
-          :metadata
-          {:name "etherpad",
-           :annotations
-           {:cert-manager.io/cluster-issuer "staging",
-            :ingress.kubernetes.io/ssl-redirect "true",
-            :kubernetes.io/ingress.class ""}},
-          :spec
-          {:tls [{:hosts ["etherpad.test.com"], :secretName "tls-etherpad"}],
-           :rules
-           [{:host "etherpad.test.com",
-             :http
-             {:paths
-              [{:path "/",
-                :pathType "Prefix",
-                :backend
-                {:service {:name "etherpad", :port {:number 9001}}}}]}}]}}
-         (cut/generate-ingress-etherpad {:fqdn "test.com" :issuer :staging}))))
-
-
 (deftest should-generate-secret
   (is (= {:apiVersion "v1",
           :kind "Secret",
