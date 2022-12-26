@@ -57,9 +57,11 @@
       (.getElementById "generate-button")
       (.addEventListener "click"
                          #(do (validate-all!)
-                              (-> (core/generate
+                              (-> (cm/generate-common
                                    (config-from-document)
-                                   (br/get-content-from-element "auth" :deserializer edn/read-string))
+                                   (br/get-content-from-element "auth" :deserializer edn/read-string)
+                                   {}
+                                   core/k8s-objects)
                                   (br/set-output!)))))
   (add-validate-listener "fqdn")  
   (add-validate-listener "issuer")
