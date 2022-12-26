@@ -5,7 +5,7 @@
    [clojure.spec.test.alpha :as st]
    [dda.c4k-jitsi.jitsi :as cut]))
 
-;;(st/instrument)
+(st/instrument)
 
 (deftest should-generate-deployment
   (is (= {:apiVersion "apps/v1",
@@ -37,7 +37,7 @@
                :image "jitsi/prosody:stable-7287",
                :imagePullPolicy "IfNotPresent",
                :env
-               [{:name "PUBLIC_URL", :value "xy"}
+               [{:name "PUBLIC_URL", :value "xy.xy.xy"}
                 {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
                 {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
                 {:name "XMPP_MUC_DOMAIN", :value "muc.meet.meissa-gmbh"}
@@ -54,7 +54,7 @@
                :image "domaindrivenarchitecture/c4k-jitsi",
                :imagePullPolicy "IfNotPresent",
                :env
-               [{:name "PUBLIC_URL", :value "xy"}
+               [{:name "PUBLIC_URL", :value "xy.xy.xy"}
                 {:name "XMPP_SERVER", :value "localhost"}
                 {:name "JICOFO_AUTH_USER", :value "focus"}
                 {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
@@ -70,14 +70,14 @@
                 {:name "RESOLUTION_WIDTH", :value "853"}
                 {:name "RESOLUTION_WIDTH_MIN", :value "427"}
                 {:name "DISABLE_AUDIO_LEVELS", :value "true"}
-                {:name "ETHERPAD_PUBLIC_URL", :value "https://etherpad.xy/p/"}]}
+                {:name "ETHERPAD_PUBLIC_URL", :value "https://etherpad.xy.xy.xy/p/"}]}
               {:name "jvb",
                :image "jitsi/jvb:stable-7287",
                :imagePullPolicy "IfNotPresent",
                :env
-               [{:name "PUBLIC_URL", :value "xy"}
+               [{:name "PUBLIC_URL", :value "xy.xy.xy"}
                 {:name "XMPP_SERVER", :value "localhost"}
-                {:name "DOCKER_HOST_ADDRESS", :value "xy"}
+                {:name "DOCKER_HOST_ADDRESS", :value "xy.xy.xy"}
                 {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
                 {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
                 {:name "XMPP_INTERNAL_MUC_DOMAIN", :value "internal-muc.meet.meissa-gmbh"}
@@ -102,7 +102,7 @@
                 {:name "XMPP_INTERNAL_MUC_DOMAIN", :value "internal-muc.meet.meissa-gmbh"}
                 {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
                 {:name "TZ", :value "Europe/Berlin"}]}]}}}}
-         (cut/generate-deployment {:fqdn "xy"}))))
+         (cut/generate-deployment {:fqdn "xy.xy.xy"}))))
 
 (deftest should-generate-secret
   (is (= {:apiVersion "v1",
