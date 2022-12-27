@@ -8,8 +8,8 @@
 (defn -main [& cmd-args]
   (uberjar/main-common
    "c4k-jitsi" 
-   jitsi/config? 
-   jitsi/auth?
+   core/config? 
+   core/auth?
    core/config-defaults 
    core/k8s-objects
    cmd-args))

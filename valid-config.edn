@@ -1,2 +1,5 @@
 {:fqdn "jitsi.test.meissa-gmbh.de"
- :issuer :staging}
+ :issuer "staging"
+ :mon-cfg {:grafana-cloud-url "url-for-your-prom-remote-write-endpoint"
+           :k3s-cluster-name "jitsi"
+           :k3s-cluster-stage "test"}}

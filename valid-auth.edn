@@ -1,3 +1,5 @@
 {:jvb-auth-password "JvbAuth"
  :jicofo-auth-password "JicofoAuth"
- :jicofo-component-secret "JicofoCompSec"}
+ :jicofo-component-secret "JicofoCompSec"
+ :mon-auth {:grafana-cloud-user "user"
+            :grafana-cloud-password "password"}}

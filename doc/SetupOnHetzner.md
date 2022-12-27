@@ -45,7 +45,7 @@ output "ipv4" {
 
 ## k8s minicluster
 
-For k8s installation we use our [dda-k8s-crate](https://github.com/DomainDrivenArchitecture/dda-k8s-crate) with the following configuation:
+For k8s installation we use our [provs](https://repo.prod.meissa.de/meissa/provs) with the following configuation:
 
 
 ```
@@ -69,5 +69,5 @@ with the following config.edn:
 ```
 {:fqdn "the-fqdn-from aws_route53_record.v4_neu"
  :postgres-data-volume-path "/var/postgres"         ;; Volume was configured at dda-k8s-crate, results in a PersistentVolume definition.
- :issuer :prod }
+ :issuer "prod" }
 ```
