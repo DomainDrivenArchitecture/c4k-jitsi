@@ -2,8 +2,7 @@
   (:gen-class)
   (:require
    [dda.c4k-common.uberjar :as uberjar]
-   [dda.c4k-jitsi.core :as core]
-   [dda.c4k-jitsi.jitsi :as jitsi]))
+   [dda.c4k-jitsi.core :as core]))
 
 (defn -main [& cmd-args]
   (uberjar/main-common
