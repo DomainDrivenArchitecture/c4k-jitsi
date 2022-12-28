@@ -64,16 +64,16 @@
   (yaml/from-string (yaml/load-resource "jitsi/jvb-service.yaml")))
 
 (defn-spec generate-web-service cp/map-or-seq? []
-  (yaml/from-string (yaml/load-resource "jitsi/web-service.yaml")))
+  (yaml/load-as-edn "jitsi/web-service.yaml"))
 
 (defn-spec generate-etherpad-service cp/map-or-seq? []
-  (yaml/from-string (yaml/load-resource "jitsi/etherpad-service.yaml")))
+  (yaml/load-as-edn "jitsi/etherpad-service.yaml"))
 
 (defn-spec generate-deployment cp/map-or-seq?
   [config config?]
   (let [{:keys [fqdn]} config]
     (->
-     (yaml/from-string (yaml/load-resource "jitsi/deployment.yaml"))
+     (yaml/load-as-edn "jitsi/deployment.yaml")
      (cm/replace-all-matching-values-by-new-value "REPLACE_JITSI_FQDN" fqdn)
      (cm/replace-all-matching-values-by-new-value "REPLACE_ETHERPAD_URL"
                                                   (str "https://etherpad." fqdn "/p/")))))
