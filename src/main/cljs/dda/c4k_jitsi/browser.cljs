@@ -81,6 +81,9 @@
                                    {}
                                    core/k8s-objects)
                                   (br/set-output!)))))
-  (add-validate-listener "fqdn")  
+  (add-validate-listener "fqdn")
   (add-validate-listener "issuer")
+  (add-validate-listener "mon-cluster-name")
+  (add-validate-listener "mon-cluster-stage")
+  (add-validate-listener "mon-cloud-url")
   (add-validate-listener "auth"))
