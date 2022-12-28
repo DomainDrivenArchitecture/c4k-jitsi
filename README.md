@@ -25,8 +25,8 @@ Your input will stay in your browser. No server interaction is required.
 
 You will also be able to try out on cli:
 ```
-target/graalvm/c4k-jitsi src/test/resources/valid-config.edn src/test/resources/valid-auth.edn | kubeval -
-target/graalvm/c4k-jitsi src/test/resources/valid-config.edn src/test/resources/valid-auth.edn | kubectl apply -f -
+target/graalvm/c4k-jitsi src/test/resources/jitsi-test/valid-config.yaml src/test/resources/jitsi-test/valid-auth.yaml | kubeval -
+target/graalvm/c4k-jitsi src/test/resources/jitsi-test/valid-config.yaml src/test/resources/jitsi-test/valid-auth.yaml | kubectl apply -f -
 ```
 
 ## Documentation
