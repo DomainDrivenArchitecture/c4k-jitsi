@@ -1,5 +1,6 @@
 (ns dda.c4k-jitsi.core-test
   (:require
+   #?(:cljs [shadow.resource :as rc])
    #?(:clj [clojure.test :refer [deftest is are testing run-tests]]
       :cljs [cljs.test :refer-macros [deftest is are testing run-tests]])
    [clojure.spec.alpha :as s]
