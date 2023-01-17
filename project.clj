@@ -1,11 +1,11 @@
-(defproject org.domaindrivenarchitecture/c4k-jitsi "1.2.2-SNAPSHOT"
+(defproject org.domaindrivenarchitecture/c4k-jitsi "1.3.3-SNAPSHOT"
   :description "jitsi c4k-installation package"
   :url "https://domaindrivenarchitecture.org"
   :license {:name "Apache License, Version 2.0"
             :url "https://www.apache.org/licenses/LICENSE-2.0.html"}
-  :dependencies [[org.clojure/clojure "1.10.3"]
+  :dependencies [[org.clojure/clojure "1.11.1"]
                  [org.clojure/tools.reader "1.3.6"]
-                 [org.domaindrivenarchitecture/c4k-common-clj "2.1.0"]
+                 [org.domaindrivenarchitecture/c4k-common-clj "5.0.1"]
                  [hickory "0.7.1"]]
   :target-path "target/%s/"
   :source-paths ["src/main/cljc"
@@ -22,10 +22,10 @@
              :uberjar {:aot :all
                        :main dda.c4k-jitsi.uberjar
                        :uberjar-name "c4k-jitsi-standalone.jar"
-                       :dependencies [[org.clojure/tools.cli "1.0.206"]
-                                      [ch.qos.logback/logback-classic "1.3.0-alpha4"
+                       :dependencies [[org.clojure/tools.cli "1.0.214"]
+                                      [ch.qos.logback/logback-classic "1.4.5"
                                        :exclusions [com.sun.mail/javax.mail]]
-                                      [org.slf4j/jcl-over-slf4j "2.0.0-alpha1"]]}}
+                                      [org.slf4j/jcl-over-slf4j "2.0.6"]]}}
   :release-tasks [["test"]
                   ["vcs" "assert-committed"]
                   ["change" "version" "leiningen.release/bump-version" "release"]
