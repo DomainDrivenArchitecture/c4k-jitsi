@@ -1,4 +1,4 @@
-FROM jitsi/web:stable-7287
+FROM jitsi/web:stable-8719
 
 # Prepare Configuration
 ADD resources /tmp
