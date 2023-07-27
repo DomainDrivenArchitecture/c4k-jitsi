@@ -33,6 +33,16 @@ target/graalvm/c4k-jitsi src/test/resources/jitsi-test/valid-config.yaml src/tes
 * [Example Setup on Hetzner](doc/SetupOnHetzner.md)
 * [Development](doc/Development.md)
 
+## Development & mirrors
+
+Development happens at: https://repo.prod.meissa.de/meissa/c4k-jitsi
+
+Mirrors are:
+
+* https://gitlab.com/domaindrivenarchitecture/c4k-jitsi (issues and PR, CI)
+
+For more details about our repository model see: https://repo.prod.meissa.de/meissa/federate-your-repos
+
 ## License
 
 Copyright © 2022 meissa GmbH

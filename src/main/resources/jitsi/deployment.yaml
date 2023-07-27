@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: jicofo
-          image: jitsi/jicofo:stable-7287
+          image: jitsi/jicofo:stable-8615
           imagePullPolicy: IfNotPresent
           env:
             - name: XMPP_SERVER
@@ -122,7 +122,7 @@ spec:
             - name: ETHERPAD_PUBLIC_URL
               value: REPLACE_ETHERPAD_URL
         - name: jvb
-          image: jitsi/jvb:stable-7287
+          image: jitsi/jvb:stable-8719
           imagePullPolicy: IfNotPresent
           env:
             - name: PUBLIC_URL
@@ -160,7 +160,7 @@ spec:
             - name: TZ
               value: Europe/Berlin
         - name: etherpad
-          image: jitsi/etherpad
+          image: etherpad/etherpad:1.9.1
           env:
           - name: XMPP_SERVER
             value: localhost   

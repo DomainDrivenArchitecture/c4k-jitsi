@@ -19,7 +19,7 @@
             :spec
             {:containers
              [{:name "jicofo",
-               :image "jitsi/jicofo:stable-7287",
+               :image "jitsi/jicofo:stable-8615",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "XMPP_SERVER", :value "localhost"}
@@ -72,7 +72,7 @@
                 {:name "DISABLE_AUDIO_LEVELS", :value "true"}
                 {:name "ETHERPAD_PUBLIC_URL", :value "https://etherpad.xy.xy.xy/p/"}]}
               {:name "jvb",
-               :image "jitsi/jvb:stable-7287",
+               :image "jitsi/jvb:stable-8719",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "PUBLIC_URL", :value "xy.xy.xy"}
@@ -90,7 +90,7 @@
                 {:name "JVB_BREWERY_MUC", :value "jvbbrewery"}
                 {:name "TZ", :value "Europe/Berlin"}]}
               {:name "etherpad",
-               :image "jitsi/etherpad",
+               :image "etherpad/etherpad:1.9.1",
                :env
                [{:name "XMPP_SERVER", :value "localhost"}
                 {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}

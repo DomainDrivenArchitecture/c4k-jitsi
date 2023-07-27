@@ -27,3 +27,4 @@ public/js/
 auth.edn
 config.edn
 out.yaml
+.eastwood

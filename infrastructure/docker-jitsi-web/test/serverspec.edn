@@ -1,1 +1,2 @@
-{:file [{:path "/defaults/settings-config.js"}]}
+{:file [{:path "/usr/local/bin/install-debug.sh" :mod "700"}
+        {:path "/defaults/settings-config.js" :mod "644"}]}

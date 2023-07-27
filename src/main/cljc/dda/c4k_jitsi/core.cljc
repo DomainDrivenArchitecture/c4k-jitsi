@@ -11,8 +11,8 @@
 
 (def config-defaults {:issuer "staging"})
 
-(s/def ::mon-cfg mon/config?)
-(s/def ::mon-auth mon/auth?)
+(s/def ::mon-cfg ::mon/mon-cfg)
+(s/def ::mon-auth ::mon/mon-auth)
 
 (def config? (s/keys :req-un [::jitsi/fqdn]
                      :opt-un [::jitsi/issuer
