@@ -40,6 +40,7 @@ Development happens at: https://repo.prod.meissa.de/meissa/c4k-jitsi
 Mirrors are:
 
 * https://gitlab.com/domaindrivenarchitecture/c4k-jitsi (issues and PR, CI)
+* https://github.com/DomainDrivenArchitecture/c4k-jitsi
 
 For more details about our repository model see: https://repo.prod.meissa.de/meissa/federate-your-repos
 
