@@ -18,6 +18,7 @@ def initialize(project):
         "stage": "notused",
         "project_root_path": PROJECT_ROOT_PATH,
         "build_types": [],
+        "release_artifacts": ["target/uberjar/c4k-jitsi-standalone.jar"],
         "mixin_types": ["RELEASE"],
         "release_primary_build_file": "project.clj",
         "release_secondary_build_files": [
