@@ -26,7 +26,7 @@ def initialize(project):
         "image_tag": f"{image_tag}",
     }
 
-    project.build_depends_on("ddadevops>=4.0.0")
+    project.build_depends_on("ddadevops>=4.7.0")
 
     build = DevopsImageBuild(project, input)
     build.initialize_build_dir()
