@@ -23,9 +23,9 @@
                        :main dda.c4k-jitsi.uberjar
                        :uberjar-name "c4k-jitsi-standalone.jar"
                        :dependencies [[org.clojure/tools.cli "1.0.219"]
-                                      [ch.qos.logback/logback-classic "1.4.8"
+                                      [ch.qos.logback/logback-classic "1.4.11"
                                        :exclusions [com.sun.mail/javax.mail]]
-                                      [org.slf4j/jcl-over-slf4j "2.0.7"]]}}
+                                      [org.slf4j/jcl-over-slf4j "2.0.9"]]}}
   :release-tasks [["test"]
                   ["vcs" "assert-committed"]
                   ["change" "version" "leiningen.release/bump-version" "release"]
