@@ -88,3 +88,6 @@
                                                   (str "https://etherpad." fqdn "/p/"))
      (cm/replace-all-matching-values-by-new-value "REPLACE_EXCALIDRAW_BACKEND_URL"
                                                   (str "https://excalidraw-backend." fqdn)))))
+
+(defn-spec generate-excalidraw-deployment cp/map-or-seq? []
+  (yaml/load-as-edn "jitsi/excalidraw-deployment.yaml"))
