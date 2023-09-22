@@ -8,6 +8,6 @@ spec:
   ports:
   - name: excalidraw-backend
     port: 3002
-    targetPort: 3002
+    targetPort: 80
   selector:
-    app: jitsi
+    app: excalidraw-backend

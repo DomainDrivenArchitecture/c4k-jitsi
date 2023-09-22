@@ -35,7 +35,8 @@
           (jitsi/generate-web-service)
           (jitsi/generate-etherpad-service)
           (jitsi/generate-excalidraw-backend-service)
-          (jitsi/generate-deployment config)]
+          (jitsi/generate-deployment config)
+          (jitsi/generate-excalidraw-deployment)]
          (jitsi/generate-ingress-web config)
          (jitsi/generate-ingress-etherpad config)
          (jitsi/generate-ingress-excalidraw-backend config)

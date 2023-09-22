@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: excalidraw-backend
+  name: excalidraw-backend
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: excalidraw-backend
+  template:
+    metadata:
+      labels:
+        app: excalidraw-backend
+    spec:
+      containers:
+        - name: excalidraw-backend
+          image: domaindrivenarchitecture/excalidraw-backend
