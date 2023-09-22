@@ -100,7 +100,7 @@ release-to-clojars:
   script:
     - pyb upload_clj
 
-.release-to-forgejo:
+release-to-forgejo:
   <<: *clj
   <<: *tag_only
   stage: upload
