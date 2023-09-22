@@ -37,5 +37,6 @@
           (jitsi/generate-deployment config)]
          (jitsi/generate-ingress-web config)
          (jitsi/generate-ingress-etherpad config)
+         (jitsi/generate-ingress-excalidraw-backend config)
          (when (:contains? config :mon-cfg)
            (mon/generate (:mon-cfg config) (:mon-auth auth)))))))

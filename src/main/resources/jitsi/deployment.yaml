@@ -146,3 +146,8 @@ spec:
                   key: JICOFO_AUTH_PASSWORD
             - name: TZ
               value: Europe/Berlin
+        - name: excalidraw-backend
+          image: domaindrivenarchitecture/excalidraw-backend
+          env:
+            - name: PORT
+              value: "3002"

@@ -51,6 +51,15 @@
      :fqdns [(str "etherpad." (:fqdn config))]}
     config)))
 
+(defn-spec generate-ingress-excalidraw-backend cp/map-or-seq?
+  [config config?]
+  (ing/generate-ingress-and-cert
+   (merge
+    {:service-name "excalidraw-backend"
+     :service-port 3002
+     :fqdns [(str "excalidraw-backend." (:fqdn config))]}
+    config)))
+
 (defn-spec generate-secret-jitsi cp/map-or-seq?
   [auth auth?]
   (let [{:keys [jvb-auth-password jicofo-auth-password jicofo-component-secret]} auth]
