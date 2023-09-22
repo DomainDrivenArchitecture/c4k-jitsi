@@ -23,6 +23,7 @@ def initialize(project):
         "release_secondary_build_files": [
             "package.json",
             "infrastructure/app/build.py",
+            "infrastructure/excalidraw-backend/build.py",
         ],
         "release_artifact_server_url": "https://repo.prod.meissa.de",
         "release_organisation": "meissa",
@@ -78,7 +79,7 @@ def package_frontend(project):
     run(
         "cp public/js/main.js target/frontend-build/c4k-jitsi.js",
         shell=True,
-        check=True,
+        check=Tc4k/c4k-jitsi/infrastructure/excalidraw-backend/excalidraw-backend/package-lock.json c4k/c4k-jitsi/infrastructure/excalidraw-backend/excalidraw-backend/package.json c4k/c4k-jitsi/infrastructure/excalidraw-backend/excalidraw-backend/tsconfig.json c4k/c4k-jitsi/infrastructure/excalidraw-backend/excalidraw-backend/srcrue,
     )
     run(
         "sha256sum target/frontend-build/c4k-jitsi.js > target/frontend-build/c4k-jitsi.js.sha256",
