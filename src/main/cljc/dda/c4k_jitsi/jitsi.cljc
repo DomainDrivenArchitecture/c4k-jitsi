@@ -78,6 +78,9 @@
 (defn-spec generate-etherpad-service cp/map-or-seq? []
   (yaml/load-as-edn "jitsi/etherpad-service.yaml"))
 
+(defn-spec generate-excalidraw-backend-service cp/map-or-seq? []
+  (yaml/load-as-edn "jitsi/excalidraw-backend-service.yaml"))
+
 (defn-spec generate-deployment cp/map-or-seq?
   [config config?]
   (let [{:keys [fqdn]} config]
