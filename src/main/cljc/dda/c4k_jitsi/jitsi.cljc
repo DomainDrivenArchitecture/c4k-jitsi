@@ -85,4 +85,6 @@
      (yaml/load-as-edn "jitsi/deployment.yaml")
      (cm/replace-all-matching-values-by-new-value "REPLACE_JITSI_FQDN" fqdn)
      (cm/replace-all-matching-values-by-new-value "REPLACE_ETHERPAD_URL"
-                                                  (str "https://etherpad." fqdn "/p/")))))
+                                                  (str "https://etherpad." fqdn "/p/"))
+     (cm/replace-all-matching-values-by-new-value "REPLACE_EXCALIDRAW_BACKEND_URL"
+                                                  (str "https://excalidraw-backend." fqdn)))))
