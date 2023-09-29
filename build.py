@@ -176,4 +176,4 @@ def linttest(project, release_type):
     test_clj(project)
     test_cljs(project)
     test_schema(project)
-    #lint(project)
+    lint(project)
