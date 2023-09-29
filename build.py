@@ -79,7 +79,7 @@ def package_frontend(project):
     run(
         "cp public/js/main.js target/frontend-build/c4k-jitsi.js",
         shell=True,
-        check=Tc4k/c4k-jitsi/infrastructure/excalidraw-backend/excalidraw-backend/package-lock.json c4k/c4k-jitsi/infrastructure/excalidraw-backend/excalidraw-backend/package.json c4k/c4k-jitsi/infrastructure/excalidraw-backend/excalidraw-backend/tsconfig.json c4k/c4k-jitsi/infrastructure/excalidraw-backend/excalidraw-backend/srcrue,
+        check=True,
     )
     run(
         "sha256sum target/frontend-build/c4k-jitsi.js > target/frontend-build/c4k-jitsi.js.sha256",
