@@ -22,7 +22,7 @@ def initialize(project):
         "project_root_path": PROJECT_ROOT_PATH,
         "build_types": ["IMAGE"],
         "mixin_types": [],
-        "image_naming": "NAME_AND_NAME",
+        "image_naming": "NAME_AND_MODULE",
         "image_tag": f"{image_tag}",
     }
 
