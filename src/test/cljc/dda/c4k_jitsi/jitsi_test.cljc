@@ -43,7 +43,7 @@
                 {:name "TZ", :value "Europe/Berlin"}
                 {:name "JVB_TCP_HARVESTER_DISABLED", :value "true"}]}
               {:name "web",
-               :image "domaindrivenarchitecture/c4k-jitsi",
+               :image "domaindrivenarchitecture/c4k-jitsi-web",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "PUBLIC_URL", :value "xy.xy.xy"}
@@ -58,7 +58,9 @@
                 {:name "RESOLUTION_WIDTH", :value "853"}
                 {:name "RESOLUTION_WIDTH_MIN", :value "427"}
                 {:name "DISABLE_AUDIO_LEVELS", :value "true"}
-                {:name "ETHERPAD_PUBLIC_URL", :value "https://etherpad.xy.xy.xy/p/"}]}
+                {:name "ETHERPAD_PUBLIC_URL", :value "https://etherpad.xy.xy.xy/p/"}
+                {:name "WHITEBOARD_ENABLED", :value "true"}
+                {:name "WHITEBOARD_COLLAB_SERVER_PUBLIC_URL", :value "https://excalidraw-backend.xy.xy.xy"}]}
               {:name "jvb",
                :image "jitsi/jvb:stable-8922-1",
                :imagePullPolicy "IfNotPresent",
