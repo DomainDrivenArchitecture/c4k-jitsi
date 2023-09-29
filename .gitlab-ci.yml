@@ -112,4 +112,4 @@ jitsi-image-test-publish:
   <<: *tag_only
   stage: image
   script:
-    - cd infrastructure/app && pyb image publish
+    - cd infrastructure/web && pyb image publish
