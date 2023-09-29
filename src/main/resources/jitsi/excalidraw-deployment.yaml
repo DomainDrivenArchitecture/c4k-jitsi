@@ -17,4 +17,4 @@ spec:
     spec:
       containers:
         - name: excalidraw-backend
-          image: domaindrivenarchitecture/excalidraw-backend
+          image: domaindrivenarchitecture/c4k-jitsi-excalidraw-backend

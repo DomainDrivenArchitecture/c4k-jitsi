@@ -1,3 +1,5 @@
+// Taken from: https://github.com/jitsi/excalidraw-backend
+
 import debug from 'debug';
 import dotenv from 'dotenv';
 import express from 'express';

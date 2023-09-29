@@ -3,7 +3,7 @@ from datetime import datetime
 from pybuilder.core import task, init
 from ddadevops import *
 
-name = "excalidraw-backend"
+name = "c4k-jitsi"
 MODULE = "excalidraw-backend"
 PROJECT_ROOT_PATH = "../.."
 version = "1.4.2-SNAPSHOT"
@@ -22,7 +22,7 @@ def initialize(project):
         "project_root_path": PROJECT_ROOT_PATH,
         "build_types": ["IMAGE"],
         "mixin_types": [],
-        "image_naming": "NAME_ONLY",
+        "image_naming": "NAME_AND_NAME",
         "image_tag": f"{image_tag}",
     }
 
