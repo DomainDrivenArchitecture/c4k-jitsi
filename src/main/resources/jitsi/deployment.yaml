@@ -68,7 +68,7 @@ spec:
             - name: JVB_TCP_HARVESTER_DISABLED
               value: "true"
         - name: web
-          image: domaindrivenarchitecture/c4k-jitsi
+          image: domaindrivenarchitecture/c4k-jitsi-web
           imagePullPolicy: IfNotPresent
           env:
             - name: PUBLIC_URL
@@ -97,6 +97,10 @@ spec:
               value: "true"
             - name: ETHERPAD_PUBLIC_URL
               value: REPLACE_ETHERPAD_URL
+            - name: WHITEBOARD_ENABLED
+              value: "true"
+            - name: WHITEBOARD_COLLAB_SERVER_PUBLIC_URL
+              value: REPLACE_EXCALIDRAW_BACKEND_URL
         - name: jvb
           image: jitsi/jvb:stable-8922-1
           imagePullPolicy: IfNotPresent
