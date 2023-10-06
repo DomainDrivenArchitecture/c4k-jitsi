@@ -26,11 +26,13 @@
 #?(:cljs
    (defmethod yaml/load-resource :jitsi [resource-name]
      (case resource-name
-       "jitsi/deployment.yaml"           (rc/inline "jitsi/deployment.yaml")
-       "jitsi/etherpad-service.yaml"     (rc/inline "jitsi/etherpad-service.yaml")
-       "jitsi/jvb-service.yaml"          (rc/inline "jitsi/jvb-service.yaml")
-       "jitsi/secret.yaml"               (rc/inline "jitsi/secret.yaml")
-       "jitsi/web-service.yaml"          (rc/inline "jitsi/web-service.yaml")
+       "jitsi/deployment.yaml"                 (rc/inline "jitsi/deployment.yaml")
+       "jitsi/etherpad-service.yaml"           (rc/inline "jitsi/etherpad-service.yaml")
+       "jitsi/jvb-service.yaml"                (rc/inline "jitsi/jvb-service.yaml")
+       "jitsi/excalidraw-backend-service.yaml" (rc/inline "jitsi/excalidraw-backend-service.yaml")
+       "jitsi/excalidraw-deployment.yaml"      (rc/inline "jitsi/excalidraw-deployment.yaml")
+       "jitsi/secret.yaml"                     (rc/inline "jitsi/secret.yaml")
+       "jitsi/web-service.yaml"                (rc/inline "jitsi/web-service.yaml")
        (throw (js/Error. "Undefined Resource!")))))
 
 (defn-spec generate-ingress-web cp/map-or-seq?
