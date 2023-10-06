@@ -43,7 +43,7 @@
 (defn config-from-document []
   (let [issuer (br/get-content-from-element "issuer" :optional true)
         mon-cluster-name (br/get-content-from-element "mon-cluster-name" :optional true)
-        mon-cluster-stage (br/get-content-from-element "mon-cluster-stage" :optional true :deserializer keyword)
+        mon-cluster-stage (br/get-content-from-element "mon-cluster-stage" :optional true)
         mon-cloud-url (br/get-content-from-element "mon-cloud-url" :optional true)]
     (merge
      {:fqdn (br/get-content-from-element "fqdn")}     
@@ -59,10 +59,10 @@
   (br/validate! "fqdn" ::jitsi/fqdn)  
   (br/validate! "issuer" ::jitsi/issuer :optional true)
   (br/validate! "mon-cluster-name" ::mon/cluster-name :optional true)
-  (br/validate! "mon-cluster-stage" ::mon/cluster-stage :optional true :deserializer keyword)
+  (br/validate! "mon-cluster-stage" ::mon/cluster-stage :optional true)
   (br/validate! "mon-cloud-url" ::mon/grafana-cloud-url :optional true)
   (br/validate! "auth" core/auth? :deserializer edn/read-string)
-  (br/set-validated!))
+  (br/set-form-validated!))
 
 (defn add-validate-listener [name]
   (-> (br/get-element-by-id name)
