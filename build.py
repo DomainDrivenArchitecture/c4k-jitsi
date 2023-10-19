@@ -23,7 +23,15 @@ def initialize(project):
         "release_primary_build_file": "project.clj",
         "release_secondary_build_files": [
             "package.json",
-            "infrastructure/docker-jitsi-web/build.py"
+            "infrastructure/web/build.py",
+            "infrastructure/excalidraw-backend/build.py",
+        ],
+        "release_artifact_server_url": "https://repo.prod.meissa.de",
+        "release_organisation": "meissa",
+        "release_repository_name": name,
+        "release_artifacts": [
+            "target/uberjar/c4k-jitsi-standalone.jar",
+            "target/frontend-build/c4k-jitsi.js",
         ],
     }
 
@@ -153,6 +161,10 @@ def tag(project):
     build = get_devops_build(project)
     build.tag_bump_and_push_release()
 
+@task
+def publish_artifacts(project):
+    build = get_devops_build(project)
+    build.publish_artifacts()
 
 def release(project):
     prepare(project)

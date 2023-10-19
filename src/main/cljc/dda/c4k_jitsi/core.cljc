@@ -34,8 +34,11 @@
           (jitsi/generate-jvb-service)
           (jitsi/generate-web-service)
           (jitsi/generate-etherpad-service)
-          (jitsi/generate-deployment config)]
+          (jitsi/generate-excalidraw-backend-service)
+          (jitsi/generate-deployment config)
+          (jitsi/generate-excalidraw-deployment)]
          (jitsi/generate-ingress-web config)
          (jitsi/generate-ingress-etherpad config)
+         (jitsi/generate-ingress-excalidraw-backend config)
          (when (:contains? config :mon-cfg)
            (mon/generate (:mon-cfg config) (:mon-auth auth)))))))

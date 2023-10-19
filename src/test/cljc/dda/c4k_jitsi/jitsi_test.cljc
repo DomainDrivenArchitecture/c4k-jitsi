@@ -19,29 +19,21 @@
             :spec
             {:containers
              [{:name "jicofo",
-               :image "jitsi/jicofo:stable-8615",
+               :image "jitsi/jicofo:stable-8922-1",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "XMPP_SERVER", :value "localhost"}
-                {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
-                {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
-                {:name "XMPP_MUC_DOMAIN", :value "muc.meet.meissa-gmbh"}
-                {:name "XMPP_INTERNAL_MUC_DOMAIN", :value "internal-muc.meet.meissa-gmbh"}
                 {:name "JICOFO_COMPONENT_SECRET",
                  :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_COMPONENT_SECRET"}}}
                 {:name "JICOFO_AUTH_USER", :value "focus"}
                 {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
-                {:name "TZ", :value "Europe/Berlin"}
-                {:name "JVB_BREWERY_MUC", :value "jvbbrewery"}]}
+                {:name "TZ", :value "Europe/Berlin"}]}
               {:name "prosody",
-               :image "jitsi/prosody:stable-7287",
+               :image "jitsi/prosody:stable-8922-1",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "PUBLIC_URL", :value "xy.xy.xy"}
-                {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
-                {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
-                {:name "XMPP_MUC_DOMAIN", :value "muc.meet.meissa-gmbh"}
-                {:name "XMPP_INTERNAL_MUC_DOMAIN", :value "internal-muc.meet.meissa-gmbh"}
+                {:name "XMPP_SERVER", :value "localhost"}
                 {:name "JICOFO_COMPONENT_SECRET",
                  :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_COMPONENT_SECRET"}}}
                 {:name "JVB_AUTH_USER", :value "jvb"}
@@ -51,17 +43,13 @@
                 {:name "TZ", :value "Europe/Berlin"}
                 {:name "JVB_TCP_HARVESTER_DISABLED", :value "true"}]}
               {:name "web",
-               :image "domaindrivenarchitecture/c4k-jitsi",
+               :image "domaindrivenarchitecture/c4k-jitsi-web",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "PUBLIC_URL", :value "xy.xy.xy"}
                 {:name "XMPP_SERVER", :value "localhost"}
-                {:name "JICOFO_AUTH_USER", :value "focus"}
-                {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
-                {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
-                {:name "XMPP_INTERNAL_MUC_DOMAIN", :value "internal-muc.meet.meissa-gmbh"}
                 {:name "XMPP_BOSH_URL_BASE", :value "http://127.0.0.1:5280"}
-                {:name "XMPP_MUC_DOMAIN", :value "muc.meet.meissa-gmbh"}
+                {:name "JICOFO_AUTH_USER", :value "focus"}
                 {:name "TZ", :value "Europe/Berlin"}
                 {:name "JVB_TCP_HARVESTER_DISABLED", :value "true"}
                 {:name "DEFAULT_LANGUAGE", :value "de"}
@@ -70,36 +58,30 @@
                 {:name "RESOLUTION_WIDTH", :value "853"}
                 {:name "RESOLUTION_WIDTH_MIN", :value "427"}
                 {:name "DISABLE_AUDIO_LEVELS", :value "true"}
-                {:name "ETHERPAD_PUBLIC_URL", :value "https://etherpad.xy.xy.xy/p/"}]}
+                {:name "ETHERPAD_PUBLIC_URL", :value "https://etherpad.xy.xy.xy/p/"}
+                {:name "WHITEBOARD_ENABLED", :value "true"}
+                {:name "WHITEBOARD_COLLAB_SERVER_PUBLIC_URL", :value "https://excalidraw-backend.xy.xy.xy"}]}
               {:name "jvb",
-               :image "jitsi/jvb:stable-8719",
+               :image "jitsi/jvb:stable-8922-1",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "PUBLIC_URL", :value "xy.xy.xy"}
                 {:name "XMPP_SERVER", :value "localhost"}
                 {:name "DOCKER_HOST_ADDRESS", :value "xy.xy.xy"}
-                {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
-                {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
-                {:name "XMPP_INTERNAL_MUC_DOMAIN", :value "internal-muc.meet.meissa-gmbh"}
                 {:name "JICOFO_AUTH_USER", :value "focus"}
                 {:name "JVB_TCP_HARVESTER_DISABLED", :value "true"}
                 {:name "JVB_AUTH_USER", :value "jvb"}
                 {:name "JVB_PORT", :value "30300"}
                 {:name "JVB_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JVB_AUTH_PASSWORD"}}}
                 {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
-                {:name "JVB_BREWERY_MUC", :value "jvbbrewery"}
                 {:name "TZ", :value "Europe/Berlin"}]}
               {:name "etherpad",
-               :image "etherpad/etherpad:1.9.1",
+               :image "etherpad/etherpad:1.9.2",
                :env
                [{:name "XMPP_SERVER", :value "localhost"}
-                {:name "XMPP_DOMAIN", :value "meet.meissa-gmbh"}
-                {:name "XMPP_AUTH_DOMAIN", :value "auth.meet.meissa-gmbh"}
                 {:name "JICOFO_COMPONENT_SECRET",
                  :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_COMPONENT_SECRET"}}}
                 {:name "JICOFO_AUTH_USER", :value "focus"}
-                {:name "JVB_BREWERY_MUC", :value "jvbbrewery"}
-                {:name "XMPP_INTERNAL_MUC_DOMAIN", :value "internal-muc.meet.meissa-gmbh"}
                 {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
                 {:name "TZ", :value "Europe/Berlin"}]}]}}}}
          (cut/generate-deployment {:fqdn "xy.xy.xy"}))))

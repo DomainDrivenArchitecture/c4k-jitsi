@@ -4,9 +4,9 @@ from pybuilder.core import task, init
 from ddadevops import *
 
 name = "c4k-jitsi"
-MODULE = "app"
+MODULE = "web"
 PROJECT_ROOT_PATH = "../.."
-version = "1.3.5-SNAPSHOT"
+version = "1.5.2-SNAPSHOT"
 
 
 @init
@@ -22,11 +22,11 @@ def initialize(project):
         "project_root_path": PROJECT_ROOT_PATH,
         "build_types": ["IMAGE"],
         "mixin_types": [],
-        "image_naming": "NAME_ONLY",
+        "image_naming": "NAME_AND_MODULE",
         "image_tag": f"{image_tag}",
     }
 
-    project.build_depends_on("ddadevops>=4.0.0")
+    project.build_depends_on("ddadevops>=4.7.0")
 
     build = DevopsImageBuild(project, input)
     build.initialize_build_dir()
