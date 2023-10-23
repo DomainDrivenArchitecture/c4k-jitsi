@@ -39,7 +39,7 @@ server.listen(port, () => {
 
 const io = require("socket.io")(Server, {
     cors: {
-        origin: "https://meet.jit.si",
+        origin: "https://jitsi.test.meissa.de",
         credentials: true
     },
     maxHttpBufferSize: 10e6,
