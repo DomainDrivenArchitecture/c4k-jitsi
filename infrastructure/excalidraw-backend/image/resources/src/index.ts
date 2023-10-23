@@ -4,8 +4,17 @@ import debug from 'debug';
 import dotenv from 'dotenv';
 import express from 'express';
 import http from 'http';
-import socketIO from 'socket.io';
+import {Server} from 'socket.io';
+/* 
 import * as prometheus from 'socket.io-prometheus-metrics';
+
+do not use anymore, since 3 years no further progression, depends on debug 4.1.1, 
+wich is moderate vulnerable to regular expression denial of service when untrusted user 
+input is passed into the o formatter. 
+
+alternatively could be used prom-client
+import  
+*/
 
 const serverDebug = debug('server');
 
@@ -28,25 +37,34 @@ server.listen(port, () => {
     serverDebug(`listening on port: ${port}`);
 });
 
-const io = socketIO(server, {
-    handlePreflightRequest: (req, res) => {
-        const headers = {
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            'Access-Control-Allow-Origin': req.header?.origin ?? 'https://meet.jit.si',
-            'Access-Control-Allow-Credentials': true
-        };
-
-        res.writeHead(200, headers);
-        res.end();
+const io = require("socket.io")(Server, {
+    cors: {
+        origin: "https://meet.jit.si",
+        credentials: true
     },
     maxHttpBufferSize: 10e6,
     pingTimeout: 10000
 });
 
 // listens on host:9090/metrics
+/* do not use
 prometheus.metrics(io, {
     collectDefaultMetrics: true
 });
+*/
+
+/* alternatively could be used:
+
+const client = require('prom-client');
+const collectDefaultMetrics = client.collectDefaultMetrics;
+const Registry = client.Registry;
+const register = new Registry();
+collectDefaultMetrics({ register });
+
+or more:
+https://codersociety.com/blog/articles/nodejs-application-monitoring-with-prometheus-and-grafana
+*/
+
 
 io.on('connection', socket => {
     serverDebug(`connection established! ${socket.conn.request.url}`);
