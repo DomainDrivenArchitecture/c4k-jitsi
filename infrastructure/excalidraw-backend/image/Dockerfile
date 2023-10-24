@@ -1,12 +1,11 @@
 # Taken from: https://github.com/jitsi/excalidraw-backend
-FROM node:16.17-slim
+FROM node:18.18.2-slim
 
 WORKDIR /excalidraw-backend
 
+COPY resources/package.json resources/package-lock.json resources/tsconfig.json resources/install.sh resources/src ./
 
-COPY resources/package.json resources/package-lock.json resources/tsconfig.json resources/src ./
-RUN npm install
-RUN npm run build
+RUN ./install.sh
 
 EXPOSE 80
 EXPOSE 9090
