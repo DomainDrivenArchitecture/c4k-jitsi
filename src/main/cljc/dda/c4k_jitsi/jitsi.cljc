@@ -1,14 +1,14 @@
 (ns dda.c4k-jitsi.jitsi
- (:require
-  [clojure.spec.alpha :as s]
-  #?(:cljs [shadow.resource :as rc])
-  #?(:clj [orchestra.core :refer [defn-spec]]
-     :cljs [orchestra.core :refer-macros [defn-spec]])
-  [dda.c4k-common.yaml :as yaml]
-  [dda.c4k-common.common :as cm]
-  [dda.c4k-common.ingress :as ing]
-  [dda.c4k-common.base64 :as b64]
-  [dda.c4k-common.predicate :as cp]))
+  (:require
+   [clojure.spec.alpha :as s]
+   #?(:clj [orchestra.core :refer [defn-spec]]
+      :cljs [orchestra.core :refer-macros [defn-spec]])
+   [dda.c4k-common.yaml :as yaml]
+   [dda.c4k-common.common :as cm]
+   [dda.c4k-common.ingress :as ing]
+   [dda.c4k-common.base64 :as b64]
+   [dda.c4k-common.predicate :as cp]
+   #?(:cljs [dda.c4k-common.macros :refer-macros [inline-resources]])))
 
 (s/def ::fqdn cp/fqdn-string?)
 (s/def ::issuer cp/letsencrypt-issuer?)
@@ -22,18 +22,9 @@
 (def auth? (s/keys :req-un [::jvb-auth-password 
                             ::jicofo-auth-password 
                             ::jicofo-component-secret]))
-
-#?(:cljs
+#?(:cljs 
    (defmethod yaml/load-resource :jitsi [resource-name]
-     (case resource-name
-       "jitsi/deployment.yaml"                 (rc/inline "jitsi/deployment.yaml")
-       "jitsi/etherpad-service.yaml"           (rc/inline "jitsi/etherpad-service.yaml")
-       "jitsi/jvb-service.yaml"                (rc/inline "jitsi/jvb-service.yaml")
-       "jitsi/excalidraw-backend-service.yaml" (rc/inline "jitsi/excalidraw-backend-service.yaml")
-       "jitsi/excalidraw-deployment.yaml"      (rc/inline "jitsi/excalidraw-deployment.yaml")
-       "jitsi/secret.yaml"                     (rc/inline "jitsi/secret.yaml")
-       "jitsi/web-service.yaml"                (rc/inline "jitsi/web-service.yaml")
-       (throw (js/Error. "Undefined Resource!")))))
+           (get (inline-resources "jitsi") resource-name)))
 
 (defn-spec generate-ingress-web cp/map-or-seq?
   [config config?]
