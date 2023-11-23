@@ -1,10 +1,10 @@
 #!/bin/bash
-set -Eeo pipefail
+set -eux
 
 apt-get update > /dev/null
 apt-get upgrade -y > /dev/null
 apt-get clean
 
-npm install -g npm
+npm install -g npm@latest
 npm ci
 npm run build

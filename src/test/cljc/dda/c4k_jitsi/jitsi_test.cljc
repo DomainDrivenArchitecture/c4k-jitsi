@@ -19,7 +19,7 @@
             :spec
             {:containers
              [{:name "jicofo",
-               :image "jitsi/jicofo:stable-8922-1",
+               :image "jitsi/jicofo:stable-8960-1",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "XMPP_SERVER", :value "localhost"}
@@ -29,7 +29,7 @@
                 {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
                 {:name "TZ", :value "Europe/Berlin"}]}
               {:name "prosody",
-               :image "jitsi/prosody:stable-8922-1",
+               :image "jitsi/prosody:stable-8960-1",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "PUBLIC_URL", :value "xy.xy.xy"}
@@ -62,7 +62,7 @@
                 {:name "WHITEBOARD_ENABLED", :value "true"}
                 {:name "WHITEBOARD_COLLAB_SERVER_PUBLIC_URL", :value "https://excalidraw-backend.xy.xy.xy"}]}
               {:name "jvb",
-               :image "jitsi/jvb:stable-8922-1",
+               :image "jitsi/jvb:stable-8960-1",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "PUBLIC_URL", :value "xy.xy.xy"}
@@ -76,7 +76,7 @@
                 {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
                 {:name "TZ", :value "Europe/Berlin"}]}
               {:name "etherpad",
-               :image "etherpad/etherpad:1.9.2",
+               :image "etherpad/etherpad:1.9.3",
                :env
                [{:name "XMPP_SERVER", :value "localhost"}
                 {:name "JICOFO_COMPONENT_SECRET",
