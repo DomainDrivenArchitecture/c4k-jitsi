@@ -4,9 +4,9 @@ from pybuilder.core import task, init
 from ddadevops import *
 
 name = "c4k-jitsi"
-MODULE = "webtest"
+MODULE = "web"
 PROJECT_ROOT_PATH = "../.."
-version = "1.0.1-SNAPSHOT"
+version = "1.6.1-SNAPSHOT"
 
 
 @init
