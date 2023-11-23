@@ -1,17 +1,4 @@
 (ns dda.c4k-jitsi.jitsi
-<<<<<<< HEAD
- (:require
-  [clojure.spec.alpha :as s]
-  #?(:cljs [shadow.resource :as rc])
-  #?(:clj [orchestra.core :refer [defn-spec]]
-     :cljs [orchestra.core :refer-macros [defn-spec]])
-  [dda.c4k-common.yaml :as yaml]
-  [dda.c4k-common.common :as cm]
-  [dda.c4k-common.ingress :as ing]
-  [dda.c4k-common.base64 :as b64]
-  [dda.c4k-common.predicate :as cp]
-  #?(:cljs [dda.c4k-common.macros :refer-macros [inline-resources]])))
-=======
   (:require
    [clojure.spec.alpha :as s]
    #?(:clj [orchestra.core :refer [defn-spec]]
@@ -22,7 +9,6 @@
    [dda.c4k-common.base64 :as b64]
    [dda.c4k-common.predicate :as cp]
    #?(:cljs [dda.c4k-common.macros :refer-macros [inline-resources]])))
->>>>>>> 89de4ed0a5b1247d387b28aebbbd357599264480
 
 (s/def ::fqdn cp/fqdn-string?)
 (s/def ::issuer cp/letsencrypt-issuer?)
