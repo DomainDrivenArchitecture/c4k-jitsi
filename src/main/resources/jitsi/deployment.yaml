@@ -68,7 +68,7 @@ spec:
             - name: JVB_TCP_HARVESTER_DISABLED
               value: "true"
         - name: web
-          image: domaindrivenarchitecture/c4k-jitsi-webtest
+          image: domaindrivenarchitecture/c4k-jitsi-web
           imagePullPolicy: IfNotPresent
           env:
             - name: PUBLIC_URL
