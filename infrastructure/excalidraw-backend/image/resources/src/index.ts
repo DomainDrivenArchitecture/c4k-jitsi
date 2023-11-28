@@ -35,7 +35,7 @@ httpServer.listen(port, () => {
 });
 
 const corsOptions = { 
-                    origin: 'https://meet.jit.si',
+                    origin: ['jitsi.test.meissa.de', 'jitsi.prod.meissa.de'],
                     methods: ["GET", "POST"],
                     credentials: true
 };
