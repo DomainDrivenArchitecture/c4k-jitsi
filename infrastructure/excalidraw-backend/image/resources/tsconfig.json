@@ -12,7 +12,6 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "outDir": "dist",
-        //"noImplicitAny": false
     }
   }
   
