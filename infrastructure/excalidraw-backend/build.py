@@ -6,7 +6,7 @@ from ddadevops import *
 name = "c4k-jitsi"
 MODULE = "excalidraw-backend"
 PROJECT_ROOT_PATH = "../.."
-version = "1.6.1-SNAPSHOT"
+version = "2.0.0"
 
 
 @init
