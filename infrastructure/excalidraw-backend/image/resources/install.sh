@@ -6,5 +6,5 @@ apt-get upgrade -y > /dev/null
 apt-get clean
 
 npm install -g npm@latest
-npm ci
+npm ci --omit=dev
 npm run build
