@@ -1,10 +1,17 @@
 #!/bin/bash
 set -exo pipefail
 
-apt-get update > /dev/null
-apt-get -y upgrade > /dev/null
-apt-get clean
-rm -rf /var/lib/apt/lists/*
+function main() {
+    {
+        apt-get update
+        apt-get -qqy upgrade
+    } > /dev/null
+    
+    cleanupDocker
+}
+
+source ./install_functions.sh
+main
 
 npm ci --omit=dev
 npm run build
