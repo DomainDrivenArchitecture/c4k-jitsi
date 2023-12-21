@@ -4,8 +4,7 @@ set -exo pipefail
 
 function main() {
     {
-        apt-get update
-        apt-get -qqy upgrade 
+        upgradeSystem
     } > /dev/null
 
     install -m 0700 /tmp/install-debug.sh /usr/local/bin/
@@ -14,5 +13,5 @@ function main() {
     cleanupDocker
 }
 
-source /tmp/install_functions.sh
-main
+source /tmp/install_functions_debian.sh
+DEBIAN_FRONTEND=noninteractive DEBCONF_NOWARNINGS=yes main

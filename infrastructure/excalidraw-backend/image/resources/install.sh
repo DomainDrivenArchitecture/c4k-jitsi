@@ -3,15 +3,14 @@ set -exo pipefail
 
 function main() {
     {
-        apt-get update
-        apt-get -qqy upgrade
+        upgradeSystem
     } > /dev/null
     
     cleanupDocker
 }
 
-source ./install_functions.sh
-main
+source ./install_functions_debian.sh
+DEBIAN_FRONTEND=noninteractive DEBCONF_NOWARNINGS=yes main
 
 npm ci --omit=dev
 npm run build
