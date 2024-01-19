@@ -6,7 +6,7 @@ from ddadevops import *
 name = "c4k-jitsi"
 MODULE = "web"
 PROJECT_ROOT_PATH = "../.."
-version = "2.0.2-dev"
+version = "2.0.2"
 
 
 @init
