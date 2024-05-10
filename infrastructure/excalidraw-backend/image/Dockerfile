@@ -1,5 +1,5 @@
 # Taken from: https://github.com/jitsi/excalidraw-backend
-FROM node:20.10.0-bookworm-slim
+FROM node:22-bookworm-slim
 
 WORKDIR /excalidraw-backend
 
