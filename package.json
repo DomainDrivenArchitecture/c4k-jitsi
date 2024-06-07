@@ -2,7 +2,7 @@
     "name": "c4k-jitsi",
     "description": "Generate c4k yaml for a jitsi deployment.",
     "author": "meissa GmbH",
-    "version": "2.1.2-SNAPSHOT",
+    "version": "2.1.2",
     "homepage": "https://gitlab.com/domaindrivenarchitecture/c4k-jitsi#readme",
     "repository": "https://www.npmjs.com/package/c4k-jitsi",
     "license": "APACHE2",
