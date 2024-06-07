@@ -19,21 +19,21 @@
 (def config? (s/keys :req-un [::fqdn]
                      :opt-un [::issuer]))
 
-(def auth? (s/keys :req-un [::jvb-auth-password 
-                            ::jicofo-auth-password 
+(def auth? (s/keys :req-un [::jvb-auth-password
+                            ::jicofo-auth-password
                             ::jicofo-component-secret]))
-#?(:cljs 
+#?(:cljs
    (defmethod yaml/load-resource :jitsi [resource-name]
-           (get (inline-resources "jitsi") resource-name)))
+     (get (inline-resources "jitsi") resource-name)))
 
 (defn-spec generate-ingress-web cp/map-or-seq?
   [config config?]
-  (ing/generate-ingress-and-cert 
-    (merge 
-     {:service-name "web" 
-      :service-port 80
-      :fqdns [(:fqdn config)]}
-     config)))
+  (ing/generate-ingress-and-cert
+   (merge
+    {:service-name "web"
+     :service-port 80
+     :fqdns [(:fqdn config)]}
+    config)))
 
 (defn-spec generate-ingress-etherpad cp/map-or-seq?
   [config config?]
@@ -79,11 +79,11 @@
   (let [{:keys [fqdn]} config]
     (->
      (yaml/load-as-edn "jitsi/deployment.yaml")
-     (cm/replace-all-matching-values-by-new-value "REPLACE_JITSI_FQDN" fqdn)
-     (cm/replace-all-matching-values-by-new-value "REPLACE_ETHERPAD_URL"
-                                                  (str "https://etherpad." fqdn "/p/"))
-     (cm/replace-all-matching-values-by-new-value "REPLACE_EXCALIDRAW_BACKEND_URL"
-                                                  (str "https://excalidraw-backend." fqdn)))))
+     (cm/replace-all-matching "REPLACE_JITSI_FQDN" fqdn)
+     (cm/replace-all-matching "REPLACE_ETHERPAD_URL"
+                              (str "https://etherpad." fqdn "/p/"))
+     (cm/replace-all-matching "REPLACE_EXCALIDRAW_BACKEND_URL"
+                              (str "https://excalidraw-backend." fqdn)))))
 
 (defn-spec generate-excalidraw-deployment cp/map-or-seq? []
   (yaml/load-as-edn "jitsi/excalidraw-deployment.yaml"))
