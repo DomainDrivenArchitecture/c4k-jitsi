@@ -101,6 +101,8 @@ spec:
               value: "true"
             - name: WHITEBOARD_COLLAB_SERVER_PUBLIC_URL
               value: REPLACE_EXCALIDRAW_BACKEND_URL
+            - name: COLIBRI_WEBSOCKET_REGEX
+              value: "127.0.0.1"
         - name: jvb
           image: jitsi/jvb:stable-9457-2
           imagePullPolicy: IfNotPresent
