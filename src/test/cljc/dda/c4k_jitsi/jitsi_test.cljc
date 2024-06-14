@@ -60,7 +60,8 @@
                 {:name "DISABLE_AUDIO_LEVELS", :value "true"}
                 {:name "ETHERPAD_PUBLIC_URL", :value "https://etherpad.xy.xy.xy/p/"}
                 {:name "WHITEBOARD_ENABLED", :value "true"}
-                {:name "WHITEBOARD_COLLAB_SERVER_PUBLIC_URL", :value "https://excalidraw-backend.xy.xy.xy"}]}
+                {:name "WHITEBOARD_COLLAB_SERVER_PUBLIC_URL", :value "https://excalidraw-backend.xy.xy.xy"}
+                {:name "COLIBRI_WEBSOCKET_REGEX", :value "127.0.0.1"}]}
               {:name "jvb",
                :image "jitsi/jvb:stable-9457-2",
                :imagePullPolicy "IfNotPresent",
