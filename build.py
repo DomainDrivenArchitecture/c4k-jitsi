@@ -30,8 +30,9 @@ def initialize(project):
         "release_organisation": "meissa",
         "release_repository_name": name,
         "release_artifacts": [
-            "target/uberjar/c4k-jitsi-standalone.jar",
-            "target/frontend-build/c4k-jitsi.js",
+            f"target/graalvm/{name}",
+            f"target/uberjar/{name}-standalone.jar",
+            f"target/frontend-build/{name}.js",
         ],
     }
 
@@ -96,6 +97,7 @@ def package_frontend(project):
 
 @task
 def package_uberjar(project):
+    run("lein uberjar", shell=True, check=True)
     run(
         "sha256sum target/uberjar/c4k-jitsi-standalone.jar > target/uberjar/c4k-jitsi-standalone.jar.sha256",
         shell=True,
