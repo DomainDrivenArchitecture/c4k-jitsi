@@ -564,12 +564,6 @@ config.testing = {
     enableAv1Support: {{ $TESTING_AV1_SUPPORT }}
 };
 
-// Settings for the Excalidraw whiteboard integration.
-if (!config.hasOwnProperty('whiteboard')) config.whiteboard = {};
-config.whiteboard.enabled = {{ $WHITEBOARD_ENABLED }};
-config.whiteboard.collabServerBaseUrl = '{{ $WHITEBOARD_COLLAB_SERVER_PUBLIC_URL }}';
-
-
 // CUSTOM ADJUSTMENTS
 config.disableThirdPartyRequests = true;
 config.channelLastN = 8;
