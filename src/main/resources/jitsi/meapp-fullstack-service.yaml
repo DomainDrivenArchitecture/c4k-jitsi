@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: meapp-fullstack
+  name: meapp-fullstack
+spec:
+  ports:
+  - name: meapp-fullstack
+    port: 8080
+    targetPort: 80
+  selector:
+    app: meapp-fullstack

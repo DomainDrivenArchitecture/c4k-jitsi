@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: meapp-fullstack
+  name: meapp-fullstack
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: meapp-fullstack
+  template:
+    metadata:
+      labels:
+        app: meapp-fullstack
+    spec:
+      containers:
+        - name: meapp-fullstack
+          image: domaindrivenarchitecture/moderator-election-vaadin_fullstack
+          env:
+            - name: MEMBERNAMES
+              value: Micha,Ansgar,Clemens,Mattis,Eric,Mirco
