@@ -35,10 +35,12 @@
           (jitsi/generate-web-service)
           (jitsi/generate-etherpad-service)
           (jitsi/generate-excalidraw-backend-service)
+          (jitsi/generate-meapp-fullstack-service)
           (jitsi/generate-deployment config)
-          (jitsi/generate-excalidraw-deployment)]
+          (jitsi/generate-excalidraw-deployment)
+          (jitsi/generate-meapp-deployment)]  
          (jitsi/generate-ingress-web config)
          (jitsi/generate-ingress-etherpad config)
-         (jitsi/generate-ingress-excalidraw-backend config)
+         (jitsi/generate-ingress-meapp-fullstack config)
          (when (:contains? config :mon-cfg)
            (mon/generate (:mon-cfg config) (:mon-auth auth)))))))

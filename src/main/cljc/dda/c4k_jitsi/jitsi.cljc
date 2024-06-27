@@ -53,6 +53,15 @@
      :fqdns [(str "excalidraw-backend." (:fqdn config))]}
     config)))
 
+(defn-spec generate-ingress-meapp-fullstack cp/map-or-seq?
+  [config config?]
+  (ing/generate-ingress-and-cert
+   (merge
+    {:service-name "meapp-fullstack"
+     :service-port 6333
+     :fqdns [(str "meapp-fullstack." (:fqdn config))]}
+    config)))
+
 (defn-spec generate-secret-jitsi cp/map-or-seq?
   [auth auth?]
   (let [{:keys [jvb-auth-password jicofo-auth-password jicofo-component-secret]} auth]
@@ -74,6 +83,9 @@
 (defn-spec generate-excalidraw-backend-service cp/map-or-seq? []
   (yaml/load-as-edn "jitsi/excalidraw-backend-service.yaml"))
 
+(defn-spec generate-meapp-fullstack-service cp/map-or-seq? []
+  (yaml/load-as-edn "jitsi/meapp-fullstack-service.yaml"))
+
 (defn-spec generate-deployment cp/map-or-seq?
   [config config?]
   (let [{:keys [fqdn]} config]
@@ -87,3 +99,6 @@
 
 (defn-spec generate-excalidraw-deployment cp/map-or-seq? []
   (yaml/load-as-edn "jitsi/excalidraw-deployment.yaml"))
+
+(defn-spec generate-meapp-deployment cp/map-or-seq? []
+  (yaml/load-as-edn "jitsi/meapp-deployment.yaml"))
