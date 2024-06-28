@@ -6,8 +6,8 @@ metadata:
   name: meapp-fullstack
 spec:
   ports:
-  - name: meapp-fullstack
-    port: 6333
-    targetPort: 8080
+    - name: "http"
+      port: 80
+      targetPort: 8080
   selector:
     app: meapp-fullstack

@@ -58,7 +58,7 @@
   (ing/generate-ingress-and-cert
    (merge
     {:service-name "meapp-fullstack"
-     :service-port 6333
+     :service-port 80
      :fqdns [(str "meapp-fullstack." (:fqdn config))]}
     config)))
 
@@ -94,6 +94,7 @@
      (cm/replace-all-matching "REPLACE_JITSI_FQDN" fqdn)
      (cm/replace-all-matching "REPLACE_ETHERPAD_URL"
                               (str "https://etherpad." fqdn "/p/"))
+     
      (cm/replace-all-matching "REPLACE_EXCALIDRAW_BACKEND_URL"
                               (str "https://excalidraw-backend." fqdn)))))
 

@@ -5,6 +5,7 @@ metadata:
     app: meapp-fullstack
   name: meapp-fullstack
 spec:
+  replicas: 1
   strategy:
     type: Recreate
   selector:
@@ -18,6 +19,7 @@ spec:
       containers:
         - name: meapp-fullstack
           image: domaindrivenarchitecture/moderator-election-vaadin_fullstack
+          imagePullPolicy: IfNotPresent
           env:
             - name: MEMBERNAMES
-              value: Micha,Ansgar,Clemens,Mattis,Eric,Mirco
+              value: "Micha,Ansgar,Clemens,Mattis,Eric,Mirco"
