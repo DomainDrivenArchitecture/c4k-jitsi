@@ -4,6 +4,7 @@ metadata:
   labels:
     app: excalidraw-backend
   name: excalidraw-backend
+  namespace: NAMESPACE
 spec:
   strategy:
     type: Recreate

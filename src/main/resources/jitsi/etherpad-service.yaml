@@ -4,6 +4,7 @@ metadata:
   labels:
     service: etherpad
   name: etherpad
+  namespace: NAMESPACE
 spec:
   ports:
   - name: etherpad

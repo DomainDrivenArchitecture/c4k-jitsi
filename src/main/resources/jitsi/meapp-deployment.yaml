@@ -4,6 +4,7 @@ metadata:
   labels:
     app: meapp-fullstack
   name: meapp-fullstack
+  namespace: NAMESPACE
 spec:
   replicas: 1
   strategy:

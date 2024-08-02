@@ -4,6 +4,7 @@ metadata:
   labels:
     service: meapp-fullstack
   name: meapp-fullstack
+  namespace: NAMESPACE
 spec:
   ports:
     - name: "http"

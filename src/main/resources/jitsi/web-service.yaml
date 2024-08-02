@@ -4,6 +4,7 @@ metadata:
   labels:
     service: web
   name: web
+  namespace: NAMESPACE
 spec:
   ports:
   - name: "http"

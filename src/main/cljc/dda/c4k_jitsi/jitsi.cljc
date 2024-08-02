@@ -83,17 +83,33 @@
      (yaml/from-string (yaml/load-resource "jitsi/jvb-service.yaml"))
      (cm/replace-all-matching "NAMESPACE" namespace))))
 
-(defn-spec generate-web-service cp/map-or-seq? []
-  (yaml/load-as-edn "jitsi/web-service.yaml"))
+(defn-spec generate-web-service cp/map-or-seq?
+  [config config?]
+  (let [{:keys [namespace]} config]
+    (->
+     (yaml/load-as-edn "jitsi/web-service.yaml")
+     (cm/replace-all-matching "NAMESPACE" namespace))))
 
-(defn-spec generate-etherpad-service cp/map-or-seq? []
-  (yaml/load-as-edn "jitsi/etherpad-service.yaml"))
+(defn-spec generate-etherpad-service cp/map-or-seq?
+  [config config?]
+  (let [{:keys [namespace]} config]
+    (->
+     (yaml/load-as-edn "jitsi/etherpad-service.yaml")
+     (cm/replace-all-matching "NAMESPACE" namespace))))
 
-(defn-spec generate-excalidraw-backend-service cp/map-or-seq? []
-  (yaml/load-as-edn "jitsi/excalidraw-backend-service.yaml"))
+(defn-spec generate-excalidraw-backend-service cp/map-or-seq?
+  [config config?]
+  (let [{:keys [namespace]} config]
+    (->
+     (yaml/load-as-edn "jitsi/excalidraw-backend-service.yaml")
+     (cm/replace-all-matching "NAMESPACE" namespace))))
 
-(defn-spec generate-meapp-fullstack-service cp/map-or-seq? []
-  (yaml/load-as-edn "jitsi/meapp-fullstack-service.yaml"))
+(defn-spec generate-meapp-fullstack-service cp/map-or-seq?
+  [config config?]
+  (let [{:keys [namespace]} config]
+    (->
+     (yaml/load-as-edn "jitsi/meapp-fullstack-service.yaml")
+     (cm/replace-all-matching "NAMESPACE" namespace))))
 
 (defn-spec generate-deployment cp/map-or-seq?
   [config config?]
@@ -108,8 +124,16 @@
      (cm/replace-all-matching "REPLACE_EXCALIDRAW_BACKEND_URL"
                               (str "https://excalidraw-backend." fqdn)))))
 
-(defn-spec generate-excalidraw-deployment cp/map-or-seq? []
-  (yaml/load-as-edn "jitsi/excalidraw-deployment.yaml"))
+(defn-spec generate-excalidraw-deployment cp/map-or-seq?
+  [config config?]
+  (let [{:keys [fqdn namespace]} config]
+    (->
+     (yaml/load-as-edn "jitsi/excalidraw-deployment.yaml")
+     (cm/replace-all-matching "NAMESPACE" namespace))))
 
-(defn-spec generate-meapp-deployment cp/map-or-seq? []
-  (yaml/load-as-edn "jitsi/meapp-deployment.yaml"))
+(defn-spec generate-meapp-deployment cp/map-or-seq?
+  [config config?]
+  (let [{:keys [fqdn namespace]} config]
+    (->
+     (yaml/load-as-edn "jitsi/meapp-deployment.yaml")
+     (cm/replace-all-matching "NAMESPACE" namespace))))

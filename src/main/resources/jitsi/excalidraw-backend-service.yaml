@@ -4,6 +4,7 @@ metadata:
   labels:
     service: excalidraw-backend
   name: excalidraw-backend
+  namespace: NAMESPACE
 spec:
   ports:
   - name: excalidraw-backend
