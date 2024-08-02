@@ -7,9 +7,10 @@
   [dda.c4k-common.predicate :as cp]
   [dda.c4k-common.monitoring :as mon]
   [dda.c4k-common.yaml :as yaml]
-  [dda.c4k-jitsi.jitsi :as jitsi]))
+  [dda.c4k-jitsi.jitsi :as jitsi]
+  [dda.c4k-common.namespace :as ns]))
 
-(def config-defaults {:issuer "staging"})
+(def config-defaults {:issuer "staging", :namespace "jitsi"})
 
 (s/def ::mon-cfg ::mon/mon-cfg)
 (s/def ::mon-auth ::mon/mon-auth)
@@ -30,7 +31,8 @@
        (filter
         #(not (nil? %))
         (cm/concat-vec
-         [(jitsi/generate-secret-jitsi auth)
+         [(ns/generate config)
+          (jitsi/generate-secret-jitsi auth)
           (jitsi/generate-jvb-service)
           (jitsi/generate-web-service)
           (jitsi/generate-etherpad-service)
@@ -43,4 +45,4 @@
          (jitsi/generate-ingress-etherpad config)
          (jitsi/generate-ingress-meapp-fullstack config)
          (when (:contains? config :mon-cfg)
-           (mon/generate (:mon-cfg config) (:mon-auth auth)))))))
+           (mon/generate-config (:mon-cfg config) (:mon-auth auth)))))))

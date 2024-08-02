@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: jicofo
-          image: jitsi/jicofo:stable-9457-2
+          image: jitsi/jicofo:stable-9584-1
           imagePullPolicy: IfNotPresent
           env:
             - name: XMPP_SERVER
@@ -37,7 +37,7 @@ spec:
             - name: TZ
               value: Europe/Berlin
         - name: prosody
-          image: jitsi/prosody:stable-9457-2
+          image: jitsi/prosody:stable-9584-1
           imagePullPolicy: IfNotPresent
           env:
             - name: PUBLIC_URL
@@ -104,7 +104,7 @@ spec:
             - name: COLIBRI_WEBSOCKET_REGEX
               value: "127.0.0.1"
         - name: jvb
-          image: jitsi/jvb:stable-9457-2
+          image: jitsi/jvb:stable-9584-1
           imagePullPolicy: IfNotPresent
           env:
             - name: PUBLIC_URL
