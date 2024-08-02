@@ -109,3 +109,41 @@
           {:jvb-auth-password "jvb-auth"
            :jicofo-auth-password "jicofo-auth"
            :jicofo-component-secret "jicofo-comp"}))))
+                                                        
+  (deftest should-generate-ingress-web
+    (is (= [{:apiVersion "cert-manager.io/v1",
+            :kind "Certificate",
+            :metadata
+            {:name "web",
+             :labels {:app.kubernetes.part-of "web"},
+             :namespace "jitsi"},
+            :spec
+            {:secretName "web",
+             :commonName "xy.xy.xy",
+             :duration "2160h",
+             :renewBefore "720h",
+             :dnsNames ["xy.xy.xy"],
+             :issuerRef {:name "staging", :kind "ClusterIssuer"}}}
+           {:apiVersion "networking.k8s.io/v1",
+            :kind "Ingress",
+            :metadata
+            {:namespace "jitsi",
+             :annotations
+             {:traefik.ingress.kubernetes.io/router.entrypoints "web, websecure",
+              :traefik.ingress.kubernetes.io/router.middlewares
+              "default-redirect-https@kubernetescrd",
+              :metallb.universe.tf/address-pool "public"},
+             :name "web",
+             :labels {:app.kubernetes.part-of "web"}},
+            :spec
+            {:tls [{:hosts ["xy.xy.xy"], :secretName "web"}],
+             :rules
+             [{:host "xy.xy.xy",
+               :http
+               {:paths
+                [{:pathType "Prefix",
+                  :path "/",
+                  :backend {:service {:name "web", :port {:number 80}}}}]}}]}}]
+           (cut/generate-ingress-web
+            {:fqdn "xy.xy.xy"
+             :namespace "jitsi"}))))
