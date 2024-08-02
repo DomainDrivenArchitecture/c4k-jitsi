@@ -12,12 +12,14 @@
 
 (s/def ::fqdn cp/fqdn-string?)
 (s/def ::issuer cp/letsencrypt-issuer?)
+(s/def ::namespace string?)
 (s/def ::jvb-auth-password cp/bash-env-string?)
 (s/def ::jicofo-auth-password cp/bash-env-string?)
 (s/def ::jicofo-component-secret cp/bash-env-string?)
 
 (def config? (s/keys :req-un [::fqdn]
-                     :opt-un [::issuer]))
+                     :opt-un [::issuer
+                              ::namespace]))
 
 (def auth? (s/keys :req-un [::jvb-auth-password
                             ::jicofo-auth-password
@@ -63,10 +65,13 @@
     config)))
 
 (defn-spec generate-secret-jitsi cp/map-or-seq?
-  [auth auth?]
-  (let [{:keys [jvb-auth-password jicofo-auth-password jicofo-component-secret]} auth]
+  [config config?
+   auth auth?]
+  (let [{:keys [namespace]} config
+        {:keys [jvb-auth-password jicofo-auth-password jicofo-component-secret]} auth]
     (->
      (yaml/from-string (yaml/load-resource "jitsi/secret.yaml"))
+     (cm/replace-all-matching "NAMESPACE" namespace)
      (cm/replace-key-value :JVB_AUTH_PASSWORD (b64/encode jvb-auth-password))
      (cm/replace-key-value :JICOFO_AUTH_PASSWORD (b64/encode jicofo-auth-password))
      (cm/replace-key-value :JICOFO_COMPONENT_SECRET (b64/encode jicofo-component-secret)))))
@@ -88,10 +93,11 @@
 
 (defn-spec generate-deployment cp/map-or-seq?
   [config config?]
-  (let [{:keys [fqdn]} config]
+  (let [{:keys [fqdn namespace]} config]
     (->
      (yaml/load-as-edn "jitsi/deployment.yaml")
      (cm/replace-all-matching "REPLACE_JITSI_FQDN" fqdn)
+     (cm/replace-all-matching "NAMESPACE" namespace)
      (cm/replace-all-matching "REPLACE_ETHERPAD_URL"
                               (str "https://etherpad." fqdn "/p/"))
      

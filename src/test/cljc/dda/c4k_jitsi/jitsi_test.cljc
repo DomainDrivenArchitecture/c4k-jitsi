@@ -5,12 +5,16 @@
    [clojure.spec.test.alpha :as st]
    [dda.c4k-jitsi.jitsi :as cut]))
 
-(st/instrument)
+(st/instrument `cut/generate-deployment)
+(st/instrument `cut/generate-secret-jitsi)
 
 (deftest should-generate-deployment
   (is (= {:apiVersion "apps/v1",
           :kind "Deployment",
-          :metadata {:labels {:app "jitsi"}, :name "jitsi"},
+          :metadata
+          {:labels {:app "jitsi"},
+           :name "jitsi"
+           :namespace "jitsi"},
           :spec
           {:strategy {:type "Recreate"},
            :selector {:matchLabels {:app "jitsi"}},
@@ -19,7 +23,7 @@
             :spec
             {:containers
              [{:name "jicofo",
-               :image "jitsi/jicofo:stable-9457-2",
+               :image "jitsi/jicofo:stable-9584-1",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "XMPP_SERVER", :value "localhost"}
@@ -29,7 +33,7 @@
                 {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
                 {:name "TZ", :value "Europe/Berlin"}]}
               {:name "prosody",
-               :image "jitsi/prosody:stable-9457-2",
+               :image "jitsi/prosody:stable-9584-1",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "PUBLIC_URL", :value "xy.xy.xy"}
@@ -63,7 +67,7 @@
                 {:name "WHITEBOARD_COLLAB_SERVER_PUBLIC_URL", :value "https://excalidraw-backend.xy.xy.xy"}
                 {:name "COLIBRI_WEBSOCKET_REGEX", :value "127.0.0.1"}]}
               {:name "jvb",
-               :image "jitsi/jvb:stable-9457-2",
+               :image "jitsi/jvb:stable-9584-1",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "PUBLIC_URL", :value "xy.xy.xy"}
@@ -85,17 +89,23 @@
                 {:name "JICOFO_AUTH_USER", :value "focus"}
                 {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
                 {:name "TZ", :value "Europe/Berlin"}]}]}}}}
-         (cut/generate-deployment {:fqdn "xy.xy.xy"}))))
+         (cut/generate-deployment {:fqdn "xy.xy.xy"
+                                   :namespace "jitsi"}))))
 
 (deftest should-generate-secret
   (is (= {:apiVersion "v1",
           :kind "Secret",
-          :metadata {:name "jitsi-config"},
+          :metadata 
+          {:name "jitsi-config"
+           :namespace "jitsi"},
           :type "Opaque",
           :data
           {:JVB_AUTH_PASSWORD "anZiLWF1dGg=",
            :JICOFO_AUTH_PASSWORD "amljb2ZvLWF1dGg=",
            :JICOFO_COMPONENT_SECRET "amljb2ZvLWNvbXA="}}
-         (cut/generate-secret-jitsi {:jvb-auth-password "jvb-auth"
-                                     :jicofo-auth-password "jicofo-auth"
-                                     :jicofo-component-secret "jicofo-comp"}))))
+         (cut/generate-secret-jitsi 
+          {:fqdn "xy.xy.xy"
+           :namespace "jitsi"}
+          {:jvb-auth-password "jvb-auth"
+           :jicofo-auth-password "jicofo-auth"
+           :jicofo-component-secret "jicofo-comp"}))))

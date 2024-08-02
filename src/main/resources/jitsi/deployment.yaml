@@ -4,6 +4,7 @@ metadata:
   labels:
     app: jitsi
   name: jitsi
+  namespace: NAMESPACE
 spec:
   strategy:
     type: Recreate
