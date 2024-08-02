@@ -7,6 +7,8 @@
 
 (st/instrument `cut/generate-deployment)
 (st/instrument `cut/generate-secret-jitsi)
+(st/instrument `cut/generate-ingress-web)
+(st/instrument `cut/generate-jvb-service)
 
 (deftest should-generate-deployment
   (is (= {:apiVersion "apps/v1",
@@ -147,3 +149,22 @@
            (cut/generate-ingress-web
             {:fqdn "xy.xy.xy"
              :namespace "jitsi"}))))
+
+(deftest should-generate-jvb-service
+  (is (= {:apiVersion "v1",
+          :kind "Service",
+          :metadata
+          {:labels {:service "jvb"},
+           :annotations
+           #:metallb.universe.tf{:allow-shared-ip "shared-ip-service-group",
+                                 :address-pool "public"},
+           :name "jvb-udp"
+           :namespace "jitsi"},
+          :spec
+          {:type "LoadBalancer",
+           :ports
+           [{:port 30300, :protocol "UDP", :targetPort 30300, :nodePort 30300}],
+           :selector {:app "jitsi"}}}
+         (cut/generate-jvb-service
+          {:fqdn "xy.xy.xy"
+           :namespace "jitsi"}))))

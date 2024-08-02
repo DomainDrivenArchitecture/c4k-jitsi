@@ -76,8 +76,12 @@
      (cm/replace-key-value :JICOFO_AUTH_PASSWORD (b64/encode jicofo-auth-password))
      (cm/replace-key-value :JICOFO_COMPONENT_SECRET (b64/encode jicofo-component-secret)))))
 
-(defn-spec generate-jvb-service cp/map-or-seq? []
-  (yaml/from-string (yaml/load-resource "jitsi/jvb-service.yaml")))
+(defn-spec generate-jvb-service cp/map-or-seq? 
+  [config config?]
+  (let [{:keys [namespace]} config]
+    (->
+     (yaml/from-string (yaml/load-resource "jitsi/jvb-service.yaml"))
+     (cm/replace-all-matching "NAMESPACE" namespace))))
 
 (defn-spec generate-web-service cp/map-or-seq? []
   (yaml/load-as-edn "jitsi/web-service.yaml"))
