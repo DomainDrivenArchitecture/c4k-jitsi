@@ -104,13 +104,6 @@
      (yaml/load-as-edn "jitsi/excalidraw-backend-service.yaml")
      (cm/replace-all-matching "NAMESPACE" namespace))))
 
-(defn-spec generate-meapp-fullstack-service cp/map-or-seq?
-  [config config?]
-  (let [{:keys [namespace]} config]
-    (->
-     (yaml/load-as-edn "jitsi/meapp-fullstack-service.yaml")
-     (cm/replace-all-matching "NAMESPACE" namespace))))
-
 (defn-spec generate-deployment cp/map-or-seq?
   [config config?]
   (let [{:keys [fqdn namespace]} config]

@@ -35,7 +35,6 @@
           (jitsi/generate-web-service config)
           (jitsi/generate-etherpad-service config)
           (jitsi/generate-excalidraw-backend-service config)
-          (jitsi/generate-meapp-fullstack-service config)
           (jitsi/generate-deployment config)
           (jitsi/generate-excalidraw-deployment config)
           (jitsi/generate-meapp-deployment config)]

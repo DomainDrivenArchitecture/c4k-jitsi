@@ -25,7 +25,7 @@
             :spec
             {:containers
              [{:name "jicofo",
-               :image "jitsi/jicofo:stable-9584-1",
+               :image "jitsi/jicofo:stable-9646",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "XMPP_SERVER", :value "localhost"}
@@ -35,7 +35,7 @@
                 {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
                 {:name "TZ", :value "Europe/Berlin"}]}
               {:name "prosody",
-               :image "jitsi/prosody:stable-9584-1",
+               :image "jitsi/prosody:stable-9646",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "PUBLIC_URL", :value "xy.xy.xy"}
@@ -69,7 +69,7 @@
                 {:name "WHITEBOARD_COLLAB_SERVER_PUBLIC_URL", :value "https://excalidraw-backend.xy.xy.xy"}
                 {:name "COLIBRI_WEBSOCKET_REGEX", :value "127.0.0.1"}]}
               {:name "jvb",
-               :image "jitsi/jvb:stable-9584-1",
+               :image "jitsi/jvb:stable-9646",
                :imagePullPolicy "IfNotPresent",
                :env
                [{:name "PUBLIC_URL", :value "xy.xy.xy"}
@@ -195,20 +195,6 @@
            :namespace "jitsi"}))))
 
 (deftest should-generate-excalidraw-backend-service
-  (is (= {:apiVersion "v1",
-          :kind "Service",
-          :metadata
-          {:labels {:service "excalidraw-backend"},
-           :name "excalidraw-backend",
-           :namespace "jitsi"},
-          :spec
-          {:ports [{:name "excalidraw-backend", :port 3002, :targetPort 80}],
-           :selector {:app "excalidraw-backend"}}}
-         (cut/generate-excalidraw-backend-service
-          {:fqdn "xy.xy.xy"
-           :namespace "jitsi"}))))
-
-(deftest should-generate-meapp-fullstack-service
   (is (= {:apiVersion "v1",
           :kind "Service",
           :metadata
