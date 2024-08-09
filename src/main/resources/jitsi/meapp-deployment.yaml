@@ -23,4 +23,4 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: MEMBERNAMES
-              value: "Micha,Ansgar,Clemens,Mattis,Eric,Mirco"
+              value: "Micha,Ansgar,Clemens,Mattis,Erik,Mirco"
