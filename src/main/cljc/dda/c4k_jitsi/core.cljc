@@ -40,6 +40,7 @@
           (jitsi/generate-meapp-deployment config)]
          (jitsi/generate-ingress-web config)
          (jitsi/generate-ingress-etherpad config)
+         (jitsi/generate-ingress-excalidraw-backend config)
          (jitsi/generate-ingress-meapp-fullstack config)
          (when (:contains? config :mon-cfg)
            (mon/generate-config))))))
