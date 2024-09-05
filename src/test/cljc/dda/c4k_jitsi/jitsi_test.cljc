@@ -208,6 +208,20 @@
           {:fqdn "xy.xy.xy"
            :namespace "jitsi"}))))
 
+(deftest should-generate-meapp-fullstack-service
+  (is (= {:apiVersion "v1",
+          :kind "Service",
+          :metadata
+          {:labels {:service "excalidraw-backend"},
+           :name "excalidraw-backend",
+           :namespace "jitsi"},
+          :spec
+          {:ports [{:name "excalidraw-backend", :port 3002, :targetPort 80}],
+           :selector {:app "excalidraw-backend"}}}
+         (cut/generate-excalidraw-backend-service
+          {:fqdn "xy.xy.xy"
+           :namespace "jitsi"}))))
+
 (deftest should-generate-excalidraw-deployment
   (is (= {:apiVersion "v1",
           :kind "Service",
