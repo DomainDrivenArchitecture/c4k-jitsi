@@ -150,6 +150,44 @@
             {:fqdn "xy.xy.xy"
              :namespace "jitsi"}))))
 
+(deftest should-generate-ingress-modelector
+  (is (= [{:apiVersion "cert-manager.io/v1",
+           :kind "Certificate",
+           :metadata
+           {:name "modelector",
+            :labels {:app.kubernetes.part-of "modelector"},
+            :namespace "jitsi"},
+           :spec
+           {:secretName "modelector",
+            :commonName "modelector.xy.xy",
+            :duration "2160h",
+            :renewBefore "720h",
+            :dnsNames ["modelector.xy.xy"],
+            :issuerRef {:name "staging", :kind "ClusterIssuer"}}}
+          {:apiVersion "networking.k8s.io/v1",
+           :kind "Ingress",
+           :metadata
+           {:namespace "jitsi",
+            :annotations
+            {:traefik.ingress.kubernetes.io/router.entrypoints "web, websecure",
+             :traefik.ingress.kubernetes.io/router.middlewares
+             "default-redirect-https@kubernetescrd",
+             :metallb.universe.tf/address-pool "public"},
+            :name "modelector",
+            :labels {:app.kubernetes.part-of "modelector"}},
+           :spec
+           {:tls [{:hosts ["modelector.xy.xy"], :secretName "modelector"}],
+            :rules
+            [{:host "modelector.xy.xy",
+              :http
+              {:paths
+               [{:pathType "Prefix",
+                 :path "/",
+                 :backend {:service {:name "modelector", :port {:number 80}}}}]}}]}}]
+         (cut/generate-ingress-modelector
+          {:fqdn "xy.xy"
+           :namespace "jitsi"}))))
+
 (deftest should-generate-jvb-service
   (is (= {:apiVersion "v1",
           :kind "Service",
@@ -208,19 +246,44 @@
           {:fqdn "xy.xy.xy"
            :namespace "jitsi"}))))
 
-(deftest should-generate-meapp-fullstack-service
+(deftest should-generate-modelector-service
   (is (= {:apiVersion "v1",
           :kind "Service",
           :metadata
-          {:labels {:service "excalidraw-backend"},
-           :name "excalidraw-backend",
+          {:labels {:service "modelector"},
+           :name "modelector",
            :namespace "jitsi"},
           :spec
-          {:ports [{:name "excalidraw-backend", :port 3002, :targetPort 80}],
-           :selector {:app "excalidraw-backend"}}}
-         (cut/generate-excalidraw-backend-service
+          {:ports [{:name "http", :port 80, :targetPort 8080}],
+           :selector {:app "modelector"}}}
+         (cut/generate-modelector-service
           {:fqdn "xy.xy.xy"
            :namespace "jitsi"}))))
+
+(deftest should-generate-modelector-deployment
+  (is (= {:apiVersion "apps/v1",
+          :kind "Deployment",
+          :metadata
+          {:labels {:app "modelector"},
+           :name "modelector",
+           :namespace "jitsi"},
+          :spec
+          {:selector {:matchLabels {:app "modelector"}},
+           :replicas 1,
+           :strategy {:type "Recreate"},
+           :template
+           {:metadata {:labels {:app "modelector"}},
+            :spec
+            {:containers
+             [{:name "modelector",
+               :image "domaindrivenarchitecture/moderator-election-vaadin_fullstack",
+               :imagePullPolicy "IfNotPresent",
+               :env
+               [{:name "MEMBERNAMES",
+                 :value "Micha,Ansgar,Erik,Mirco"}]}]}}}}
+          (cut/generate-modelector-deployment
+           {:fqdn "xy.xy.xy"
+            :namespace "jitsi"}))))
 
 (deftest should-generate-excalidraw-deployment
   (is (= {:apiVersion "v1",
