@@ -55,13 +55,13 @@
      :fqdns [(str "excalidraw-backend." (:fqdn config))]}
     config)))
 
-(defn-spec generate-ingress-meapp-fullstack cp/map-or-seq?
+(defn-spec generate-ingress-modelector cp/map-or-seq?
   [config config?]
   (ing/generate-ingress-and-cert
    (merge
-    {:service-name "meapp-fullstack"
+    {:service-name "modelector"
      :service-port 80
-     :fqdns [(str "meapp-fullstack." (:fqdn config))]}
+     :fqdns [(str "modelector." (:fqdn config))]}
     config)))
 
 (defn-spec generate-secret-jitsi cp/map-or-seq?
@@ -104,11 +104,11 @@
      (yaml/load-as-edn "jitsi/excalidraw-backend-service.yaml")
      (cm/replace-all-matching "NAMESPACE" namespace))))
 
-(defn-spec generate-meapp-fullstack-service cp/map-or-seq?
+(defn-spec generate-modelector-service cp/map-or-seq?
   [config config?]
   (let [{:keys [namespace]} config]
     (->
-     (yaml/load-as-edn "jitsi/meapp-fullstack-service.yaml")
+     (yaml/load-as-edn "jitsi/modelector-service.yaml")
      (cm/replace-all-matching "NAMESPACE" namespace))))
 
 (defn-spec generate-deployment cp/map-or-seq?
@@ -131,9 +131,9 @@
      (yaml/load-as-edn "jitsi/excalidraw-deployment.yaml")
      (cm/replace-all-matching "NAMESPACE" namespace))))
 
-(defn-spec generate-meapp-deployment cp/map-or-seq?
+(defn-spec generate-modelector-deployment cp/map-or-seq?
   [config config?]
   (let [{:keys [fqdn namespace]} config]
     (->
-     (yaml/load-as-edn "jitsi/meapp-deployment.yaml")
+     (yaml/load-as-edn "jitsi/modelector-deployment.yaml")
      (cm/replace-all-matching "NAMESPACE" namespace))))

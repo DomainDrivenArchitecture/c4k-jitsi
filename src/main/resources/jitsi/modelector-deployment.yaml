@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: meapp-fullstack
-  name: meapp-fullstack
+    app: modelector
+  name: modelector
   namespace: NAMESPACE
 spec:
   replicas: 1
@@ -11,16 +11,16 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: meapp-fullstack
+      app: modelector
   template:
     metadata:
       labels:
-        app: meapp-fullstack
+        app: modelector
     spec:
       containers:
-        - name: meapp-fullstack
+        - name: modelector
           image: domaindrivenarchitecture/moderator-election-vaadin_fullstack
           imagePullPolicy: IfNotPresent
           env:
             - name: MEMBERNAMES
-              value: "Micha,Ansgar,Clemens,Mattis,Erik,Mirco"
+              value: "Micha,Ansgar,Erik,Mirco"

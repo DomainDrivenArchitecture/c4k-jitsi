@@ -3,7 +3,7 @@
   :url "https://domaindrivenarchitecture.org"
   :license {:name "Apache License, Version 2.0"
             :url "https://www.apache.org/licenses/LICENSE-2.0.html"}
-  :dependencies [[org.clojure/clojure "1.11.4"]
+  :dependencies [[org.clojure/clojure "1.12.0"]
                  [org.clojure/tools.reader "1.5.0"]
                  [org.domaindrivenarchitecture/c4k-common-clj "8.0.0"]
                  [hickory "0.7.1" :exclusions [viebel/codox-klipse-theme]]]
@@ -24,7 +24,7 @@
                        :main dda.c4k-jitsi.uberjar
                        :uberjar-name "c4k-jitsi-standalone.jar"
                        :dependencies [[org.clojure/tools.cli "1.1.230"]
-                                      [ch.qos.logback/logback-classic "1.5.7"
+                                      [ch.qos.logback/logback-classic "1.5.12"
                                        :exclusions [com.sun.mail/javax.mail]]
                                       [org.slf4j/jcl-over-slf4j "2.0.16"]
                                       [com.github.clj-easy/graal-build-time "1.0.5"]]}}
