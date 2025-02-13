@@ -334,7 +334,7 @@
          (second (cut/prosody
                   {:fqdn "xy.xy.xy"
                    :namespace "jitsi"}))))
-  (is (= 3
+  (is (= 5
          (count (cut/prosody
                  {:fqdn "xy.xy.xy"
                   :namespace "jitsi"})))))

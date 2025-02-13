@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prosody
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: prosody
+data:
