@@ -298,3 +298,43 @@
          (cut/generate-excalidraw-backend-service
           {:fqdn "xy.xy.xy"
            :namespace "jitsi"}))))
+
+(deftest should-generate-prosody
+  (is (= {:apiVersion "v1",
+          :kind "ServiceAccount",
+          :metadata
+          {:name "prosody",
+           :namespace "jitsi",
+           :labels
+           {:app.kubernetes.io/name "prosody"}}}
+         (first (cut/prosody
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"}))))
+  (is (= {:apiVersion "v1",
+          :kind "ConfigMap",
+          :metadata
+          {:name "prosody-common",
+           :namespace "jitsi",
+           :labels
+           #:app.kubernetes.io{:name "jitsi-meet"}},
+          :data
+          {:ENABLE_AUTH "0",
+           :ENABLE_GUESTS "1",
+           :PUBLIC_URL "xy.xy.xy",
+           :XMPP_DOMAIN "meet.jitsi",
+           :XMPP_MUC_DOMAIN "muc.meet.jitsi",
+           :XMPP_AUTH_DOMAIN "auth.meet.jitsi",
+           :XMPP_GUEST_DOMAIN "guest.meet.jitsi",
+           :XMPP_RECORDER_DOMAIN "recorder.meet.jitsi",
+           :XMPP_INTERNAL_MUC_DOMAIN "internal-muc.meet.jitsi",
+           :ENABLE_COLIBRI_WEBSOCKET "true",
+           :ENABLE_COLIBRI_WEBSOCKET_UNSAFE_REGEX "1",
+           :ENABLE_XMPP_WEBSOCKET "true",
+           :TZ "Europe/Amsterdam"}}
+         (second (cut/prosody
+                  {:fqdn "xy.xy.xy"
+                   :namespace "jitsi"}))))
+  (is (= 3
+         (count (cut/prosody
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
