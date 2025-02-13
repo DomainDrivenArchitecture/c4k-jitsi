@@ -1,0 +1,22 @@
+# Source: jitsi-meet/templates/common-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prosody-common
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: jitsi-meet
+data:
+  ENABLE_AUTH: "0"
+  ENABLE_GUESTS: "1"
+  PUBLIC_URL: JITSI_FQDN
+  XMPP_DOMAIN: meet.jitsi
+  XMPP_MUC_DOMAIN: muc.meet.jitsi
+  XMPP_AUTH_DOMAIN: auth.meet.jitsi
+  XMPP_GUEST_DOMAIN: guest.meet.jitsi
+  XMPP_RECORDER_DOMAIN: recorder.meet.jitsi
+  XMPP_INTERNAL_MUC_DOMAIN: internal-muc.meet.jitsi
+  ENABLE_COLIBRI_WEBSOCKET: 'true'
+  ENABLE_COLIBRI_WEBSOCKET_UNSAFE_REGEX: '1'
+  ENABLE_XMPP_WEBSOCKET: 'true'
+  TZ: 'Europe/Amsterdam'

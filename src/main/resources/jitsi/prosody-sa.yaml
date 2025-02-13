@@ -4,6 +4,4 @@ metadata:
   name: prosody
   namespace: NAMESPACE
   labels:
-    helm.sh/chart: prosody-1.4.1
     app.kubernetes.io/name: prosody
-    app.kubernetes.io/version: "stable-9646"

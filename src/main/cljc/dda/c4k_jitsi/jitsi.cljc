@@ -143,5 +143,12 @@
   (let [{:keys [fqdn namespace]} config]
     [(->
       (yaml/load-as-edn "jitsi/prosody-sa.yaml")
+      (cm/replace-all-matching "NAMESPACE" namespace))
+     (->
+      (yaml/load-as-edn "jitsi/prosody-common-cm.yaml")
+      (cm/replace-all-matching "JITSI_FQDN" fqdn)
+      (cm/replace-all-matching "NAMESPACE" namespace))
+     (->
+      (yaml/load-as-edn "jitsi/prosody-default-cm.yaml")
       (cm/replace-all-matching "NAMESPACE" namespace))]))
 
