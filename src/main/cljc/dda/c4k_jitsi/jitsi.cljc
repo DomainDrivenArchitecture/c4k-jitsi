@@ -150,5 +150,20 @@
       (cm/replace-all-matching "NAMESPACE" namespace))
      (->
       (yaml/load-as-edn "jitsi/prosody-default-cm.yaml")
+      (cm/replace-all-matching "NAMESPACE" namespace))
+     (->
+      (yaml/load-as-edn "jitsi/prosody-envs-cm.yaml")
+      (cm/replace-all-matching "NAMESPACE" namespace))
+     (->
+      (yaml/load-as-edn "jitsi/prosody-init-cm.yaml")
+      (cm/replace-all-matching "NAMESPACE" namespace))
+     (->
+      (yaml/load-as-edn "jitsi/prosody-stateful-set.yaml")
+      (cm/replace-all-matching "NAMESPACE" namespace))
+     (->
+      (yaml/load-as-edn "jitsi/prosody-service.yaml")
+      (cm/replace-all-matching "NAMESPACE" namespace))
+     (->
+      (yaml/load-as-edn "jitsi/prosody-test-deployment.yaml")
       (cm/replace-all-matching "NAMESPACE" namespace))]))
 
