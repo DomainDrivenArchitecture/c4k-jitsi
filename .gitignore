@@ -28,3 +28,4 @@ auth.edn
 config.edn
 out.yaml
 .eastwood
+tmp/

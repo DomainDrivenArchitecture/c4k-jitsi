@@ -137,3 +137,11 @@
     (->
      (yaml/load-as-edn "jitsi/modelector-deployment.yaml")
      (cm/replace-all-matching "NAMESPACE" namespace))))
+
+(defn-spec prosody cp/map-or-seq?
+  [config config?]
+  (let [{:keys [fqdn namespace]} config]
+    [(->
+      (yaml/load-as-edn "jitsi/prosody-sa.yaml")
+      (cm/replace-all-matching "NAMESPACE" namespace))]))
+

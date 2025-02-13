@@ -10,7 +10,8 @@
    [dda.c4k-jitsi.jitsi :as jitsi]
    [dda.c4k-common.namespace :as ns]))
 
-(def config-defaults {:issuer "staging", :namespace "jitsi"})
+(def config-defaults {:issuer "staging", 
+                      :namespace "jitsi"})
 
 (s/def ::mon-cfg ::mon/mon-cfg)
 (s/def ::mon-auth ::mon/mon-auth)
@@ -26,25 +27,27 @@
 
 (defn-spec config-objects cp/map-or-seq?
   [config config?]
-  (map yaml/to-string
-       (filter
-        #(not (nil? %))
-        (cm/concat-vec
-         (ns/generate config)
-         [(jitsi/generate-jvb-service config)
-          (jitsi/generate-web-service config)
-          (jitsi/generate-etherpad-service config)
-          (jitsi/generate-excalidraw-backend-service config)
-          (jitsi/generate-modelector-service config)
-          (jitsi/generate-deployment config)
-          (jitsi/generate-excalidraw-deployment config)
-          (jitsi/generate-modelector-deployment config)]
-         (jitsi/generate-ingress-web config)
-         (jitsi/generate-ingress-etherpad config)
-         (jitsi/generate-ingress-excalidraw-backend config)
-         (jitsi/generate-ingress-modelector config)
-         (when (:contains? config :mon-cfg)
-           (mon/generate-config))))))
+  (let [resolved-config (merge config-defaults config)]
+    (map yaml/to-string
+         (filter
+          #(not (nil? %))
+          (cm/concat-vec
+           (ns/generate resolved-config)
+           (jitsi/prosody resolved-config)
+          ;;  [(jitsi/generate-jvb-service config)
+          ;;   (jitsi/generate-web-service config)
+          ;;   (jitsi/generate-etherpad-service config)
+          ;;   (jitsi/generate-excalidraw-backend-service config)
+          ;;   (jitsi/generate-modelector-service config)
+          ;;   (jitsi/generate-deployment config)
+          ;;   (jitsi/generate-excalidraw-deployment config)
+          ;;   (jitsi/generate-modelector-deployment config)]
+          ;;  (jitsi/generate-ingress-web config)
+          ;;  (jitsi/generate-ingress-etherpad config)
+          ;;  (jitsi/generate-ingress-excalidraw-backend config)
+          ;;  (jitsi/generate-ingress-modelector config)
+           (when (:contains? resolved-config :mon-cfg)
+             (mon/generate-config)))))))
 
 (defn-spec auth-objects cp/map-or-seq?
   [config config?
