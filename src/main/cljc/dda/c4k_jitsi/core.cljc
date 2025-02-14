@@ -33,7 +33,7 @@
           #(not (nil? %))
           (cm/concat-vec
            (ns/generate resolved-config)
-           (jitsi/prosody resolved-config)
+           (jitsi/prosody-config resolved-config)
           ;;  [(jitsi/generate-jvb-service config)
           ;;   (jitsi/generate-web-service config)
           ;;   (jitsi/generate-etherpad-service config)
@@ -56,7 +56,8 @@
        (filter
         #(not (nil? %))
         (cm/concat-vec
-         [(jitsi/generate-secret-jitsi config auth)]
+         (jitsi/prosody-secret auth)
+         ;[(jitsi/generate-secret-jitsi config auth)]
          (when (:contains? config :mon-cfg)
            (mon/generate-auth (:mon-cfg config) (:mon-auth auth)))))))
 
