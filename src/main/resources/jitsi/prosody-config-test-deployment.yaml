@@ -5,6 +5,7 @@ metadata:
   namespace: NAMESPACE
   labels:
     app.kubernetes.io/name: "prosody-test-connection"
+    app.kubernetes.io/component: prosody
 spec:
   replicas: 0
   strategy:

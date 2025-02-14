@@ -56,7 +56,7 @@
        (filter
         #(not (nil? %))
         (cm/concat-vec
-         (jitsi/prosody-secret auth)
+         (jitsi/prosody-auth auth)
          ;[(jitsi/generate-secret-jitsi config auth)]
          (when (:contains? config :mon-cfg)
            (mon/generate-auth (:mon-cfg config) (:mon-auth auth)))))))

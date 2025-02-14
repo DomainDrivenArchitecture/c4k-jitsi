@@ -5,6 +5,7 @@ metadata:
   namespace: NAMESPACE
   labels:
     app.kubernetes.io/name: prosody
+    app.kubernetes.io/component: prosody
 spec:
   serviceName: "prosody"
   replicas: 1

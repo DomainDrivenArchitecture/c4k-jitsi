@@ -306,8 +306,8 @@
           {:name "prosody",
            :namespace "jitsi",
            :labels
-           {:app.kubernetes.io/name "prosody"}}}
-         (first (cut/prosody
+           #:app.kubernetes.io{:name "prosody" :component "prosody"}}}
+         (first (cut/prosody-config
                  {:fqdn "xy.xy.xy"
                   :namespace "jitsi"}))))
   (is (= {:apiVersion "v1",
@@ -316,7 +316,7 @@
           {:name "prosody-common",
            :namespace "jitsi",
            :labels
-           #:app.kubernetes.io{:name "jitsi-meet"}},
+           #:app.kubernetes.io{:name "jitsi-meet" :component "prosody"}},
           :data
           {:ENABLE_AUTH "0",
            :ENABLE_GUESTS "1",
@@ -331,10 +331,15 @@
            :ENABLE_COLIBRI_WEBSOCKET_UNSAFE_REGEX "1",
            :ENABLE_XMPP_WEBSOCKET "true",
            :TZ "Europe/Amsterdam"}}
-         (second (cut/prosody
+         (second (cut/prosody-config
                   {:fqdn "xy.xy.xy"
                    :namespace "jitsi"}))))
   (is (= 8
-         (count (cut/prosody
+         (count (cut/prosody-config
                  {:fqdn "xy.xy.xy"
-                  :namespace "jitsi"})))))
+                  :namespace "jitsi"}))))
+   (is (= 5
+         (count (cut/prosody-auth
+                 {:jvb-auth-password "jvb-auth"
+                  :jicofo-auth-password "jicofo-auth"
+                  :jicofo-component-secret "jicofo-comp"})))))

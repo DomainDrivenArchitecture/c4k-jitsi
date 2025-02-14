@@ -5,6 +5,7 @@ metadata:
   namespace: NAMESPACE
   labels:
     app.kubernetes.io/name: prosody
+    app.kubernetes.io/component: prosody
 data:
   prosody.cfg.lua: |
     # Using prosody /default/prosody.cfg.lua from container image

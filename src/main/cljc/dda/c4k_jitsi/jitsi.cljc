@@ -138,37 +138,36 @@
      (yaml/load-as-edn "jitsi/modelector-deployment.yaml")
      (cm/replace-all-matching "NAMESPACE" namespace))))
 
+(defn- load-and-adjust-namespace
+  [file namespace]
+  (->
+   (yaml/load-as-edn file)
+   (cm/replace-all-matching "NAMESPACE" namespace)))
+
 (defn-spec prosody-config cp/map-or-seq?
   [config config?]
   (let [{:keys [fqdn namespace]} config]
-    [(->
-      (yaml/load-as-edn "jitsi/prosody-sa.yaml")
-      (cm/replace-all-matching "NAMESPACE" namespace))
+    [(load-and-adjust-namespace "jitsi/prosody-config-serviceaccount.yaml" namespace)
      (->
-      (yaml/load-as-edn "jitsi/prosody-common-cm.yaml")
-      (cm/replace-all-matching "JITSI_FQDN" fqdn)
-      (cm/replace-all-matching "NAMESPACE" namespace))
-     (->
-      (yaml/load-as-edn "jitsi/prosody-default-cm.yaml")
-      (cm/replace-all-matching "NAMESPACE" namespace))
-     (->
-      (yaml/load-as-edn "jitsi/prosody-envs-cm.yaml")
-      (cm/replace-all-matching "NAMESPACE" namespace))
-     (->
-      (yaml/load-as-edn "jitsi/prosody-init-cm.yaml")
-      (cm/replace-all-matching "NAMESPACE" namespace))
-     (->
-      (yaml/load-as-edn "jitsi/prosody-stateful-set.yaml")
-      (cm/replace-all-matching "NAMESPACE" namespace))
-     (->
-      (yaml/load-as-edn "jitsi/prosody-service.yaml")
-      (cm/replace-all-matching "NAMESPACE" namespace))
-     (->
-      (yaml/load-as-edn "jitsi/prosody-test-deployment.yaml")
-      (cm/replace-all-matching "NAMESPACE" namespace))]))
+      (load-and-adjust-namespace "jitsi/prosody-config-common-cm.yaml" namespace)
+      (cm/replace-all-matching "JITSI_FQDN" fqdn))
+     (load-and-adjust-namespace "jitsi/prosody-config-default-cm.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/prosody-config-envs-cm.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/prosody-config-init-cm.yaml"namespace)
+     (load-and-adjust-namespace "jitsi/prosody-config-stateful-set.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/prosody-config-service.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/prosody-config-test-deployment.yaml" namespace)]))
 
-(defn-spec prosody-secret cp/map-or-seq?
+(defn-spec prosody-auth cp/map-or-seq?
   [auth auth?]
-  [(->
-    (yaml/load-as-edn "jitsi/prosody-secret.yaml")
-    (cm/replace-all-matching "NAMESPACE" namespace))])
+  (let [{:keys [jvb-auth-password jicofo-auth-password jicofo-component-secret]} auth]
+  [(load-and-adjust-namespace "jitsi/prosody-auth-secret.yaml" namespace)
+   (load-and-adjust-namespace "jitsi/prosody-auth-jibri-secret.yaml" namespace)
+   (->
+    (load-and-adjust-namespace "jitsi/prosody-auth-jicofo-secret.yaml" namespace)
+    (cm/replace-key-value :JICOFO_AUTH_PASSWORD (b64/encode jicofo-auth-password))
+    (cm/replace-key-value :JICOFO_COMPONENT_SECRET (b64/encode jicofo-component-secret)))
+   (load-and-adjust-namespace "jitsi/prosody-auth-jigasi-secret.yaml" namespace)
+   (-> 
+    (load-and-adjust-namespace "jitsi/prosody-auth-jvb-secret.yaml" namespace)
+    (cm/replace-key-value :JVB_AUTH_PASSWORD (b64/encode jvb-auth-password)))]))

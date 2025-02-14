@@ -6,6 +6,7 @@ metadata:
   namespace: NAMESPACE
   labels:
     app.kubernetes.io/name: jitsi-meet
+    app.kubernetes.io/component: prosody
 data:
   ENABLE_AUTH: "0"
   ENABLE_GUESTS: "1"
