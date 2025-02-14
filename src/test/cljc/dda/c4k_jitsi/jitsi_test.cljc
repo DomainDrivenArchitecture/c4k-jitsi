@@ -340,6 +340,8 @@
                   :namespace "jitsi"}))))
    (is (= 5
          (count (cut/prosody-auth
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"}
                  {:jvb-auth-password "jvb-auth"
                   :jicofo-auth-password "jicofo-auth"
                   :jicofo-component-secret "jicofo-comp"})))))

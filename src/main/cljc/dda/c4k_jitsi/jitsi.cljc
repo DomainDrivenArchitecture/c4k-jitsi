@@ -159,8 +159,10 @@
      (load-and-adjust-namespace "jitsi/prosody-config-test-deployment.yaml" namespace)]))
 
 (defn-spec prosody-auth cp/map-or-seq?
-  [auth auth?]
-  (let [{:keys [jvb-auth-password jicofo-auth-password jicofo-component-secret]} auth]
+  [config config?
+   auth auth?]
+  (let [{:keys [namespace]} config
+        {:keys [jvb-auth-password jicofo-auth-password jicofo-component-secret]} auth]
   [(load-and-adjust-namespace "jitsi/prosody-auth-secret.yaml" namespace)
    (load-and-adjust-namespace "jitsi/prosody-auth-jibri-secret.yaml" namespace)
    (->

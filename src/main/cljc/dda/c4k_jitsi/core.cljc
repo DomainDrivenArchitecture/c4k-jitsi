@@ -52,12 +52,12 @@
 (defn-spec auth-objects cp/map-or-seq?
   [config config?
    auth auth?]
+  (let [resolved-config (merge config-defaults config)]
   (map yaml/to-string
        (filter
         #(not (nil? %))
         (cm/concat-vec
-         (jitsi/prosody-auth auth)
+         (jitsi/prosody-auth config auth)
          ;[(jitsi/generate-secret-jitsi config auth)]
          (when (:contains? config :mon-cfg)
-           (mon/generate-auth (:mon-cfg config) (:mon-auth auth)))))))
-
+           (mon/generate-auth (:mon-cfg config) (:mon-auth auth))))))))
