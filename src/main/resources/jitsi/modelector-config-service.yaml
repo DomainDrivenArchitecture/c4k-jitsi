@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    service: modelector
-  name: modelector
+  name: moderator-elector
   namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: moderator-elector
 spec:
   ports:
     - name: "http"
       port: 80
       targetPort: 8080
   selector:
-    app: modelector
+    app.kubernetes.io/name: moderator-elector

@@ -1,24 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: modelector
-  name: modelector
+  name: moderator-elector
   namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: moderator-elector
 spec:
   replicas: 1
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
-      app: modelector
+      app.kubernetes.io/name: moderator-elector
   template:
     metadata:
       labels:
-        app: modelector
+        app.kubernetes.io/name: moderator-elector
     spec:
       containers:
-        - name: modelector
+        - name: moderator-elector
           image: domaindrivenarchitecture/moderator-election-vaadin_fullstack
           imagePullPolicy: IfNotPresent
           env:

@@ -129,16 +129,8 @@
     [(load-and-adjust-namespace "jitsi/excalidraw-config-service.yaml" namespace)
      (load-and-adjust-namespace "jitsi/excalidraw-config-deployment.yaml" namespace)]))
 
-(defn-spec generate-modelector-service cp/map-or-seq?
+(defn-spec moderator-elector-config cp/map-or-seq?
   [config config?]
   (let [{:keys [namespace]} config]
-    (->
-     (yaml/load-as-edn "jitsi/modelector-service.yaml")
-     (cm/replace-all-matching "NAMESPACE" namespace))))
-
-(defn-spec generate-modelector-deployment cp/map-or-seq?
-  [config config?]
-  (let [{:keys [fqdn namespace]} config]
-    (->
-     (yaml/load-as-edn "jitsi/modelector-deployment.yaml")
-     (cm/replace-all-matching "NAMESPACE" namespace))))
+    [(load-and-adjust-namespace "jitsi/modelector-config-service.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/modelector-config-deployment.yaml" namespace)]))

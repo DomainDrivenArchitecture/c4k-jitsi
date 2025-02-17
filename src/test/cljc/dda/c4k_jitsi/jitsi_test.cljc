@@ -105,3 +105,8 @@
                  {:fqdn "xy.xy.xy"
                   :namespace "jitsi"})))))
 
+(deftest should-generate-moderator-elector
+  (is (= 2
+         (count (cut/moderator-elector-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
