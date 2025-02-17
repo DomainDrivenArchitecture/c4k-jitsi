@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "prosody-test-connection"
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: "prosody-test-connection"
+    app.kubernetes.io/component: prosody
+spec:
+  replicas: 0
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "prosody-test-connection"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "prosody-test-connection"
+    spec:
+      containers:
+        - name: wget
+          image: busybox
+          command: ['wget']
+          args: ['prosody:5280/http-bind']

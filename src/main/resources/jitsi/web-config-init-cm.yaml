@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: NAMESPACE
+  name: jitsi-meet-web-init
+  labels:
+    app.kubernetes.io/name: jitsi-meet
+    app.kubernetes.io/component: web
+data:
+  10-config: |
+  # Using web /etc/cont-init.d/10-config from container image

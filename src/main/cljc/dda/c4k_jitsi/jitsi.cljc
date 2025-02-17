@@ -174,6 +174,11 @@
     (load-and-adjust-namespace "jitsi/prosody-auth-jvb-secret.yaml" namespace)
     (cm/replace-key-value :JVB_AUTH_PASSWORD (b64/encode jvb-auth-password)))]))
 
+(defn-spec jitsi-config cp/map-or-seq?
+  [config config?]
+  (let [{:keys [fqdn namespace]} config]
+    [(load-and-adjust-namespace "jitsi/jitsi-config-serviceaccount.yaml" namespace)]))
+
 (defn-spec jicofo-config cp/map-or-seq?
   [config config?]
   (let [{:keys [namespace]} config]
@@ -184,10 +189,17 @@
      (load-and-adjust-namespace "jitsi/jicofo-config-init-cm.yaml" namespace)
      (load-and-adjust-namespace "jitsi/jicofo-config-deployment.yaml" namespace)]))
 
-(defn-spec jitsi-config cp/map-or-seq?
+(defn-spec web-config cp/map-or-seq?
   [config config?]
   (let [{:keys [fqdn namespace]} config]
-    [(load-and-adjust-namespace "jitsi/jitsi-config-serviceaccount.yaml" namespace)]))
+    [(load-and-adjust-namespace "jitsi/web-config-conffiles-cm.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/web-config-init-cm.yaml" namespace)
+     (-> 
+      (load-and-adjust-namespace "jitsi/web-config-envs-cm.yaml" namespace)
+      (cm/replace-key-value :XMPP_BOSH_URL_BASE (str "http://prosody." namespace ".svc.cluster.local:5280")))
+     (load-and-adjust-namespace "jitsi/web-config-service.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/web-config-deployment.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/web-config-test-deployment.yaml" namespace)]))
 
 (defn-spec jibri-config cp/map-or-seq?
   [config config?]

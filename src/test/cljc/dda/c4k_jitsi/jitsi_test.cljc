@@ -155,3 +155,10 @@
          (count (cut/jibri-config
                  {:fqdn "xy.xy.xy"
                   :namespace "jitsi"})))))
+
+(deftest should-generate-web
+  (is (= 6
+         (count (cut/web-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
+

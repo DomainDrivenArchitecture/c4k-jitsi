@@ -34,8 +34,9 @@
           (cm/concat-vec
            (ns/generate resolved-config)
            (jitsi/prosody-config resolved-config)
-           (jitsi/jicofo-config resolved-config)
            (jitsi/jitsi-config resolved-config)
+           (jitsi/jicofo-config resolved-config)
+           (jitsi/web-config resolved-config)
            (jitsi/jibri-config resolved-config)
           ;;  [(jitsi/generate-jvb-service config)
           ;;   (jitsi/generate-web-service config)
