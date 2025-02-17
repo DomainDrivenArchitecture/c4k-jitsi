@@ -40,7 +40,8 @@
            (jitsi/web-config resolved-config)
            (jitsi/jvb-config resolved-config)
            (jitsi/jibri-config resolved-config)
-           (jitsi/etherpad resolved-config)
+           (jitsi/etherpad-config resolved-config)
+           (jitsi/excalidraw-config resolved-config)
            (ing/generate-ingress-and-cert (merge
                                            {:service-name "jitsi-meet-web"
                                             :service-port 80

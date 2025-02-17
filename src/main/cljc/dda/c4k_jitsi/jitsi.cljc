@@ -123,25 +123,17 @@
     [(load-and-adjust-namespace "jitsi/etherpad-config-service.yaml" namespace)
      (load-and-adjust-namespace "jitsi/etherpad-config-deployment.yaml" namespace)]))
 
-(defn-spec generate-excalidraw-backend-service cp/map-or-seq?
+(defn-spec excalidraw-config cp/map-or-seq?
   [config config?]
   (let [{:keys [namespace]} config]
-    (->
-     (yaml/load-as-edn "jitsi/excalidraw-backend-service.yaml")
-     (cm/replace-all-matching "NAMESPACE" namespace))))
+    [(load-and-adjust-namespace "jitsi/excalidraw-config-service.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/excalidraw-config-deployment.yaml" namespace)]))
 
 (defn-spec generate-modelector-service cp/map-or-seq?
   [config config?]
   (let [{:keys [namespace]} config]
     (->
      (yaml/load-as-edn "jitsi/modelector-service.yaml")
-     (cm/replace-all-matching "NAMESPACE" namespace))))
-
-(defn-spec generate-excalidraw-deployment cp/map-or-seq?
-  [config config?]
-  (let [{:keys [fqdn namespace]} config]
-    (->
-     (yaml/load-as-edn "jitsi/excalidraw-deployment.yaml")
      (cm/replace-all-matching "NAMESPACE" namespace))))
 
 (defn-spec generate-modelector-deployment cp/map-or-seq?

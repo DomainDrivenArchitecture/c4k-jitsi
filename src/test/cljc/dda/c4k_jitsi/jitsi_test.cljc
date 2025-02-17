@@ -12,73 +12,7 @@
 (st/instrument `cut/web-config)
 (st/instrument `cut/jvb-config)
 (st/instrument `cut/etherpad-config)
-
-(deftest should-generate-excalidraw-backend-service
-  (is (= {:apiVersion "v1",
-          :kind "Service",
-          :metadata
-          {:labels {:service "excalidraw-backend"},
-           :name "excalidraw-backend",
-           :namespace "jitsi"},
-          :spec
-          {:ports [{:name "excalidraw-backend", :port 3002, :targetPort 80}],
-           :selector {:app "excalidraw-backend"}}}
-         (cut/generate-excalidraw-backend-service
-          {:fqdn "xy.xy.xy"
-           :namespace "jitsi"}))))
-
-(deftest should-generate-modelector-service
-  (is (= {:apiVersion "v1",
-          :kind "Service",
-          :metadata
-          {:labels {:service "modelector"},
-           :name "modelector",
-           :namespace "jitsi"},
-          :spec
-          {:ports [{:name "http", :port 80, :targetPort 8080}],
-           :selector {:app "modelector"}}}
-         (cut/generate-modelector-service
-          {:fqdn "xy.xy.xy"
-           :namespace "jitsi"}))))
-
-(deftest should-generate-modelector-deployment
-  (is (= {:apiVersion "apps/v1",
-          :kind "Deployment",
-          :metadata
-          {:labels {:app "modelector"},
-           :name "modelector",
-           :namespace "jitsi"},
-          :spec
-          {:selector {:matchLabels {:app "modelector"}},
-           :replicas 1,
-           :strategy {:type "Recreate"},
-           :template
-           {:metadata {:labels {:app "modelector"}},
-            :spec
-            {:containers
-             [{:name "modelector",
-               :image "domaindrivenarchitecture/moderator-election-vaadin_fullstack",
-               :imagePullPolicy "IfNotPresent",
-               :env
-               [{:name "MEMBERNAMES",
-                 :value "Micha,Ansgar,Erik,Mirco"}]}]}}}}
-          (cut/generate-modelector-deployment
-           {:fqdn "xy.xy.xy"
-            :namespace "jitsi"}))))
-
-(deftest should-generate-excalidraw-deployment
-  (is (= {:apiVersion "v1",
-          :kind "Service",
-          :metadata
-          {:labels {:service "excalidraw-backend"},
-           :name "excalidraw-backend",
-           :namespace "jitsi"},
-          :spec
-          {:ports [{:name "excalidraw-backend", :port 3002, :targetPort 80}],
-           :selector {:app "excalidraw-backend"}}}
-         (cut/generate-excalidraw-backend-service
-          {:fqdn "xy.xy.xy"
-           :namespace "jitsi"}))))
+(st/instrument `cut/excalidraw-config)
 
 (deftest should-generate-prosody
   (is (= {:apiVersion "v1",
@@ -162,6 +96,12 @@
 (deftest should-generate-etherpad
   (is (= 2
          (count (cut/etherpad-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
+
+(deftest should-generate-excalidraw
+  (is (= 2
+         (count (cut/excalidraw-config
                  {:fqdn "xy.xy.xy"
                   :namespace "jitsi"})))))
 
