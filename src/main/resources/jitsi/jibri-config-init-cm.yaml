@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jitsi-meet-jibri-cont-inits
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: jitsi-meet
+    app.kubernetes.io/component: jibri
+data:
+  10-config: |
+    # Using jibri /etc/cont-init.d/10-config from container image

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jitsi-meet-jibri-defaults
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: jitsi-meet
+    app.kubernetes.io/component: jibri
+data:
+  jibri.conf: |
+    # Using jibri /default/jibri.conf from container image
+    
+  logging.properties: |
+    # Using jibri /default/logging.properties from container image
+    
+  autoscaler-sidecar.config: |
+    # Using jibri /default/autoscaler-sidecar.config from container image
+    
+  xorg-video-dummy.conf: |
+    # Using jibri /default/xorg-video-dummy.conf from container image

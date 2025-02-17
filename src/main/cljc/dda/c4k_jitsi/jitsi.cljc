@@ -173,3 +173,18 @@
    (-> 
     (load-and-adjust-namespace "jitsi/prosody-auth-jvb-secret.yaml" namespace)
     (cm/replace-key-value :JVB_AUTH_PASSWORD (b64/encode jvb-auth-password)))]))
+
+(defn-spec jitsi-config cp/map-or-seq?
+  [config config?]
+  (let [{:keys [fqdn namespace]} config]
+    [(load-and-adjust-namespace "jitsi/jitsi-config-serviceaccount.yaml" namespace)]))
+
+(defn-spec jibri-config cp/map-or-seq?
+  [config config?]
+  (let [{:keys [fqdn namespace]} config]
+    [(load-and-adjust-namespace "jitsi/jitsi-config-serviceaccount.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/jibri-config-default-cm.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/jibri-config-envs.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/jibri-config-init-cm.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/jibri-config-service.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/jibri-config-deployment.yaml" namespace)]))

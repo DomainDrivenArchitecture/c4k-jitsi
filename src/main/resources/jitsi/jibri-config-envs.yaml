@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jitsi-meet-jibri
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: jitsi-meet
+    app.kubernetes.io/component: jibri
+data:
+  XMPP_SERVER: 'prosody.NAMESPACE.svc.cluster.local'
+  JIBRI_BREWERY_MUC: 'jibribrewery'
+  JIBRI_RECORDING_DIR: '/data/recordings'
+  JIBRI_FINALIZE_RECORDING_SCRIPT_PATH: "/config/finalize.sh"
+  JIBRI_STRIP_DOMAIN_JID: muc
+  DISPLAY: ":0"
+  JIBRI_SINGLE_USE_MODE: "true"

@@ -37,37 +37,6 @@ spec:
                   key: JICOFO_AUTH_PASSWORD
             - name: TZ
               value: Europe/Berlin
-        - name: prosody
-          image: jitsi/prosody:stable-9646
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: PUBLIC_URL
-              value: REPLACE_JITSI_FQDN
-            - name: XMPP_SERVER
-              value: localhost
-            - name: JICOFO_COMPONENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: jitsi-config
-                  key: JICOFO_COMPONENT_SECRET
-            - name: JVB_AUTH_USER
-              value: jvb
-            - name: JVB_AUTH_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: jitsi-config
-                  key: JVB_AUTH_PASSWORD
-            - name: JICOFO_AUTH_USER
-              value: focus
-            - name: JICOFO_AUTH_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: jitsi-config
-                  key: JICOFO_AUTH_PASSWORD
-            - name: TZ
-              value: Europe/Berlin
-            - name: JVB_TCP_HARVESTER_DISABLED
-              value: "true"
         - name: web
           image: domaindrivenarchitecture/c4k-jitsi-web
           imagePullPolicy: IfNotPresent
