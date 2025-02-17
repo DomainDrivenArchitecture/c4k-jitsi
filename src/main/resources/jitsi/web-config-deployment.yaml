@@ -25,7 +25,7 @@ spec:
         - name: jitsi-meet
           securityContext:
             {}
-          image: "jitsi/web:stable-9646"
+          image: domaindrivenarchitecture/c4k-jitsi-web
           imagePullPolicy: IfNotPresent
           envFrom:
           - configMapRef:

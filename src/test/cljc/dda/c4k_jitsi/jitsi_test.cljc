@@ -9,18 +9,9 @@
 (st/instrument `cut/prosody-auth)
 (st/instrument `cut/jitsi-config)
 (st/instrument `cut/jibri-config)
-
-(deftest should-generate-etherpad-service
-  (is (= {:apiVersion "v1",
-          :kind "Service",
-          :metadata
-          {:labels {:service "etherpad"}, :name "etherpad", :namespace "jitsi"},
-          :spec
-          {:ports [{:name "etherpad", :port 9001, :targetPort 9001}],
-           :selector {:app "jitsi"}}}
-         (cut/generate-etherpad-service
-          {:fqdn "xy.xy.xy"
-           :namespace "jitsi"}))))
+(st/instrument `cut/web-config)
+(st/instrument `cut/jvb-config)
+(st/instrument `cut/etherpad-config)
 
 (deftest should-generate-excalidraw-backend-service
   (is (= {:apiVersion "v1",
@@ -159,6 +150,18 @@
 (deftest should-generate-web
   (is (= 6
          (count (cut/web-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
+
+(deftest should-generate-jvb
+  (is (= 3
+         (count (cut/jvb-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
+
+(deftest should-generate-etherpad
+  (is (= 2
+         (count (cut/etherpad-config
                  {:fqdn "xy.xy.xy"
                   :namespace "jitsi"})))))
 

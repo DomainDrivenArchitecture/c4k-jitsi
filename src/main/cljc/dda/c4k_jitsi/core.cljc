@@ -5,6 +5,7 @@
       :cljs [orchestra.core :refer-macros [defn-spec]])
    [dda.c4k-common.common :as cm]
    [dda.c4k-common.predicate :as cp]
+   [dda.c4k-common.ingress :as ing]
    [dda.c4k-common.monitoring :as mon]
    [dda.c4k-common.yaml :as yaml]
    [dda.c4k-jitsi.jitsi :as jitsi]
@@ -37,19 +38,29 @@
            (jitsi/jitsi-config resolved-config)
            (jitsi/jicofo-config resolved-config)
            (jitsi/web-config resolved-config)
+           (jitsi/jvb-config resolved-config)
            (jitsi/jibri-config resolved-config)
-          ;;  [(jitsi/generate-jvb-service config)
-          ;;   (jitsi/generate-web-service config)
-          ;;   (jitsi/generate-etherpad-service config)
-          ;;   (jitsi/generate-excalidraw-backend-service config)
-          ;;   (jitsi/generate-modelector-service config)
-          ;;   (jitsi/generate-deployment config)
-          ;;   (jitsi/generate-excalidraw-deployment config)
-          ;;   (jitsi/generate-modelector-deployment config)]
-          ;;  (jitsi/generate-ingress-web config)
-          ;;  (jitsi/generate-ingress-etherpad config)
-          ;;  (jitsi/generate-ingress-excalidraw-backend config)
-          ;;  (jitsi/generate-ingress-modelector config)
+           (jitsi/etherpad resolved-config)
+           (ing/generate-ingress-and-cert (merge
+                                           {:service-name "jitsi-meet-web"
+                                            :service-port 80
+                                            :fqdns [(:fqdn resolved-config)]}
+                                           resolved-config))
+           (ing/generate-ingress-and-cert (merge
+                                           {:service-name "etherpad"
+                                            :service-port 9001
+                                            :fqdns [(str "etherpad." (:fqdn resolved-config))]}
+                                           resolved-config))
+            (ing/generate-ingress-and-cert (merge
+                                            {:service-name "excalidraw"
+                                             :service-port 3002
+                                             :fqdns [(str "excalidraw." (:fqdn resolved-config))]}
+                                            resolved-config))
+           (ing/generate-ingress-and-cert (merge
+                                           {:service-name "moderator-elector"
+                                            :service-port 80
+                                            :fqdns [(str "moderator-elector." (:fqdn resolved-config))]}
+                                           resolved-config))
            (when (:contains? resolved-config :mon-cfg)
              (mon/generate-config)))))))
 
@@ -62,6 +73,5 @@
         #(not (nil? %))
         (cm/concat-vec
          (jitsi/prosody-auth config auth)
-         ;[(jitsi/generate-secret-jitsi config auth)]
          (when (:contains? config :mon-cfg)
            (mon/generate-auth (:mon-cfg config) (:mon-auth auth))))))))
