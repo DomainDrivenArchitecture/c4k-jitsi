@@ -138,6 +138,12 @@
                   :jicofo-auth-password "jicofo-auth"
                   :jicofo-component-secret "jicofo-comp"})))))
 
+(deftest should-generate-jicofo
+  (is (= 4
+         (count (cut/jicofo-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
+
 (deftest should-generate-jitsi
   (is (= 1
          (count (cut/jitsi-config

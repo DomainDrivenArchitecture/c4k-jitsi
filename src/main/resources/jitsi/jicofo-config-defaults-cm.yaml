@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jitsi-meet-jicofo-defaults
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: jitsi-meet
+    app.kubernetes.io/component: jicofo
+data:
+  jicofo.conf: |
+    # Using jicofo /default/jicofo.conf from container image
+    
+  logging.properties: |
+    # Using jicofo /default/logging.properties from container image

@@ -153,7 +153,7 @@
       (cm/replace-all-matching "JITSI_FQDN" fqdn))
      (load-and-adjust-namespace "jitsi/prosody-config-default-cm.yaml" namespace)
      (load-and-adjust-namespace "jitsi/prosody-config-envs-cm.yaml" namespace)
-     (load-and-adjust-namespace "jitsi/prosody-config-init-cm.yaml"namespace)
+     (load-and-adjust-namespace "jitsi/prosody-config-init-cm.yaml" namespace)
      (load-and-adjust-namespace "jitsi/prosody-config-stateful-set.yaml" namespace)
      (load-and-adjust-namespace "jitsi/prosody-config-service.yaml" namespace)
      (load-and-adjust-namespace "jitsi/prosody-config-test-deployment.yaml" namespace)]))
@@ -174,6 +174,16 @@
     (load-and-adjust-namespace "jitsi/prosody-auth-jvb-secret.yaml" namespace)
     (cm/replace-key-value :JVB_AUTH_PASSWORD (b64/encode jvb-auth-password)))]))
 
+(defn-spec jicofo-config cp/map-or-seq?
+  [config config?]
+  (let [{:keys [namespace]} config]
+    [(load-and-adjust-namespace "jitsi/jicofo-config-defaults-cm.yaml" namespace)
+     (->
+      (load-and-adjust-namespace "jitsi/jicofo-config-envs-cm.yaml" namespace)
+      (cm/replace-key-value :XMPP_SERVER (str "prosody." namespace ".svc.cluster.local")))
+     (load-and-adjust-namespace "jitsi/jicofo-config-init-cm.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/jicofo-config-deployment.yaml" namespace)]))
+
 (defn-spec jitsi-config cp/map-or-seq?
   [config config?]
   (let [{:keys [fqdn namespace]} config]
@@ -184,7 +194,9 @@
   (let [{:keys [fqdn namespace]} config]
     [(load-and-adjust-namespace "jitsi/jitsi-config-serviceaccount.yaml" namespace)
      (load-and-adjust-namespace "jitsi/jibri-config-default-cm.yaml" namespace)
-     (load-and-adjust-namespace "jitsi/jibri-config-envs.yaml" namespace)
+     (->
+      (load-and-adjust-namespace "jitsi/jibri-config-envs.yaml" namespace)
+      (cm/replace-key-value :XMPP_SERVER (str "prosody." namespace ".svc.cluster.local")))
      (load-and-adjust-namespace "jitsi/jibri-config-init-cm.yaml" namespace)
      (load-and-adjust-namespace "jitsi/jibri-config-service.yaml" namespace)
      (load-and-adjust-namespace "jitsi/jibri-config-deployment.yaml" namespace)]))
