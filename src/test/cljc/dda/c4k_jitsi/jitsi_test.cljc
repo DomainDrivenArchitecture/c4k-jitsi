@@ -140,10 +140,10 @@
               2)))
   (is (= {:apiVersion "batch/v1",
           :kind "CronJob",
-          :metadata {:name "deployment-restart", :namespace "jitsi"},
+          :metadata {:name "restart-etherpad", :namespace "jitsi"},
           :spec
           {:concurrencyPolicy "Forbid",
-           :schedule "SCHEDULE_REPLACE_Me",
+           :schedule "0 2 * * *",
            :jobTemplate
            {:spec
             {:backoffLimit 2,
@@ -156,12 +156,12 @@
                :command
                ["bash"
                 "-c"
-                "kubectl rollout restart deployment/<YOUR DEPLOYMENT NAME> && kubectl rollout status deployment/<YOUR DEPLOYMENT NAME>"]}}}}}}
+                "kubectl rollout restart deployment/etherpad && kubectl rollout status deployment/etherpad"]}}}}}}
          (nth (cut/restart-config
                {:fqdn "xy.xy.xy"
                 :namespace "jitsi"})
               3)))
-  (is (= 4
+  (is (= 5
          (count (cut/restart-config
                  {:fqdn "xy.xy.xy"
                   :namespace "jitsi"})))))

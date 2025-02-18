@@ -1,11 +1,11 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: deployment-restart
+  name: CRON_NAME
   namespace: NAMESPACE
 spec:
   concurrencyPolicy: Forbid
-  schedule: SCHEDULE_REPLACE_Me
+  schedule: SCHEDULE_REPLACE_ME
   jobTemplate:
     spec:
       backoffLimit: 2
@@ -17,9 +17,4 @@ spec:
           containers:
             - name: kubectl
               image: bitnami/kubectl
-          command:
-          - bash
-          - -c
-          - >-
-            kubectl rollout restart deployment/<YOUR DEPLOYMENT NAME> &&
-            kubectl rollout status deployment/<YOUR DEPLOYMENT NAME>
+          command: COMMAND_REPLACE_ME

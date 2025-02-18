@@ -127,7 +127,22 @@
       (cm/replace-key-value :resourceNames ["etherpad", "excalidraw"]))
      (->
       (load-and-adjust-namespace "jitsi/restart-config-cron.yaml" namespace)
-      (cm/replace-key-value :resourceNames))]))
+      (cm/replace-all-matching "CRON_NAME" "restart-etherpad")
+      (cm/replace-key-value :schedule "0 2 * * *")
+      (cm/replace-key-value 
+       :command 
+       ["bash"
+        "-c"
+        "kubectl rollout restart deployment/etherpad && kubectl rollout status deployment/etherpad"]))
+     (->
+      (load-and-adjust-namespace "jitsi/restart-config-cron.yaml" namespace)
+      (cm/replace-all-matching "CRON_NAME" "restart-excalidraw")
+      (cm/replace-key-value :schedule "0 1 * * *")
+      (cm/replace-key-value
+       :command
+       ["bash"
+        "-c"
+        "kubectl rollout restart deployment/excalidraw && kubectl rollout status deployment/excalidraw"]))]))
 
 (defn-spec etherpad-config cp/map-or-seq?
   [config config?]
