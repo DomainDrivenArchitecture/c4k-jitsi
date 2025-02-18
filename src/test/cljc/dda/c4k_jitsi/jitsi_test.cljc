@@ -110,3 +110,35 @@
          (count (cut/moderator-elector-config
                  {:fqdn "xy.xy.xy"
                   :namespace "jitsi"})))))
+
+(deftest should-generate-restart
+  (is (= {:apiVersion "rbac.authorization.k8s.io/v1",
+          :kind "RoleBinding",
+          :metadata {:name "deployment-restart", :namespace "jitsi"},
+          :roleRef
+          {:apiGroup "rbac.authorization.k8s.io",
+           :kind "Role",
+           :name "deployment-restart"},
+          :subjects
+          [{:kind "ServiceAccount",
+            :name "deployment-restart",
+            :namespace "jitsi"}]}
+         (second (cut/restart-config
+                  {:fqdn "xy.xy.xy"
+                   :namespace "jitsi"}))))
+  (is (= {:apiVersion "rbac.authorization.k8s.io/v1",
+          :kind "Role",
+          :metadata {:name "deployment-restart", :namespace "jitsi"},
+          :rules
+          [{:apiGroups ["apps" "extensions"],
+            :resources ["deployments"],
+            :resourceNames ["etherpad" "excalidraw"],
+            :verbs ["get" "patch" "list" "watch"]}]}
+         (nth (cut/restart-config
+               {:fqdn "xy.xy.xy"
+                :namespace "jitsi"})
+              2)))
+  (is (= 3
+         (count (cut/restart-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))

@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: deployment-restart
+  namespace: NAMESPACE
+rules:
+  - apiGroups: ["apps", "extensions"]
+    resources: ["deployments"]
+    resourceNames: REPLACE_ME
+    verbs: ["get", "patch", "list", "watch"] # "list" and "watch" are only needed
+                                             # if you want to use `rollout status

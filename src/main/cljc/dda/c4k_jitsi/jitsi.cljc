@@ -117,6 +117,15 @@
      (load-and-adjust-namespace "jitsi/jibri-config-service.yaml" namespace)
      (load-and-adjust-namespace "jitsi/jibri-config-deployment.yaml" namespace)]))
 
+(defn-spec restart-config cp/map-or-seq?
+  [config config?]
+  (let [{:keys [namespace]} config]
+    [(load-and-adjust-namespace "jitsi/restart-config-serviceaccount.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/restart-config-rolebinding.yaml" namespace)
+     (-> 
+      (load-and-adjust-namespace "jitsi/restart-config-authorization.yaml" namespace)
+      (cm/replace-key-value :resourceNames ["etherpad", "excalidraw"]))]))
+
 (defn-spec etherpad-config cp/map-or-seq?
   [config config?]
   (let [{:keys [namespace]} config]
