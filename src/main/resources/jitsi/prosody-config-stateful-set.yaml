@@ -24,7 +24,7 @@ spec:
         - name: prosody
           securityContext:
             {}
-          image: "jitsi/prosody:stable-9909"
+          image: "jitsi/prosody:stable-10008"
           imagePullPolicy: IfNotPresent
           envFrom:
           - configMapRef:

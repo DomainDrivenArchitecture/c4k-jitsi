@@ -43,7 +43,7 @@ spec:
         - name: jitsi-meet
           securityContext:
             {}
-          image: "jitsi/jicofo:stable-9646"
+          image: "jitsi/jicofo:stable-10008"
           imagePullPolicy: IfNotPresent
           envFrom:
           - secretRef:

@@ -24,7 +24,7 @@ spec:
         securityContext:
           capabilities:
             add: ["SYS_ADMIN"]
-        image: "jitsi/jibri:stable-9646"
+        image: "jitsi/jibri:stable-10008"
         imagePullPolicy: IfNotPresent
         ports:
         - name: http-internal
