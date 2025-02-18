@@ -23,8 +23,7 @@ def initialize(project):
         "release_primary_build_file": "project.clj",
         "release_secondary_build_files": [
             "package.json",
-            "infrastructure/web/build.py",
-            "infrastructure/excalidraw-backend/build.py",
+            "infrastructure/excalidraw/build.py",
         ],
         "release_artifact_server_url": "https://repo.prod.meissa.de",
         "release_organisation": "meissa",

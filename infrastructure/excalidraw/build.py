@@ -4,7 +4,7 @@ from pybuilder.core import task, init
 from ddadevops import *
 
 name = "c4k-jitsi"
-MODULE = "excalidraw-backend"
+MODULE = "excalidraw"
 PROJECT_ROOT_PATH = "../.."
 version = "2.2.1-dev"
 
