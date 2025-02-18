@@ -152,11 +152,12 @@
              {:spec
               {:serviceAccountName "deployment-restart",
                :restartPolicy "Never",
-               :containers [{:name "kubectl", :image "bitnami/kubectl"}],
-               :command
-               ["bash"
-                "-c"
-                "kubectl rollout restart deployment/etherpad && kubectl rollout status deployment/etherpad"]}}}}}}
+               :containers 
+               [{:name "kubectl", :image "bitnami/kubectl",
+                 :command
+                 ["bash"
+                  "-c"
+                  "kubectl rollout restart deployment/etherpad && kubectl rollout status deployment/etherpad"]}]}}}}}}
          (nth (cut/restart-config
                {:fqdn "xy.xy.xy"
                 :namespace "jitsi"})

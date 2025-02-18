@@ -17,4 +17,4 @@ spec:
           containers:
             - name: kubectl
               image: bitnami/kubectl
-          command: COMMAND_REPLACE_ME
+              command: COMMAND_REPLACE_ME
