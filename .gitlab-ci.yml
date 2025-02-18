@@ -116,9 +116,9 @@ release-to-forgejo:
   script:
     - pyb publish_artifacts
 
-jitsi-web-image-publish:
+jitsi-excalidraw-image-publish:
   <<: *img
   <<: *tag_only
   stage: image
   script:
-    - cd infrastructure/web && pyb image publish
+    - cd infrastructure/excalidraw && pyb image publish
