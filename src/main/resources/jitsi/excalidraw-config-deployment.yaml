@@ -16,5 +16,5 @@ spec:
         app.kubernetes.io/name: excalidraw
     spec:
       containers:
-        - name: excalidraw-backend
+        - name: excalidraw
           image: domaindrivenarchitecture/c4k-jitsi-excalidraw-backend
