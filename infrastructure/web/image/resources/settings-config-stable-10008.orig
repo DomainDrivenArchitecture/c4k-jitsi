@@ -1,5 +1,3 @@
-//https://github.com/jitsi/docker-jitsi-meet/blob/master/web/rootfs/defaults/settings-config.js
-
 {{ $ENABLE_ADAPTIVE_MODE := .Env.ENABLE_ADAPTIVE_MODE | default "true" | toBool -}}
 {{ $ENABLE_AUDIO_PROCESSING := .Env.ENABLE_AUDIO_PROCESSING | default "true" | toBool -}}
 {{ $ENABLE_AUTOMATIC_GAIN_CONTROL := .Env.ENABLE_AUTOMATIC_GAIN_CONTROL | default "true" | toBool -}}
@@ -628,10 +626,5 @@ config.whiteboard.userLimit = 25;
 
 // Testing
 config.testing = {
-    enableAv1Support: {{ $TESTING_AV1_SUPPORT }}
+    enableCodecSelectionAPI: true
 };
-
-// CUSTOM ADJUSTMENTS
-config.disableThirdPartyRequests = true;
-config.channelLastN = 8;
-config.enableLayerSuspension = true;
