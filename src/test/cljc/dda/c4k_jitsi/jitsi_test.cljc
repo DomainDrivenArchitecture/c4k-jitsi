@@ -138,7 +138,30 @@
                {:fqdn "xy.xy.xy"
                 :namespace "jitsi"})
               2)))
-  (is (= 3
+  (is (= {:apiVersion "batch/v1",
+          :kind "CronJob",
+          :metadata {:name "deployment-restart", :namespace "jitsi"},
+          :spec
+          {:concurrencyPolicy "Forbid",
+           :schedule "SCHEDULE_REPLACE_Me",
+           :jobTemplate
+           {:spec
+            {:backoffLimit 2,
+             :activeDeadlineSeconds 600,
+             :template
+             {:spec
+              {:serviceAccountName "deployment-restart",
+               :restartPolicy "Never",
+               :containers [{:name "kubectl", :image "bitnami/kubectl"}],
+               :command
+               ["bash"
+                "-c"
+                "kubectl rollout restart deployment/<YOUR DEPLOYMENT NAME> && kubectl rollout status deployment/<YOUR DEPLOYMENT NAME>"]}}}}}}
+         (nth (cut/restart-config
+               {:fqdn "xy.xy.xy"
+                :namespace "jitsi"})
+              3)))
+  (is (= 4
          (count (cut/restart-config
                  {:fqdn "xy.xy.xy"
                   :namespace "jitsi"})))))

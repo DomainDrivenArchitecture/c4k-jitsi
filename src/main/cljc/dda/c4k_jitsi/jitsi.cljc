@@ -122,9 +122,12 @@
   (let [{:keys [namespace]} config]
     [(load-and-adjust-namespace "jitsi/restart-config-serviceaccount.yaml" namespace)
      (load-and-adjust-namespace "jitsi/restart-config-rolebinding.yaml" namespace)
-     (-> 
+     (->
       (load-and-adjust-namespace "jitsi/restart-config-authorization.yaml" namespace)
-      (cm/replace-key-value :resourceNames ["etherpad", "excalidraw"]))]))
+      (cm/replace-key-value :resourceNames ["etherpad", "excalidraw"]))
+     (->
+      (load-and-adjust-namespace "jitsi/restart-config-cron.yaml" namespace)
+      (cm/replace-key-value :resourceNames))]))
 
 (defn-spec etherpad-config cp/map-or-seq?
   [config config?]
