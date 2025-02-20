@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prosody-defaults
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: prosody
+    app.kubernetes.io/component: prosody
+data:
+  prosody.cfg.lua: |
+    # Using prosody /default/prosody.cfg.lua from container image
+    
+  saslauthd.conf: |
+    # Using prosody /default/saslauthd.conf from container image
+    
+  jitsi-meet.cfg.lua: |
+    # Using prosody /default/conf.d/jitsi-meet.cfg.lua from container image

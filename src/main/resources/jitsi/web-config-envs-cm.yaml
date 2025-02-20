@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: NAMESPACE
+  name: jitsi-meet-web
+  labels:
+    app.kubernetes.io/name: jitsi-meet
+    app.kubernetes.io/component: web
+data:
+  DISABLE_HTTPS: "1"
+  ENABLE_HTTP_REDIRECT: "0"
+  JICOFO_AUTH_USER: focus
+  XMPP_BOSH_URL_BASE: REPLACE_ME
+  DEFAULT_LANGUAGE: de
+  RESOLUTION: "480"
+  RESOLUTION_MIN: "240"
+  RESOLUTION_WIDTH: "853"
+  RESOLUTION_WIDTH_MIN: "427"
+  ETHERPAD_PUBLIC_URL: REPLACE_ME
+  WHITEBOARD_COLLAB_SERVER_PUBLIC_URL: REPLACE_ME

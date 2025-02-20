@@ -23,8 +23,7 @@ def initialize(project):
         "release_primary_build_file": "project.clj",
         "release_secondary_build_files": [
             "package.json",
-            "infrastructure/web/build.py",
-            "infrastructure/excalidraw-backend/build.py",
+            "infrastructure/excalidraw/build.py",
         ],
         "release_artifact_server_url": "https://repo.prod.meissa.de",
         "release_organisation": "meissa",
@@ -165,12 +164,12 @@ def lint(project):
 @task
 def inst(project):
     package_uberjar(project)
-    package_native(project)
     run(
         f"sudo install -m=755 target/uberjar/{project.name}-standalone.jar /usr/local/bin/{project.name}-standalone.jar",
         shell=True,
         check=True,
     )
+    package_native(project)
     run(
         f"sudo install -m=755 target/graalvm/{project.name} /usr/local/bin/{project.name}",
         shell=True,

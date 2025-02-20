@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jitsi-meet-jibri
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: jitsi-meet
+    app.kubernetes.io/component: jibri
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: jitsi-meet
+      app.kubernetes.io/component: jibri
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: jitsi-meet
+        app.kubernetes.io/component: jibri
+    spec:
+      serviceAccountName: jitsi-meet
+      containers:
+      - name: jitsi-meet
+        securityContext:
+          capabilities:
+            add: ["SYS_ADMIN"]
+        image: "jitsi/jibri:stable-10008"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http-internal
+          containerPort: 3333
+        - name: http-api
+          containerPort: 2222
+        livenessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - curl -sq localhost:2222/jibri/api/v1.0/health | jq '"\(.status.health.healthStatus)
+              \(.status.busyStatus)"' | grep -qP 'HEALTHY (IDLE|BUSY)'
+          failureThreshold: 2
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - curl -sq localhost:2222/jibri/api/v1.0/health | jq '"\(.status.health.healthStatus)
+              \(.status.busyStatus)"' | grep -qP 'HEALTHY (IDLE|BUSY)'
+          failureThreshold: 2
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+        envFrom:
+        - secretRef:
+            name: prosody-jibri
+        - configMapRef:
+            name: prosody-common
+        - configMapRef:
+            name: jitsi-meet-jibri
+
+        resources:
+            {}
+
+        volumeMounts:
+        - name: config
+          mountPath: /config
+        - name: jibri-data
+          mountPath: /data
+
+      volumes:
+      - name: config
+        emptyDir: {}
+      - name: custom-cont-inits
+        configMap:
+          defaultMode: 493
+          name: jitsi-meet-jibri-cont-inits
+          items:
+            - key: 10-config
+              path: 10-config
+      - name: custom-defaults
+        configMap:
+          name: jitsi-meet-jibri-defaults
+          items:
+            - key: jibri.conf
+              path: jibri.conf
+            - key: logging.properties
+              path: logging.properties
+            - key: autoscaler-sidecar.config
+              path: autoscaler-sidecar.config
+            - key: xorg-video-dummy.conf
+              path: xorg-video-dummy.conf
+      - name: jibri-data
+        emptyDir: {}

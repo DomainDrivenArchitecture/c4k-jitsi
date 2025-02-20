@@ -5,296 +5,182 @@
    [clojure.spec.test.alpha :as st]
    [dda.c4k-jitsi.jitsi :as cut]))
 
-(st/instrument `cut/generate-deployment)
-(st/instrument `cut/generate-secret-jitsi)
-(st/instrument `cut/generate-ingress-web)
-(st/instrument `cut/generate-jvb-service)
+(st/instrument `cut/prosody-config)
+(st/instrument `cut/prosody-auth)
+(st/instrument `cut/jitsi-config)
+(st/instrument `cut/jibri-config)
+(st/instrument `cut/web-config)
+(st/instrument `cut/jvb-config)
+(st/instrument `cut/etherpad-config)
+(st/instrument `cut/excalidraw-config)
 
-(deftest should-generate-deployment
-  (is (= {:apiVersion "apps/v1",
-          :kind "Deployment",
-          :metadata
-          {:labels {:app "jitsi"},
-           :name "jitsi"
-           :namespace "jitsi"},
-          :spec
-          {:strategy {:type "Recreate"},
-           :selector {:matchLabels {:app "jitsi"}},
-           :template
-           {:metadata {:labels {:app "jitsi"}},
-            :spec
-            {:containers
-             [{:name "jicofo",
-               :image "jitsi/jicofo:stable-9646",
-               :imagePullPolicy "IfNotPresent",
-               :env
-               [{:name "XMPP_SERVER", :value "localhost"}
-                {:name "JICOFO_COMPONENT_SECRET",
-                 :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_COMPONENT_SECRET"}}}
-                {:name "JICOFO_AUTH_USER", :value "focus"}
-                {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
-                {:name "TZ", :value "Europe/Berlin"}]}
-              {:name "prosody",
-               :image "jitsi/prosody:stable-9646",
-               :imagePullPolicy "IfNotPresent",
-               :env
-               [{:name "PUBLIC_URL", :value "xy.xy.xy"}
-                {:name "XMPP_SERVER", :value "localhost"}
-                {:name "JICOFO_COMPONENT_SECRET",
-                 :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_COMPONENT_SECRET"}}}
-                {:name "JVB_AUTH_USER", :value "jvb"}
-                {:name "JVB_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JVB_AUTH_PASSWORD"}}}
-                {:name "JICOFO_AUTH_USER", :value "focus"}
-                {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
-                {:name "TZ", :value "Europe/Berlin"}
-                {:name "JVB_TCP_HARVESTER_DISABLED", :value "true"}]}
-              {:name "web",
-               :image "domaindrivenarchitecture/c4k-jitsi-web",
-               :imagePullPolicy "IfNotPresent",
-               :env
-               [{:name "PUBLIC_URL", :value "xy.xy.xy"}
-                {:name "XMPP_SERVER", :value "localhost"}
-                {:name "XMPP_BOSH_URL_BASE", :value "http://127.0.0.1:5280"}
-                {:name "JICOFO_AUTH_USER", :value "focus"}
-                {:name "TZ", :value "Europe/Berlin"}
-                {:name "JVB_TCP_HARVESTER_DISABLED", :value "true"}
-                {:name "DEFAULT_LANGUAGE", :value "de"}
-                {:name "RESOLUTION", :value "480"}
-                {:name "RESOLUTION_MIN", :value "240"}
-                {:name "RESOLUTION_WIDTH", :value "853"}
-                {:name "RESOLUTION_WIDTH_MIN", :value "427"}
-                {:name "DISABLE_AUDIO_LEVELS", :value "true"}
-                {:name "ETHERPAD_PUBLIC_URL", :value "https://etherpad.xy.xy.xy/p/"}
-                {:name "WHITEBOARD_ENABLED", :value "true"}
-                {:name "WHITEBOARD_COLLAB_SERVER_PUBLIC_URL", :value "https://excalidraw-backend.xy.xy.xy"}
-                {:name "COLIBRI_WEBSOCKET_REGEX", :value "127.0.0.1"}]}
-              {:name "jvb",
-               :image "jitsi/jvb:stable-9646",
-               :imagePullPolicy "IfNotPresent",
-               :env
-               [{:name "PUBLIC_URL", :value "xy.xy.xy"}
-                {:name "XMPP_SERVER", :value "localhost"}
-                {:name "DOCKER_HOST_ADDRESS", :value "xy.xy.xy"}
-                {:name "JICOFO_AUTH_USER", :value "focus"}
-                {:name "JVB_TCP_HARVESTER_DISABLED", :value "true"}
-                {:name "JVB_AUTH_USER", :value "jvb"}
-                {:name "JVB_PORT", :value "30300"}
-                {:name "JVB_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JVB_AUTH_PASSWORD"}}}
-                {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
-                {:name "TZ", :value "Europe/Berlin"}]}
-              {:name "etherpad",
-               :image "etherpad/etherpad:2",
-               :env
-               [{:name "XMPP_SERVER", :value "localhost"}
-                {:name "JICOFO_COMPONENT_SECRET",
-                 :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_COMPONENT_SECRET"}}}
-                {:name "JICOFO_AUTH_USER", :value "focus"}
-                {:name "JICOFO_AUTH_PASSWORD", :valueFrom {:secretKeyRef {:name "jitsi-config", :key "JICOFO_AUTH_PASSWORD"}}}
-                {:name "TZ", :value "Europe/Berlin"}]}]}}}}
-         (cut/generate-deployment {:fqdn "xy.xy.xy"
-                                   :namespace "jitsi"}))))
-
-(deftest should-generate-secret
+(deftest should-generate-prosody
   (is (= {:apiVersion "v1",
-          :kind "Secret",
-          :metadata 
-          {:name "jitsi-config"
-           :namespace "jitsi"},
-          :type "Opaque",
+          :kind "ServiceAccount",
+          :metadata
+          {:name "prosody",
+           :namespace "jitsi",
+           :labels
+           #:app.kubernetes.io{:name "prosody" :component "prosody"}}}
+         (first (cut/prosody-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"}))))
+  (is (= {:apiVersion "v1",
+          :kind "ConfigMap",
+          :metadata
+          {:name "prosody-common",
+           :namespace "jitsi",
+           :labels
+           #:app.kubernetes.io{:name "jitsi-meet" :component "prosody"}},
           :data
-          {:JVB_AUTH_PASSWORD "anZiLWF1dGg=",
-           :JICOFO_AUTH_PASSWORD "amljb2ZvLWF1dGg=",
-           :JICOFO_COMPONENT_SECRET "amljb2ZvLWNvbXA="}}
-         (cut/generate-secret-jitsi 
-          {:fqdn "xy.xy.xy"
-           :namespace "jitsi"}
-          {:jvb-auth-password "jvb-auth"
-           :jicofo-auth-password "jicofo-auth"
-           :jicofo-component-secret "jicofo-comp"}))))
-                                                        
-  (deftest should-generate-ingress-web
-    (is (= [{:apiVersion "cert-manager.io/v1",
-            :kind "Certificate",
-            :metadata
-            {:name "web",
-             :labels {:app.kubernetes.part-of "web"},
-             :namespace "jitsi"},
-            :spec
-            {:secretName "web",
-             :commonName "xy.xy.xy",
-             :duration "2160h",
-             :renewBefore "720h",
-             :dnsNames ["xy.xy.xy"],
-             :issuerRef {:name "staging", :kind "ClusterIssuer"}}}
-           {:apiVersion "networking.k8s.io/v1",
-            :kind "Ingress",
-            :metadata
-            {:namespace "jitsi",
-             :annotations
-             {:traefik.ingress.kubernetes.io/router.entrypoints "web, websecure",
-              :traefik.ingress.kubernetes.io/router.middlewares
-              "default-redirect-https@kubernetescrd",
-              :metallb.universe.tf/address-pool "public"},
-             :name "web",
-             :labels {:app.kubernetes.part-of "web"}},
-            :spec
-            {:tls [{:hosts ["xy.xy.xy"], :secretName "web"}],
-             :rules
-             [{:host "xy.xy.xy",
-               :http
-               {:paths
-                [{:pathType "Prefix",
-                  :path "/",
-                  :backend {:service {:name "web", :port {:number 80}}}}]}}]}}]
-           (cut/generate-ingress-web
-            {:fqdn "xy.xy.xy"
-             :namespace "jitsi"}))))
+          {:ENABLE_AUTH "0",
+           :ENABLE_GUESTS "1",
+           :PUBLIC_URL "xy.xy.xy",
+           :XMPP_DOMAIN "meet.jitsi",
+           :XMPP_MUC_DOMAIN "muc.meet.jitsi",
+           :XMPP_AUTH_DOMAIN "auth.meet.jitsi",
+           :XMPP_GUEST_DOMAIN "guest.meet.jitsi",
+           :XMPP_RECORDER_DOMAIN "recorder.meet.jitsi",
+           :XMPP_INTERNAL_MUC_DOMAIN "internal-muc.meet.jitsi",
+           :ENABLE_COLIBRI_WEBSOCKET "true",
+           :ENABLE_COLIBRI_WEBSOCKET_UNSAFE_REGEX "1",
+           :ENABLE_XMPP_WEBSOCKET "true",
+           :ENABLE_RECORDING "true",
+           :ENABLE_FILE_RECORDING_SERVICE_SHARING "true",
+           :TZ "Europe/Berlin"}}
+         (second (cut/prosody-config
+                  {:fqdn "xy.xy.xy"
+                   :namespace "jitsi"}))))
+  (is (= 8
+         (count (cut/prosody-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"}))))
+   (is (= 5
+         (count (cut/prosody-auth
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"}
+                 {:jvb-auth-password "jvb-auth"
+                  :jicofo-auth-password "jicofo-auth"
+                  :jicofo-component-secret "jicofo-comp"})))))
 
-(deftest should-generate-ingress-modelector
-  (is (= [{:apiVersion "cert-manager.io/v1",
-           :kind "Certificate",
-           :metadata
-           {:name "modelector",
-            :labels {:app.kubernetes.part-of "modelector"},
-            :namespace "jitsi"},
-           :spec
-           {:secretName "modelector",
-            :commonName "modelector.xy.xy",
-            :duration "2160h",
-            :renewBefore "720h",
-            :dnsNames ["modelector.xy.xy"],
-            :issuerRef {:name "staging", :kind "ClusterIssuer"}}}
-          {:apiVersion "networking.k8s.io/v1",
-           :kind "Ingress",
+(deftest should-generate-jicofo
+  (is (= 4
+         (count (cut/jicofo-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
+
+(deftest should-generate-jitsi
+  (is (= 1
+         (count (cut/jitsi-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
+
+(deftest should-generate-jibri
+  (is (= 6
+         (count (cut/jibri-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
+
+(deftest should-generate-web
+  (is (= 6
+         (count (cut/web-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
+
+(deftest should-generate-jvb
+  (is (= 3
+         (count (cut/jvb-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
+
+(deftest should-generate-etherpad
+  (is (= 2
+         (count (cut/etherpad-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
+
+(deftest should-generate-excalidraw
+  (is (= 2
+         (count (cut/excalidraw-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
+
+(deftest should-generate-moderator-elector
+  (is (= 2
+         (count (cut/moderator-elector-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
+
+(deftest should-generate-restart
+  (is (= {:apiVersion "rbac.authorization.k8s.io/v1",
+          :kind "RoleBinding",
+          :metadata {:name "deployment-restart", :namespace "jitsi"},
+          :roleRef
+          {:apiGroup "rbac.authorization.k8s.io",
+           :kind "Role",
+           :name "deployment-restart"},
+          :subjects
+          [{:kind "ServiceAccount",
+            :name "deployment-restart",
+            :namespace "jitsi"}]}
+         (second (cut/restart-config
+                  {:fqdn "xy.xy.xy"
+                   :namespace "jitsi"}))))
+  (is (= {:apiVersion "rbac.authorization.k8s.io/v1",
+          :kind "Role",
+          :metadata {:name "deployment-restart", :namespace "jitsi"},
+          :rules
+          [{:apiGroups ["apps" "extensions"],
+            :resources ["deployments"],
+            :resourceNames ["etherpad" "excalidraw"],
+            :verbs ["get" "patch" "list" "watch"]}]}
+         (nth (cut/restart-config
+               {:fqdn "xy.xy.xy"
+                :namespace "jitsi"})
+              2)))
+  (is (= {:apiVersion "batch/v1",
+          :kind "CronJob",
+          :metadata {:name "restart-etherpad", :namespace "jitsi"},
+          :spec
+          {:concurrencyPolicy "Forbid",
+           :schedule "0 2 * * *",
+           :jobTemplate
+           {:spec
+            {:backoffLimit 2,
+             :activeDeadlineSeconds 600,
+             :template
+             {:spec
+              {:serviceAccountName "deployment-restart",
+               :restartPolicy "Never",
+               :containers 
+               [{:name "kubectl", :image "bitnami/kubectl",
+                 :command
+                 ["bash"
+                  "-c"
+                  "kubectl rollout restart deployment/etherpad && kubectl rollout status deployment/etherpad"]}]}}}}}}
+         (nth (cut/restart-config
+               {:fqdn "xy.xy.xy"
+                :namespace "jitsi"})
+              3)))
+  (is (= 5
+         (count (cut/restart-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"})))))
+
+(deftest should-generate-coturn
+   (is (= 5
+         (count (cut/coturn-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"}))))
+  (is (= {:apiVersion "v1",
+           :kind "ConfigMap",
            :metadata
            {:namespace "jitsi",
-            :annotations
-            {:traefik.ingress.kubernetes.io/router.entrypoints "web, websecure",
-             :traefik.ingress.kubernetes.io/router.middlewares
-             "default-redirect-https@kubernetescrd",
-             :metallb.universe.tf/address-pool "public"},
-            :name "modelector",
-            :labels {:app.kubernetes.part-of "modelector"}},
-           :spec
-           {:tls [{:hosts ["modelector.xy.xy"], :secretName "modelector"}],
-            :rules
-            [{:host "modelector.xy.xy",
-              :http
-              {:paths
-               [{:pathType "Prefix",
-                 :path "/",
-                 :backend {:service {:name "modelector", :port {:number 80}}}}]}}]}}]
-         (cut/generate-ingress-modelector
-          {:fqdn "xy.xy"
-           :namespace "jitsi"}))))
-
-(deftest should-generate-jvb-service
-  (is (= {:apiVersion "v1",
-          :kind "Service",
-          :metadata
-          {:labels {:service "jvb"},
-           :annotations
-           #:metallb.universe.tf{:allow-shared-ip "shared-ip-service-group",
-                                 :address-pool "public"},
-           :name "jvb-udp"
-           :namespace "jitsi"},
-          :spec
-          {:type "LoadBalancer",
-           :ports
-           [{:port 30300, :protocol "UDP", :targetPort 30300, :nodePort 30300}],
-           :selector {:app "jitsi"}}}
-         (cut/generate-jvb-service
-          {:fqdn "xy.xy.xy"
-           :namespace "jitsi"}))))
-
-(deftest should-generate-web-service
-  (is (= {:apiVersion "v1",
-          :kind "Service",
-          :metadata {:labels {:service "web"}, :name "web", :namespace "jitsi"},
-          :spec
-          {:ports
-           [{:name "http", :port 80, :targetPort 80}
-            {:name "https", :port 443, :targetPort 443}],
-           :selector {:app "jitsi"}}}
-         (cut/generate-web-service
-          {:fqdn "xy.xy.xy"
-           :namespace "jitsi"}))))
-
-(deftest should-generate-etherpad-service
-  (is (= {:apiVersion "v1",
-          :kind "Service",
-          :metadata
-          {:labels {:service "etherpad"}, :name "etherpad", :namespace "jitsi"},
-          :spec
-          {:ports [{:name "etherpad", :port 9001, :targetPort 9001}],
-           :selector {:app "jitsi"}}}
-         (cut/generate-etherpad-service
-          {:fqdn "xy.xy.xy"
-           :namespace "jitsi"}))))
-
-(deftest should-generate-excalidraw-backend-service
-  (is (= {:apiVersion "v1",
-          :kind "Service",
-          :metadata
-          {:labels {:service "excalidraw-backend"},
-           :name "excalidraw-backend",
-           :namespace "jitsi"},
-          :spec
-          {:ports [{:name "excalidraw-backend", :port 3002, :targetPort 80}],
-           :selector {:app "excalidraw-backend"}}}
-         (cut/generate-excalidraw-backend-service
-          {:fqdn "xy.xy.xy"
-           :namespace "jitsi"}))))
-
-(deftest should-generate-modelector-service
-  (is (= {:apiVersion "v1",
-          :kind "Service",
-          :metadata
-          {:labels {:service "modelector"},
-           :name "modelector",
-           :namespace "jitsi"},
-          :spec
-          {:ports [{:name "http", :port 80, :targetPort 8080}],
-           :selector {:app "modelector"}}}
-         (cut/generate-modelector-service
-          {:fqdn "xy.xy.xy"
-           :namespace "jitsi"}))))
-
-(deftest should-generate-modelector-deployment
-  (is (= {:apiVersion "apps/v1",
-          :kind "Deployment",
-          :metadata
-          {:labels {:app "modelector"},
-           :name "modelector",
-           :namespace "jitsi"},
-          :spec
-          {:selector {:matchLabels {:app "modelector"}},
-           :replicas 1,
-           :strategy {:type "Recreate"},
-           :template
-           {:metadata {:labels {:app "modelector"}},
-            :spec
-            {:containers
-             [{:name "modelector",
-               :image "domaindrivenarchitecture/moderator-election-vaadin_fullstack",
-               :imagePullPolicy "IfNotPresent",
-               :env
-               [{:name "MEMBERNAMES",
-                 :value "Micha,Ansgar,Erik,Mirco"}]}]}}}}
-          (cut/generate-modelector-deployment
-           {:fqdn "xy.xy.xy"
-            :namespace "jitsi"}))))
-
-(deftest should-generate-excalidraw-deployment
-  (is (= {:apiVersion "v1",
-          :kind "Service",
-          :metadata
-          {:labels {:service "excalidraw-backend"},
-           :name "excalidraw-backend",
-           :namespace "jitsi"},
-          :spec
-          {:ports [{:name "excalidraw-backend", :port 3002, :targetPort 80}],
-           :selector {:app "excalidraw-backend"}}}
-         (cut/generate-excalidraw-backend-service
-          {:fqdn "xy.xy.xy"
-           :namespace "jitsi"}))))
+            :name "coturn-initial-config",
+            :labels #:app.kubernetes.io{:name "coturn"}},
+           :data
+           {:turnserver.conf
+            "realm: stun.xy.xy.xy\nlistening-ip: 0.0.0.0\nlistening-port: 3478\ntls-listening-port: 5349\nmin-port: 49152\nmax-port: 65535\nlog-file: stdout\npidfile: \"/var/tmp/turnserver.pid\"\npkey: \"/tls/tls.key\"\ncert: \"/tls/tls.crt\"\nuserdb: \"/var/db/turndb\""}}
+         (second (cut/coturn-config
+                  {:fqdn "xy.xy.xy"
+                   :namespace "jitsi"})))))

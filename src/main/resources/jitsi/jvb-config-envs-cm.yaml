@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: NAMESPACE
+  name: jitsi-meet-jvb
+  labels:
+    app.kubernetes.io/name: jitsi-meet
+    app.kubernetes.io/component: jvb
+data:
+  JVB_BREWERY_MUC: 'jvbbrewery'
+  JVB_PORT: '10000'
+  JVB_STUN_SERVERS: REPLACE_ME
+  JVB_TCP_HARVESTER_DISABLED: '1'
+  XMPP_SERVER: REPLACE_ME
+  COLIBRI_REST_ENABLED: 'true'

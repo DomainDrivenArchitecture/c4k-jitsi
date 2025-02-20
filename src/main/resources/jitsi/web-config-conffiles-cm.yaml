@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jitsi-meet-web-conffiles
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: jitsi-meet
+    app.kubernetes.io/component: web
+data:
+  custom-config.js: |
+  # Not providing /config/custom-config.js
+  
+  custom-interface_config.js: |
+  # Not providing /config/custom-interface_config.js
+  
+  default: |
+  # Using web /defaults/default from container image
+  
+  ffdhe2048.txt: |
+  # Using web /defaults/ffdhe2048.txt from container image
+  
+  interface_config.js: |
+  # Using web /defaults/interface_config.js from container image
+  
+  meet.conf: |
+  # Using web /defaults/meet.conf from container image
+  
+  nginx.conf: |
+  # Using web /defaults/nginx.conf from container image
+  
+  settings-config.js: |
+  # Using web /defaults/settings-config.js from container image
+  
+  ssl.conf: |
+  # Using web /defaults/ssl.conf from container image
+  
+  system-config.js: |
+  # Using web /defaults/system-config.js from container image

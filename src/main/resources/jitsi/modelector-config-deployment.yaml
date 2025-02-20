@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moderator-elector
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: moderator-elector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: moderator-elector
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: moderator-elector
+    spec:
+      containers:
+        - name: moderator-elector
+          image: domaindrivenarchitecture/moderator-election-vaadin_fullstack
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MEMBERNAMES
+              value: "Micha,Ansgar,Erik,Mirco"

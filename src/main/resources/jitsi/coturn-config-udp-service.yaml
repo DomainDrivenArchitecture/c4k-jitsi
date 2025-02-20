@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: NAMESPACE
+  name: coturn-turn-udp
+  labels:
+    app.kubernetes.io/name: "coturn"
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "shared-ip-service-group"
+    metallb.universe.tf/address-pool: public
+spec:
+  type: LoadBalancer
+  ports:
+    - name: turn-udp
+      port: 3478
+      protocol: UDP
+      targetPort: 3478
+    - name: turn-udp-dtls
+      port: 5349
+      protocol: UDP
+      targetPort: 5349
+  selector:
+    app.kubernetes.io/name: coturn-coturn

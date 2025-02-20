@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jitsi-meet-jicofo
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: jitsi-meet
+    app.kubernetes.io/component: jicofo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: jitsi-meet
+      app.kubernetes.io/component: jicofo
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: jitsi-meet
+        app.kubernetes.io/component: jicofo
+    spec:
+      serviceAccountName: jitsi-meet
+      securityContext:
+        {}
+      volumes:
+      - name: config
+        emptyDir: {}
+      - name: custom-cont-inits
+        configMap:
+          defaultMode: 493
+          name: jitsi-meet-jicofo-cont-inits
+          items:
+            - key: 10-config
+              path: 10-config
+      - name: custom-defaults
+        configMap:
+          name: jitsi-meet-jicofo-defaults
+          items:
+            - key: jicofo.conf
+              path: jicofo.conf
+            - key: logging.properties
+              path: logging.properties
+      containers:
+        - name: jitsi-meet
+          securityContext:
+            {}
+          image: "jitsi/jicofo:stable-10008"
+          imagePullPolicy: IfNotPresent
+          envFrom:
+          - secretRef:
+              name: prosody-jicofo
+          - configMapRef:
+              name: prosody-common
+          - configMapRef:
+              name: jitsi-meet-jicofo
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 8888
+          readinessProbe:
+            tcpSocket:
+              port: 8888
+          resources:
+            {}
+          volumeMounts:
+          # to support readOnlyRootFilesystem
+          - name: config
+            mountPath: /config

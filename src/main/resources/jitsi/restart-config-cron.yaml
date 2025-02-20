@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: CRON_NAME
+  namespace: NAMESPACE
+spec:
+  concurrencyPolicy: Forbid
+  schedule: SCHEDULE_REPLACE_ME
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 600
+      template:
+        spec:
+          serviceAccountName: deployment-restart
+          restartPolicy: Never
+          containers:
+            - name: kubectl
+              image: bitnami/kubectl
+              command: COMMAND_REPLACE_ME

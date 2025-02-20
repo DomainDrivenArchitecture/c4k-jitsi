@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "jitsi-meet-web-test-connection"
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: jitsi-meet
+    app.kubernetes.io/component: web
+spec:
+  replicas: 0
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "jitsi-meet-web-test-connection"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "jitsi-meet-web-test-connection"
+    spec:
+      containers:
+        - name: wget
+          image: busybox
+          command: ['wget']
+          args: ['jitsi-meet-web:80']

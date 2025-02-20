@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: excalidraw
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: excalidraw  
+spec:
+  ports:
+  - name: excalidraw
+    port: 3002
+    targetPort: 80
+  selector:
+    app.kubernetes.io/name: excalidraw 

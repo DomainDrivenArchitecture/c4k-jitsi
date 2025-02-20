@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prosody-cont-inits
+  namespace: NAMESPACE
+  labels:
+    app.kubernetes.io/name: prosody
+    app.kubernetes.io/component: prosody
+data:
+  10-config: |
+    # Using prosody /etc/cont-init.d/10-config from container image
