@@ -163,18 +163,11 @@
   (let [{:keys [namespace]} config]
     [(load-and-adjust-namespace "jitsi/modelector-config-service.yaml" namespace)
      (load-and-adjust-namespace "jitsi/modelector-config-deployment.yaml" namespace)]))
-
-(defn-spec coturn-auth cp/map-or-seq?
-  [config config?
-   auth auth?]
-  (let [{:keys [namespace]} config
-        {:keys []} auth]
-    [(load-and-adjust-namespace "jitsi/coturn-auth-secret.yaml" namespace)]))
   
 (defn-spec coturn-config cp/map-or-seq?
   [config config?]
   (let [{:keys [namespace fqdn]} config]
-    [(load-and-adjust-namespace "jitsi/coturn-config-default-cm.yaml" namespace)
+    [(load-and-adjust-namespace "jitsi/coturn-config-extra-cm.yaml" namespace)
      (-> 
       (load-and-adjust-namespace "jitsi/coturn-config-init-cm.yaml" namespace)
       (cm/replace-key-value

@@ -168,13 +168,6 @@
                   :namespace "jitsi"})))))
 
 (deftest should-generate-coturn
-  (is (= 1
-         (count (cut/coturn-auth
-                 {:fqdn "xy.xy.xy"
-                  :namespace "jitsi"}
-                 {:jvb-auth-password "jvb-auth"
-                  :jicofo-auth-password "jicofo-auth"
-                  :jicofo-component-secret "jicofo-comp"}))))
    (is (= 5
          (count (cut/coturn-config
                  {:fqdn "xy.xy.xy"

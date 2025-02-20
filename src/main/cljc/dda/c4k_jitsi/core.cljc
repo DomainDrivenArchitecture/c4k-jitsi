@@ -77,6 +77,5 @@
         #(not (nil? %))
         (cm/concat-vec
          (jitsi/prosody-auth config auth)
-         (jitsi/coturn-auth config auth)
          (when (:contains? config :mon-cfg)
            (mon/generate-auth (:mon-cfg config) (:mon-auth auth))))))))
