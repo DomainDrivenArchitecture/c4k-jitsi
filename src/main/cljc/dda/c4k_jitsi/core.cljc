@@ -44,6 +44,7 @@
            (jitsi/etherpad-config resolved-config)
            (jitsi/excalidraw-config resolved-config)
            (jitsi/moderator-elector-config resolved-config)
+           (jitsi/coturn-config resolved-config)
            (ing/generate-ingress-and-cert (merge
                                            {:service-name "jitsi-meet-web"
                                             :service-port 80
@@ -76,5 +77,6 @@
         #(not (nil? %))
         (cm/concat-vec
          (jitsi/prosody-auth config auth)
+         (jitsi/coturn-auth config auth)
          (when (:contains? config :mon-cfg)
            (mon/generate-auth (:mon-cfg config) (:mon-auth auth))))))))

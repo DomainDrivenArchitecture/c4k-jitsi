@@ -166,3 +166,28 @@
          (count (cut/restart-config
                  {:fqdn "xy.xy.xy"
                   :namespace "jitsi"})))))
+
+(deftest should-generate-coturn
+  (is (= 1
+         (count (cut/coturn-auth
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"}
+                 {:jvb-auth-password "jvb-auth"
+                  :jicofo-auth-password "jicofo-auth"
+                  :jicofo-component-secret "jicofo-comp"}))))
+   (is (= 5
+         (count (cut/coturn-config
+                 {:fqdn "xy.xy.xy"
+                  :namespace "jitsi"}))))
+  (is (= {:apiVersion "v1",
+           :kind "ConfigMap",
+           :metadata
+           {:namespace "jitsi",
+            :name "coturn-initial-config",
+            :labels #:app.kubernetes.io{:name "coturn"}},
+           :data
+           {:turnserver.conf
+            "realm: stun.xy.xy.xy\nlistening-ip: 0.0.0.0\nlistening-port: 3478\ntls-listening-port: 5349\nmin-port: 49152\nmax-port: 65535\nlog-file: stdout\npidfile: \"/var/tmp/turnserver.pid\"\npkey: \"/tls/tls.key\"\ncert: \"/tls/tls.crt\"\nuserdb: \"/var/db/turndb\""}}
+         (second (cut/coturn-config
+                  {:fqdn "xy.xy.xy"
+                   :namespace "jitsi"})))))

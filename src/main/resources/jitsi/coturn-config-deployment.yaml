@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: NAMESPACE
+  name: coturn-coturn
+  labels:
+    app.kubernetes.io/name: "coturn"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: coturn
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: coturn
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: "coturn"
+          image: coturn/coturn:4.6.3
+          imagePullPolicy: IfNotPresent
+          args: ["-c", "/turnserver.conf"]
+          ports:
+            - name: turn-udp
+              containerPort: 3478
+              protocol: UDP
+            - name: turn-tcp
+              containerPort: 3478
+              protocol: TCP
+            - name: turn-tcp-tls
+              containerPort: 5349
+              protocol: TCP
+            - name: turn-udp-dtls
+              containerPort: 5349
+              protocol: UDP
+          volumeMounts:
+            - name: coturn-config
+              mountPath: "/turnserver.conf"
+              subPath: turnserver.conf
+              readOnly: true
+            - name: var-tmp
+              mountPath: /var/tmp
+            - name: sqllite
+              mountPath: /var/db
+          securityContext:
+            capabilities:
+              add:
+                - NET_BIND_SERVICE
+              drop:
+                - ALL
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+      volumes:
+        - name: coturn-initial-config
+          configMap:
+            name: coturn-initial-config
+        - name: coturn-extra-config
+          configMap:
+            name: coturn-extra-config
+        - name: coturn-config
+          emptyDir: {}
+        - name: var-tmp
+          emptyDir: {}
+        - name: sqllite
+          emptyDir: {}

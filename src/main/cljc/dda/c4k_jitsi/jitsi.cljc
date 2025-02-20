@@ -3,6 +3,7 @@
    [clojure.spec.alpha :as s]
    #?(:clj [orchestra.core :refer [defn-spec]]
       :cljs [orchestra.core :refer-macros [defn-spec]])
+   [clojure.string :as st]
    [dda.c4k-common.yaml :as yaml]
    [dda.c4k-common.common :as cm]
    [dda.c4k-common.base64 :as b64]
@@ -98,7 +99,8 @@
   (let [{:keys [fqdn namespace]} config]
     [(-> 
       (load-and-adjust-namespace "jitsi/jvb-config-envs-cm.yaml" namespace)
-      (cm/replace-key-value :XMPP_SERVER (str "prosody." namespace ".svc.cluster.local")))
+      (cm/replace-key-value :XMPP_SERVER (str "prosody." namespace ".svc.cluster.local"))
+      (cm/replace-key-value :JVB_STUN_SERVERS (str "stun." fqdn ":443")))
      (load-and-adjust-namespace "jitsi/jvb-config-service.yaml" namespace)
      (->
       (load-and-adjust-namespace "jitsi/jvb-config-deployment.yaml" namespace)
@@ -161,3 +163,34 @@
   (let [{:keys [namespace]} config]
     [(load-and-adjust-namespace "jitsi/modelector-config-service.yaml" namespace)
      (load-and-adjust-namespace "jitsi/modelector-config-deployment.yaml" namespace)]))
+
+(defn-spec coturn-auth cp/map-or-seq?
+  [config config?
+   auth auth?]
+  (let [{:keys [namespace]} config
+        {:keys []} auth]
+    [(load-and-adjust-namespace "jitsi/coturn-auth-secret.yaml" namespace)]))
+  
+(defn-spec coturn-config cp/map-or-seq?
+  [config config?]
+  (let [{:keys [namespace fqdn]} config]
+    [(load-and-adjust-namespace "jitsi/coturn-config-default-cm.yaml" namespace)
+     (-> 
+      (load-and-adjust-namespace "jitsi/coturn-config-init-cm.yaml" namespace)
+      (cm/replace-key-value
+       :data
+       {:turnserver.conf
+        (st/join "\n" [(str "realm: stun." fqdn)
+                       "listening-ip: 0.0.0.0"
+                       "listening-port: 3478"
+                       "tls-listening-port: 5349"
+                       "min-port: 49152"
+                       "max-port: 65535"
+                       "log-file: stdout"
+                       "pidfile: \"/var/tmp/turnserver.pid\""
+                       "pkey: \"/tls/tls.key\""
+                       "cert: \"/tls/tls.crt\""
+                       "userdb: \"/var/db/turndb\""])}))
+     (load-and-adjust-namespace "jitsi/coturn-config-tcp-service.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/coturn-config-udp-service.yaml" namespace)
+     (load-and-adjust-namespace "jitsi/coturn-config-deployment.yaml" namespace)]))
