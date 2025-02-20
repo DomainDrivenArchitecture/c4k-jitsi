@@ -14,7 +14,7 @@ pom.*
 # cljs
 .shadow-cljs
 .nrepl-*
-package-lock.json
+/package-lock.json
 node_modules/
 public/js/
 
