@@ -11,7 +11,7 @@ c4k-jitsi provides a k8s deployment for jitsi containing [see also Jitsi Archite
 * jicofo
 * prosody
 * etherpad for shared documents
-* excalidraw for whiteboards
+* excalidraw for shared whiteboards
 * coturn as stun server
 * moderator-election as tool for electing the next moderator
 * ingress having a letsencrypt managed certificate
