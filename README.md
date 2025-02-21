@@ -5,9 +5,17 @@
 
 ## Purpose
 
-c4k-jitsi provides a k8s deployment for jitsi containing:
-* jitsi
+c4k-jitsi provides a k8s deployment for jitsi containing [see also Jitsi Architecture](https://jitsi.github.io/handbook/docs/architecture/)
+* jitsi-web
+* jvb
+* jicofo
+* prosody
+* etherpad for shared documents
+* excalidraw for whiteboards
+* coturn as stun server
+* moderator-election as tool for electing the next moderator
 * ingress having a letsencrypt managed certificate
+* monitoring connected to grafana cloud
 
 The package aims to a low load sceanrio.
 

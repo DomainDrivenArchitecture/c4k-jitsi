@@ -17,10 +17,10 @@ resource "aws_s3_bucket" "backup" {
   }
 }
 
-resource "hcloud_server" "jitsi_09_2021" {
+resource "hcloud_server" "jitsi_2025_02" {
   name        = "the name"
-  image       = "ubuntu-20.04"
-  server_type = "cx31"
+  image       = "ubuntu-24.04"
+  server_type = "cx32"
   location    = "fsn1"
   ssh_keys    = ...
 
@@ -29,16 +29,17 @@ resource "hcloud_server" "jitsi_09_2021" {
   }
 }
 
-resource "aws_route53_record" "v4_neu" {
+resource "aws_route53_record" "v4" {
+  for_each ["jitsi", "stun.jitsi", "excalidraw.jitsi", "etherpad.jitsi"]
   zone_id = the_dns_zone
-  name    = "jitsi-neu"
+  name    = each.key
   type    = "A"
   ttl     = "300"
-  records = [hcloud_server.jitsi_09_2021.ipv4_address]
+  records = [hcloud_server.jitsi_2025_01.ipv4_address]
 }
 
 output "ipv4" {
-  value = hcloud_server.jitsi_09_2021.ipv4_address
+  value = hcloud_server.jitsi_2025_01.ipv4_address
 }
 
 ```
@@ -49,11 +50,9 @@ For k8s installation we use our [provs](https://repo.prod.meissa.de/meissa/provs
 
 
 ```
-{:user :k8s
- :k8s {:external-ip "ip-from-above"}
- :cert-manager :letsencrypt-prod-issuer
- :persistent-dirs ["postgres"]
- }
+{:fqdn "fqdn-from-above"
+ :node {:ipv4 "ip-from-above"}
+ :certmanager {:email "admin-email" :letsencryptEndpoint "prod}}
 ```
 
 ## kubectl apply c4k-jitsi
@@ -67,7 +66,6 @@ c4k-jitsi config.edn auth.edn | kubectl apply -f -
 with the following config.edn:
 
 ```
-{:fqdn "the-fqdn-from aws_route53_record.v4_neu"
- :postgres-data-volume-path "/var/postgres"         ;; Volume was configured at dda-k8s-crate, results in a PersistentVolume definition.
+{:fqdn "fqdn-from-above"
  :issuer "prod" }
 ```
