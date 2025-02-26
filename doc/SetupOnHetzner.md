@@ -46,13 +46,13 @@ output "ipv4" {
 
 ## k8s minicluster
 
-For k8s installation we use our [provs](https://repo.prod.meissa.de/meissa/provs) with the following configuation:
+For k8s installation we use our [provs](https://repo.prod.meissa.de/meissa/provs) with the following configuration:
 
 
 ```
 {:fqdn "fqdn-from-above"
  :node {:ipv4 "ip-from-above"}
- :certmanager {:email "admin-email" :letsencryptEndpoint "prod}}
+ :certmanager {:email "admin-email" :letsencryptEndpoint "prod"}}
 ```
 
 ## kubectl apply c4k-jitsi

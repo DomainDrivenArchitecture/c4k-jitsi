@@ -17,7 +17,7 @@ c4k-jitsi provides a k8s deployment for jitsi containing [see also Jitsi Archite
 * ingress having a letsencrypt managed certificate
 * monitoring connected to grafana cloud
 
-The package aims to a low load sceanrio.
+The package is intended for a low-load scenario.
 
 ## Status
 
