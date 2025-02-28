@@ -65,6 +65,11 @@
                                             :service-port 80
                                             :fqdns [(str "moderator-elector." (:fqdn resolved-config))]}
                                            resolved-config))
+           (ing/generate-ingress-and-cert (merge
+                                           {:service-name "coturn-turn-tcp"
+                                            :service-port 3478
+                                            :fqdns [(str "stun." (:fqdn resolved-config))]}
+                                           resolved-config))
            (when (:contains? resolved-config :mon-cfg)
              (mon/generate-config)))))))
 
