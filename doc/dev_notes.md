@@ -1,8 +1,8 @@
-### Logo customizing
+# Logo customizing
 
 Should be put like https://github.com/jitsi-contrib/installers/blob/main/templates/jitsi/usr/share/jitsi-meet/static/branding.json
 
-### video performance issues
+# video performance issues
 
 [jitsi Helm]: (https://github.com/jitsi-contrib/jitsi-helm)
 [Howto override settings-config.js]: (https://github.com/jitsi-contrib/jitsi-helm/blob/a1e029371ed519cda7abde0c616fd92e117eddef/values.yaml#L58)
@@ -49,7 +49,7 @@ eventually low performance cpu settings (clientside, VM?) keeps troubling in aud
 - https://github.com/jitsi/jitsi-videobridge/issues/1396  
   eventually no memory leak, but how is cpu & memory performance of JVB pod, are there any abnormalities if audio issue occurs? 
 
-- Testserver needed  
+## Testserver needed - to be discussed
   1. Are there any changes made to config, after adding ff. to `src/main/resources/jitsi/web-config-envs-cm.yaml`  
 
     ```yml
@@ -67,3 +67,43 @@ eventually low performance cpu settings (clientside, VM?) keeps troubling in aud
   https://jitsi-club.gitlab.io/jitsi-self-hosting/en/01-deployment-howto/03-tuning/#recommended_limit_video_resolution  
   controversial to [AV1 jitsi]  
   
+  4. Testing Parameters `config.js`  
+  https://github.com/jitsi/jitsi-meet/blob/master/config.js#L88  
+    Example:  
+    // P2P test mode disables automatic switching to P2P when there are 2  
+      // participants in the conference.  
+      // p2pTestMode: false,  
+  
+## Test-server circumstances:  
+
+All circumstances measured by 3rd person on "neutral" extern client within grafana  
+In general, every circumstance should be done like ff: 
+* 2 participants under normal workload {like weekly presentation}
+* 2 participants under normal workload {like weekly presentation} using and "Testserver needed"/4. T.Parameters configured true, see above ```p2pTestMode: true,```   
+* 3 participants under normal workload {like weekly presentation}
+* automated N participants under normal workload {like weekly presentation}
+
+1. Run at default values `720p`, no entries to any video settings in `web-config-envs-cm.yaml`, branch XXX commit XXY from zam 28.02.2025  
+
+2. RUN with `480p` in&out   
+  - branch XXX commit XXY from zam 28.02.2025
+
+3. Run with `VP9`, as first element of preferedOrder
+  - branch should be done
+
+4. well running codec but no `h.264`
+  - branch should be done
+### Grafana CPU&MEM pods JVB, web & general results
+1. 720p  
+  Results:  
+  Logs:
+
+2. 480p
+  Results:  
+  Logs:
+3. VP9  
+  Results:  
+  Logs:
+4. no h.264  
+  Results:  
+  Logs:
