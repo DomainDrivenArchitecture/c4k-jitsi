@@ -17,7 +17,7 @@
   (is (s/valid? cut/auth? (yaml/load-as-edn "jitsi-test/valid-auth.yaml"))))
 
 (deftest test-whole-generation
-  (is (= 63
+  (is (= 65
          (count
           (cut/config-objects
            (yaml/load-as-edn "jitsi-test/valid-config.yaml")))))
