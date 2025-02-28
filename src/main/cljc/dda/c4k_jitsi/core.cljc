@@ -39,6 +39,7 @@
            (jitsi/jicofo-config resolved-config)
            (jitsi/web-config resolved-config)
            (jitsi/jvb-config resolved-config)
+           ;not yet working, needs fix
            ;(jitsi/jibri-config resolved-config)
            (jitsi/restart-config resolved-config)
            (jitsi/etherpad-config resolved-config)
