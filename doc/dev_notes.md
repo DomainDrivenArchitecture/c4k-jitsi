@@ -83,10 +83,10 @@ In general, every circumstance should be done like ff:
 * 3 participants under normal workload {like weekly presentation}
 * automated N participants under normal workload {like weekly presentation}
 
-1. Run at default values `720p`, no entries to any video settings in `web-config-envs-cm.yaml`, branch XXX commit XXY from zam 28.02.2025  
+1. Run at default values `720p`, no entries to any video settings in `web-config-envs-cm.yaml`, branch video_performance_issue commit a94563ff96 from zam 28.02.2025
 
 2. RUN with `480p` in&out   
-  - branch XXX commit XXY from zam 28.02.2025
+  - branch `test_480p` commit `0ce1f19935` from zam 28.02.2025
 
 3. Run with `VP9`, as first element of preferedOrder
   - branch should be done
