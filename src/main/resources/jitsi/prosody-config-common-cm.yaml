@@ -25,5 +25,3 @@ data:
   TZ: 'Europe/Berlin'
   STUN_HOST: STUN_FQDN
   STUN_PORT: "443"
-  TURN_HOST: STUN_FQDN
-  TURN_PORT: "443"

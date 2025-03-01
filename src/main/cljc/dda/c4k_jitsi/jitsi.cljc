@@ -41,8 +41,7 @@
      (->
       (load-and-adjust-namespace "jitsi/prosody-config-common-cm.yaml" namespace)
       (cm/replace-all-matching "JITSI_FQDN" fqdn)
-      (cm/replace-key-value :STUN_HOST (str "stun." fqdn))
-      (cm/replace-key-value :TURN_HOST (str "stun." fqdn)))
+      (cm/replace-key-value :STUN_HOST (str "stun." fqdn)))
      (load-and-adjust-namespace "jitsi/prosody-config-default-cm.yaml" namespace)
      (load-and-adjust-namespace "jitsi/prosody-config-envs-cm.yaml" namespace)
      (load-and-adjust-namespace "jitsi/prosody-config-init-cm.yaml" namespace)
