@@ -40,7 +40,8 @@
     [(load-and-adjust-namespace "jitsi/prosody-config-serviceaccount.yaml" namespace)
      (->
       (load-and-adjust-namespace "jitsi/prosody-config-common-cm.yaml" namespace)
-      (cm/replace-all-matching "JITSI_FQDN" fqdn))
+      (cm/replace-all-matching "JITSI_FQDN" fqdn)
+      (cm/replace-key-value :STUN_HOST (str "stun." fqdn)))
      (load-and-adjust-namespace "jitsi/prosody-config-default-cm.yaml" namespace)
      (load-and-adjust-namespace "jitsi/prosody-config-envs-cm.yaml" namespace)
      (load-and-adjust-namespace "jitsi/prosody-config-init-cm.yaml" namespace)
@@ -87,6 +88,7 @@
      (-> 
       (load-and-adjust-namespace "jitsi/web-config-envs-cm.yaml" namespace)
       (cm/replace-key-value :XMPP_BOSH_URL_BASE (str "http://prosody." namespace ".svc.cluster.local:5280"))
+      (cm/replace-key-value :P2P_STUN_SERVERS (str "stun." fqdn ":443"))
       (cm/replace-key-value :ETHERPAD_PUBLIC_URL (str "https://etherpad." fqdn "/p/"))
       (cm/replace-key-value :WHITEBOARD_COLLAB_SERVER_PUBLIC_URL (str "https://excalidraw." fqdn))
       )

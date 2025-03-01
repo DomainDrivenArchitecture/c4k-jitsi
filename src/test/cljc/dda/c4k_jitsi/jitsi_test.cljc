@@ -47,7 +47,9 @@
            :ENABLE_XMPP_WEBSOCKET "true",
            :ENABLE_RECORDING "true",
            :ENABLE_FILE_RECORDING_SERVICE_SHARING "true",
-           :TZ "Europe/Berlin"}}
+           :TZ "Europe/Berlin"
+           :STUN_HOST "stun.xy.xy.xy",
+           :STUN_PORT "443"}}
          (second (cut/prosody-config
                   {:fqdn "xy.xy.xy"
                    :namespace "jitsi"}))))
