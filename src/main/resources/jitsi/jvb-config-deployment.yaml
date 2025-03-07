@@ -21,6 +21,11 @@ spec:
       serviceAccountName: jitsi-meet
       securityContext:
         {}
+      initContainers:
+        - name: wait-for-prosody
+          image: curlimages/curl:latest
+          command: ["/bin/sh","-c"]
+          args: ["while [ $(curl -sw '%{http_code}' http://prosody:5280 -o /dev/null) -ne 200 ]; do sleep 5; echo 'Waiting for the prosody...'; done"]
       containers:
         - name: jitsi-meet
           securityContext:
