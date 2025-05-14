@@ -11,6 +11,10 @@ metadata:
     metallb.universe.tf/address-pool: public
 spec:
   type: LoadBalancer
+  ipFamilies:
+  - IPv4
+  - IPv6
+  ipFamilyPolicy: PreferDualStack
   ports:
     - port: 10000
       protocol: UDP
