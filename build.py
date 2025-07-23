@@ -49,7 +49,7 @@ def test_schema(project):
         "java -jar target/uberjar/c4k-jitsi-standalone.jar "
         + "src/test/resources/jitsi-test/valid-config.yaml "
         + "src/test/resources/jitsi-test/valid-auth.yaml | "
-        + "kubeconform --kubernetes-version 1.23.0 --strict --skip Certificate -",
+        + """kubeconform --kubernetes-version 1.23.0 --strict --skip "Certificate,Middleware" -""",
         shell=True,
         check=True,
     )

@@ -8,16 +8,16 @@
 
 
 (deftest validate-valid-resources
-  (is (s/valid? cut/config? (yaml/load-as-edn "jitsi-test/valid-config.yaml")))
-  (is (s/valid? cut/auth? (yaml/load-as-edn "jitsi-test/valid-auth.yaml"))))
+  (is (s/valid? ::cut/config (yaml/load-as-edn "jitsi-test/valid-config.yaml")))
+  (is (s/valid? ::cut/auth (yaml/load-as-edn "jitsi-test/valid-auth.yaml"))))
 
 (deftest test-whole-generation
-  (is (= 65
+  (is (= 73
          (count
-          (cut/config-objects
+          (cut/config-objects []
            (yaml/load-as-edn "jitsi-test/valid-config.yaml")))))
   (is (= 6
          (count
-          (cut/auth-objects
+          (cut/auth-objects []
            (yaml/load-as-edn "jitsi-test/valid-config.yaml")
            (yaml/load-as-edn "jitsi-test/valid-auth.yaml"))))))
