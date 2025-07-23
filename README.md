@@ -25,13 +25,7 @@ Stable - we use this setup on production.
 
 ## Try out
 
-Click on the image to try out live in your browser:
-
-[![Try it out](doc/tryItOut.png "Try out yourself")](https://domaindrivenarchitecture.org/pages/dda-provision/c4k-jitsi/)
-
-Your input will stay in your browser. No server interaction is required.
-
-You will also be able to try out on cli:
+on cli:
 ```
 target/graalvm/c4k-jitsi src/test/resources/jitsi-test/valid-config.yaml src/test/resources/jitsi-test/valid-auth.yaml | kubeval -
 target/graalvm/c4k-jitsi src/test/resources/jitsi-test/valid-config.yaml src/test/resources/jitsi-test/valid-auth.yaml | kubectl apply -f -

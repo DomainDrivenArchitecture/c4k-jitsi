@@ -1,8 +1,7 @@
 (ns dda.c4k-jitsi.core
   (:require
    [clojure.spec.alpha :as s]
-   #?(:clj [orchestra.core :refer [defn-spec]]
-      :cljs [orchestra.core :refer-macros [defn-spec]])
+   [orchestra.core :refer [defn-spec]]
    [dda.c4k-common.common :as cm]
    [dda.c4k-common.predicate :as cp]
    [dda.c4k-common.ingress :as ing]
