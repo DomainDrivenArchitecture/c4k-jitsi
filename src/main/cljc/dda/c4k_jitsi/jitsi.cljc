@@ -1,14 +1,12 @@
 (ns dda.c4k-jitsi.jitsi
   (:require
    [clojure.spec.alpha :as s]
-   #?(:clj [orchestra.core :refer [defn-spec]]
-      :cljs [orchestra.core :refer-macros [defn-spec]])
+   [orchestra.core :refer [defn-spec]]
    [clojure.string :as st]
    [dda.c4k-common.yaml :as yaml]
    [dda.c4k-common.common :as cm]
    [dda.c4k-common.base64 :as b64]
-   [dda.c4k-common.predicate :as cp]
-   #?(:cljs [dda.c4k-common.macros :refer-macros [inline-resources]])))
+   [dda.c4k-common.predicate :as cp]))
 
 (s/def ::fqdn cp/fqdn-string?)
 (s/def ::issuer cp/letsencrypt-issuer?)
@@ -24,9 +22,6 @@
 (def auth? (s/keys :req-un [::jvb-auth-password
                             ::jicofo-auth-password
                             ::jicofo-component-secret]))
-#?(:cljs
-   (defmethod yaml/load-resource :jitsi [resource-name]
-     (get (inline-resources "jitsi") resource-name)))
 
 (defn- load-and-adjust-namespace
   [file namespace]
